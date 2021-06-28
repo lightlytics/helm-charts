@@ -1,3 +1,12 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/*
+define ECR url based on the AWS account
+*/}}
+{{- define "ecrUrl" -}}
+    {{- .Values.lightlyticsAwsAccount -}}.dkr.ecr.us-east-1.amazonaws.com
+{{- end -}}
+
 {{/*
 Expand the name of the chart.
 */}}
@@ -55,7 +64,7 @@ Create the name of the service account to use
 */}}
 {{- define "k8s-collector.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "k8s-collector.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "k8s-collector.name" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
