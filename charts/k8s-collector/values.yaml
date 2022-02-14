@@ -1,9 +1,0 @@
-lightlyticsAwsAccount: "219342927623"
-namespace: lightlytics
-replicaCount: 1
-serviceAccount:
-  create: true
-image:
-  pullPolicy: IfNotPresent
-service:
-  port: 8155

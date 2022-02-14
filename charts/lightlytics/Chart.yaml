@@ -1,6 +1,7 @@
 apiVersion: v2
-name: k8s-collector
-description: A Helm chart for Kubernetes
+name: lightlytics
+
+description: A Helm chart for Lightlytics Kubernetes agent
 
 # A chart can be either an 'application' or a 'library' chart.
 #

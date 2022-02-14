@@ -1,0 +1,53 @@
+## Default values for Lightlytics agent
+## See Lightlytics helm documentation:
+
+
+nameOverride:  # ""
+
+fullnameOverride:  # ""
+
+registry: public.ecr.aws/f1v0s3d7
+
+lightlytics:
+  #lightlytics.apiToken --  Lightlytics API token for your Kubernetes cluster
+  #ref :
+  apiToken: <LightlyticsAPIToken>
+
+  #lightlytics.apiUrl -- Lightlytics url
+  apiUrl: https://app.lightlytics.com
+
+  replicas: 1
+
+  image:
+    #lightlytics.image.name -- Lightlytics agent image name.
+    name: mika
+
+    #lightlytics.image.tag -- Lightlytics agent tag to use.
+    tag: latest
+
+    #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
+    pullPolicy: IfNotPresent
+
+  serviceAccount:
+    #lightlytics.serviceAccount.create
+    create: true
+
+    #lightlytics.serviceAccount.name -- The name of the Service account.
+    #If not set and create is true, a name is generated using the fullname template
+    name:
+
+  resources: {}
+  #   requests:
+  #     cpu: 200m
+  #     memory: 256Mi
+  #   limits:
+  #     cpu: 200m
+  #     memory: 256Mi
+
+
+  env:
+    LOGLEVEL: INFO
+
+
+
+

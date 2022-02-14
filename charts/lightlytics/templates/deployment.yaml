@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "lightlytics.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "lightlytics.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.lightlytics.replicas }}
+  selector:
+    matchLabels:
+  {{- include "lightlytics.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+    {{- include "lightlytics.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ template "lightlytics.serviceAccountName" . }}
+      containers:
+        - name: lightlytics-agent
+          image: {{ template "lightlytics.image-path" . }}
+          imagePullPolicy: {{ .Values.lightlytics.image.pullPolicy }}
+          resources:
+{{ toYaml .Values.lightlytics.resources | indent 10 }}
+          env:
+            - name: LIGHTLYTICS_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "lightlytics.fullname" . }}
+                  key: api-key
+            - name: LIGHTLYTICS_API_URL
+              value: {{ .Values.lightlytics.apiUrl | quote }}
