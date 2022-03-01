@@ -23,7 +23,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: latest
+    tag: master.33
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -43,10 +43,9 @@ lightlytics:
   #   limits:
   #     cpu: 200m
   #     memory: 256Mi
-
-
   env:
     LOGLEVEL: INFO
+    DEBUG: False
 
 
 
