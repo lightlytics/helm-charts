@@ -3,12 +3,22 @@ entries:
   lightlytics:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-03-01T11:34:24.344066+02:00"
+    created: "2022-03-01T12:27:45.936117+02:00"
+    description: A Helm chart for Lightlytics Kubernetes agent
+    digest: 2d8dec73007389390aa6965ee616ba04eca674dc234507e9832f155e74bda1ba
+    name: lightlytics
+    type: application
+    urls:
+    - https://lightlytics.github.io/helm-charts/relases/relases/lightlytics-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-03-01T12:27:45.934875+02:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: d615d4c9c157cfff77c399c0f7b72244071b97c9ab6772ace34726565239f0a4
     name: lightlytics
     type: application
     urls:
-    - https://lightlytics.github.io/helm-charts/relases/lightlytics-0.1.0.tgz
+    - https://lightlytics.github.io/helm-charts/relases/relases/lightlytics-0.1.0.tgz
     version: 0.1.0
-generated: "2022-03-01T11:34:24.342608+02:00"
+generated: "2022-03-01T12:27:45.93393+02:00"
