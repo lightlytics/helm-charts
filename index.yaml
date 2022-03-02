@@ -3,12 +3,12 @@ entries:
   lightlytics:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-03-02T15:55:23.152656+02:00"
+    created: "2022-03-02T16:04:32.52618+02:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 78d481e59312571a8cd3834ca1cba3047bdee7c47703579117d4a5fc55863284
     name: lightlytics
     type: application
     urls:
-    - https://lightlytics.github.io/helm-charts/relases/relases/lightlytics-0.1.1.tgz
+    - https://lightlytics.github.io/helm-charts/relases/lightlytics-0.1.1.tgz
     version: 0.1.1
-generated: "2022-03-02T15:55:23.150815+02:00"
+generated: "2022-03-02T16:04:32.525487+02:00"
