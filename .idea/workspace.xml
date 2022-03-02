@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12d111ab-2c00-4c72-b8e0-e58e97965ee1" name="Default Changelist" comment="Start working on helm charts">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/lightlytics/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/lightlytics/Chart.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/lightlytics/templates/deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/lightlytics/templates/deployment.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/lightlytics/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/lightlytics/values.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/relases/lightlytics-0.1.1.tgz" beforeDir="false" afterPath="$PROJECT_DIR$/relases/lightlytics-0.1.1.tgz" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +53,7 @@
       <workItem from="1644240627231" duration="20385000" />
       <workItem from="1646059713296" duration="1461000" />
       <workItem from="1646074956339" duration="1809000" />
+      <workItem from="1646212708576" duration="903000" />
     </task>
     <task id="LOCAL-00001" summary="Start working on helm charts">
       <created>1644846834809</created>

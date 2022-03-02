@@ -46,6 +46,7 @@ lightlytics:
   env:
     LOGLEVEL: INFO
     DEBUG: False
+    FULL_SCAN_SCHEDULE_SECONDS: 120
 
 
 
