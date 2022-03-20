@@ -23,7 +23,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: master.62
+    tag: master.67
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -46,7 +46,7 @@ lightlytics:
   env:
     LOGLEVEL: INFO
     DEBUG: False
-    FULL_SCAN_SCHEDULE_SECONDS: 120
+    FULL_SCAN_SCHEDULE_SECONDS: 600
     FIELD_SELECTORS_NAMESPACES:
 
 
