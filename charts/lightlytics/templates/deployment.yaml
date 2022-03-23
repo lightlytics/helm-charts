@@ -21,7 +21,7 @@ spec:
           image: {{ template "lightlytics.image-path" . }}
           imagePullPolicy: {{ .Values.lightlytics.image.pullPolicy }}
           resources:
-#  {{ toYaml .Values.lightlytics.resources | indent 10 }}
+{{ toYaml .Values.lightlytics.resources | indent 12 }}
           env:
             - name: LIGHTLYTICS_API_TOKEN
               valueFrom:

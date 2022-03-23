@@ -36,13 +36,13 @@ lightlytics:
     #If not set and create is true, a name is generated using the fullname template
     name:
 
-  resources: {}
-  #   requests:
-  #     cpu: 200m
-  #     memory: 256Mi
-  #   limits:
-  #     cpu: 200m
-  #     memory: 256Mi
+  resources:
+    requests:
+      cpu: 50m
+      memory: 32Mi
+    limits:
+     cpu: 200m
+     memory: 256Mi
   env:
     LOGLEVEL: INFO
     DEBUG: False
