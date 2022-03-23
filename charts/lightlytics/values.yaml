@@ -23,7 +23,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: master.77
+    tag: master.81
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -36,13 +36,13 @@ lightlytics:
     #If not set and create is true, a name is generated using the fullname template
     name:
 
-  resources: {}
-  #   requests:
-  #     cpu: 200m
-  #     memory: 256Mi
-  #   limits:
-  #     cpu: 200m
-  #     memory: 256Mi
+  resources:
+    requests:
+      cpu: 50m
+      memory: 32Mi
+    limits:
+     cpu: 200m
+     memory: 256Mi
   env:
     LOGLEVEL: INFO
     DEBUG: False
