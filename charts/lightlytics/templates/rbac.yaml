@@ -63,13 +63,13 @@ rules:
       - list
   - apiGroups:
       - networking.k8s.io
-      resources:
-        - ingresses
-        - networkpolicies
-      verbs:
-        - get
-        - watch
-        - list
+    resources:
+      - ingresses
+      - networkpolicies
+    verbs:
+      - get
+      - watch
+      - list
 
 ---
 apiVersion: v1
