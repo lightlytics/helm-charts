@@ -21,5 +21,12 @@ helm repo update
 ### Installing the Lightlytics Chart
 
 ```bash
-helm install lightlytics --set lightlytics.apiToken=<LIGHTLYTICS_API_TOKEN> --set lightlytics.apiUrl=<LIGHTLYTICS_API_URL> -n lightlytics --create-namespace lightlytics/lightlytics
+helm install lightlytics --set lightlytics.apiToken=<LIGHTLYTICS_API_TOKEN> --set lightlytics.apiUrl=<LIGHTLYTICS_API_URL>
+-n lightlytics --create-namespace lightlytics/lightlytics
 ```
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| agents.additionalLabels | object | `{}` | Adds labels to the Agent daemonset and pods |
