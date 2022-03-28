@@ -32,7 +32,7 @@ spec:
               value: {{ .Values.lightlytics.apiUrl | quote }}
 
             - name: FULL_SCAN_SCHEDULE_SECONDS
-              value: {{ .Values.lightlytics.fullScanScheduleSeconds }}
+              value: {{ .Values.lightlytics.fullScanScheduleSeconds | quote }}
 
             - name: FILTER_RUNNING_PODS
               value: {{ .Values.lightlytics.filterRunningPods | quote }}
