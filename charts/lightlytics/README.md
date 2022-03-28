@@ -29,4 +29,8 @@ helm install lightlytics --set lightlytics.apiToken=<LIGHTLYTICS_API_TOKEN> --se
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| agents.additionalLabels | object | `{}` | Adds labels to the Agent daemonset and pods |
+| lightlytics.apiToken | string |  | Lightlytics API token for your Kubernetes cluster |
+| lightlytics.apiUrl | string |  | Lightlytics site url |
+| lightlytics.fullScanScheduleSeconds | int | `1800` | periodic Kubernetes resources scan at seconds |
+| lightlytics.filterRunningPods | bool | `true` | takes only pods which at status running |
+| lightlytics.fieldSelectorsNamespaces | string | `nil` | filter/unfilter resources from specific namespace |

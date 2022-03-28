@@ -30,6 +30,16 @@ spec:
                   key: api-key
             - name: LIGHTLYTICS_API_URL
               value: {{ .Values.lightlytics.apiUrl | quote }}
+
+            - name: FULL_SCAN_SCHEDULE_SECONDS
+              value: {{ .Values.lightlytics.fullScanScheduleSeconds }}
+
+            - name: FILTER_RUNNING_PODS
+              value: {{ .Values.lightlytics.filterRunningPods | quote }}
+
+            - name: FIELD_SELECTORS_NAMESPACES
+              value: {{ .Values.lightlytics.fieldSelectorsNamespaces | quote }}
+
             {{- range $envVarName, $envVarValue := $.Values.lightlytics.env }}
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
