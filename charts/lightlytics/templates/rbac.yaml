@@ -14,6 +14,7 @@ rules:
       - pods
       - replicationcontrollers
       - services
+      - endpoints
       - namespaces
       - configmaps
       - nodes
