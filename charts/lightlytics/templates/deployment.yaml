@@ -42,7 +42,10 @@ spec:
               
             - name: WORKFLOW
               value: {{ .Values.lightlytics.workflow | quote }}
-
+              
+            - name: PORT
+              value: {{ .Values.lightlytics.port | quote }}
+              
             {{- range $envVarName, $envVarValue := $.Values.lightlytics.env }}
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
