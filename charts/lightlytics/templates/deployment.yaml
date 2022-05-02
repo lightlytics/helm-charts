@@ -39,6 +39,9 @@ spec:
 
             - name: FIELD_SELECTORS_NAMESPACES
               value: {{ .Values.lightlytics.fieldSelectorsNamespaces | quote }}
+              
+            - name: WORKFLOW
+              value: {{ .Values.lightlytics.workflow | quote }}
 
             {{- range $envVarName, $envVarValue := $.Values.lightlytics.env }}
             - name: {{ $envVarName }}
