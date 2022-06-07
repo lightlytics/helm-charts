@@ -16,6 +16,10 @@ spec:
     {{- include "lightlytics.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ template "lightlytics.serviceAccountName" . }}
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
       containers:
         - name: lightlytics-agent
           image: {{ template "lightlytics.image-path" . }}
