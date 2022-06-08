@@ -37,19 +37,15 @@ spec:
           readinessProbe:
               exec:
                  command:
-                   - /bin/bash
-                   - -c
-                    - ps -ef | grep python | grep -v grep
-              initialDelaySeconds: 5
-              periodSeconds: 10
+                   - ps -ef | grep -v grep | grep python
+              initialDelaySeconds: 120
+              periodSeconds: 30
           livenessProbe:
               exec:
                  command:
-                   - /bin/bash
-                   - -c
-                    - ps -ef | grep python | grep -v grep
-              initialDelaySeconds: 15
-              periodSeconds: 20
+                   - ps -ef | grep -v grep | grep python
+              initialDelaySeconds: 120
+              periodSeconds: 30
           env:
             - name: LIGHTLYTICS_API_TOKEN
               valueFrom:
