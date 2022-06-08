@@ -35,13 +35,19 @@ spec:
                  add:
                     - NET_BIND_SERVICE
           readinessProbe:
-              tcpSocket:
-                 port: {{ .Values.lightlytics.port | quote }}
+              exec:
+                 command:
+                   - /bin/bash
+                   - -c
+                    - ps -ef | grep python | grep -v grep
               initialDelaySeconds: 5
               periodSeconds: 10
           livenessProbe:
-              tcpSocket:
-                 port: {{ .Values.lightlytics.port | quote }}
+              exec:
+                 command:
+                   - /bin/bash
+                   - -c
+                    - ps -ef | grep python | grep -v grep
               initialDelaySeconds: 15
               periodSeconds: 20
           env:
