@@ -26,6 +26,24 @@ spec:
           imagePullPolicy: {{ .Values.lightlytics.image.pullPolicy }}
           resources:
 {{ toYaml .Values.lightlytics.resources | indent 12 }}
+          securityContext:: true
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                 drop:
+                    - all
+                 add:
+                    - NET_BIND_SERVICE
+          readinessProbe:
+             tcpSocket:
+                port: {{ .Values.lightlytics.port | quote }}
+             initialDelaySeconds: 5
+             periodSeconds: 10
+          livenessProbe:
+             tcpSocket:
+                port: {{ .Values.lightlytics.port | quote }}
+             initialDelaySeconds: 15
+             periodSeconds: 20
           env:
             - name: LIGHTLYTICS_API_TOKEN
               valueFrom:
