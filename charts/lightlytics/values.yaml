@@ -53,10 +53,10 @@ lightlytics:
 
   resources:
     requests:
-      cpu: 50m
-      memory: 32Mi
+      cpu: 500m
+      memory: 1000Mi
     limits:
-     cpu: 400m
+     cpu: 1000m
      memory: 2048Mi
   env:
     LOGLEVEL: INFO
