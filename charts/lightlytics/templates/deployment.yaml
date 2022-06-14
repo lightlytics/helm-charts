@@ -65,7 +65,19 @@ spec:
 
             - name: FIELD_SELECTORS_NAMESPACES
               value: {{ .Values.lightlytics.fieldSelectorsNamespaces | quote }}
-              
+
+            - name: FIELD_SELECTORS_NAMES
+              value: {{ .Values.lightlytics.fieldSelectorsNames | quote }}
+
+            - name: IN_LABEL_SELECTOR
+              value: {{ .Values.lightlytics.inLabelSelector | quote }}
+
+            - name: EXISTS_LABEL_SELECTOR
+              value: {{ .Values.lightlytics.existLabelSelector | quote }}
+
+            - name: EQUALS_LABEL_SELECTOR
+              value: {{ .Values.lightlytics.equalsLabelSelector | quote }}
+
             - name: WORKFLOW
               value: {{ .Values.lightlytics.workflow | quote }}
               
