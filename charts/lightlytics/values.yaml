@@ -50,7 +50,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: get_cluster_configuration.378
+    tag: get_cluster_configuration.380
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -68,7 +68,7 @@ lightlytics:
       cpu: 50m
       memory: 32Mi
     limits:
-     cpu: 400m
+     cpu: 800m
      memory: 2048Mi
   env:
     LOGLEVEL: INFO
