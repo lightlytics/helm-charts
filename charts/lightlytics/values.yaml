@@ -50,7 +50,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: get_cluster_configuration.376
+    tag: get_cluster_configuration.378
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
