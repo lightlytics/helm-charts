@@ -21,7 +21,6 @@ rules:
       - persistentvolumes
       - persistentvolumeclaims
       - serviceaccounts
-      - secrets
     verbs:
       - get
       - watch
