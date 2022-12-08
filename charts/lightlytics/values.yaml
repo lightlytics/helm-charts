@@ -50,7 +50,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: master.399
+    tag: master.403
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
