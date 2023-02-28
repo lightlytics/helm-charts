@@ -30,6 +30,13 @@ lightlytics:
 
   #lightlytic.inLabelSelector
   inLabelSelector:
+  
+  #lightlytics.tolerations
+  tolerations:
+  - key: "re"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
 
   #lightlytic.existLabelSelector
   existLabelSelector:
