@@ -22,6 +22,8 @@ spec:
         fsGroup: 2000
       containers:
         - name: lightlytics-agent
+          tolerations:
+{{ toYaml .Values.lightlytics.tolerations | indent 12 }}
           image: {{ template "lightlytics.image-path" . }}
           imagePullPolicy: {{ .Values.lightlytics.image.pullPolicy }}
           resources:
