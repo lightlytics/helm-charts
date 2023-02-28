@@ -40,6 +40,9 @@ lightlytics:
   #lightlytics.workflow -- lightlytics workflow type 
   workflow: full_scan
   
+  #lightlytics.tolerations 
+  tolerations:
+  
   #lightlytics.port -- lightlytics port
   port: 443
 
