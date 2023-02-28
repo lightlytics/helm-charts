@@ -19,11 +19,7 @@ spec:
       securityContext:
         runAsUser: 1000
         runAsGroup: 3000
-        fsGroup: 2000
-   {{- with .Values.lightlytics.tolerations }}
-      tolerations:
-      {{- toYaml . | nindent 8 }}
-    {{- end }}     
+        fsGroup: 2000  
       containers:
         - name: lightlytics-agent
           image: {{ template "lightlytics.image-path" . }}
@@ -38,6 +34,10 @@ spec:
                     - all
                  add:
                     - NET_BIND_SERVICE
+          {{- with .Values.lightlytics.tolerations }}
+          tolerations:
+          {{- toYaml . | nindent 12 }}
+          {{- end }}   
           readinessProbe:
               exec:
                  command:
