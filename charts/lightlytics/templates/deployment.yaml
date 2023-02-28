@@ -20,8 +20,10 @@ spec:
         runAsUser: 1000
         runAsGroup: 3000
         fsGroup: 2000
+   {{- with .Values.lightlytics.tolerations }}
       tolerations:
-{{ toYaml .Values.lightlytics.tolerations | indent 8 }}
+      {{- toYaml . | nindent 8 }}
+    {{- end }}     
       containers:
         - name: lightlytics-agent
           image: {{ template "lightlytics.image-path" . }}
