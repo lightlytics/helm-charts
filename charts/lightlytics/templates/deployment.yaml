@@ -35,7 +35,7 @@ spec:
                  add:
                     - NET_BIND_SERVICE
           tolerations:
-          {{- toYaml .Values.lightlytics.tolerations | indent 12 }}  
+          {{- toYaml .Values.lightlytics.tolerations | nindent 12 }}  
           readinessProbe:
               exec:
                  command:
