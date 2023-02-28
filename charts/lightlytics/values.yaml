@@ -40,8 +40,12 @@ lightlytics:
   #lightlytics.workflow -- lightlytics workflow type 
   workflow: full_scan
   
-  #lightlytics.tolerations 
+  #lightlytics.tolerations
   tolerations:
+  - key: "re"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
   
   #lightlytics.port -- lightlytics port
   port: 443
