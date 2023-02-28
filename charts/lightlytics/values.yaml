@@ -14,7 +14,7 @@ lightlytics:
   apiToken: <LightlyticsAPIToken>
 
   #lightlytics.apiUrl -- Lightlytics site url
-  apiUrl: https://app.lightlytics.com
+  apiUrl: placeholder.lightlytics.com
 
   #lightlytics.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
   fullScanScheduleSeconds: 1800
@@ -30,15 +30,6 @@ lightlytics:
 
   #lightlytic.inLabelSelector
   inLabelSelector:
-
-  #lightlytic.existLabelSelector
-  existLabelSelector:
-
-  #lightlytic.equalsLabelSelector
-  equalsLabelSelector:
-
-  #lightlytics.workflow -- lightlytics workflow type 
-  workflow: full_scan
   
   #lightlytics.tolerations
   tolerations:
@@ -46,6 +37,15 @@ lightlytics:
     operator: "Equal"
     value: "true"
     effect: "NoSchedule"
+
+  #lightlytic.existLabelSelector
+  existLabelSelector:
+
+  #lightlytic.equalsLabelSelector
+  equalsLabelSelector:
+  
+  #lightlytics.workflow -- lightlytics workflow type 
+  workflow: full_scan
   
   #lightlytics.port -- lightlytics port
   port: 443
@@ -57,7 +57,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: master.403
+    tag: master.452
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
