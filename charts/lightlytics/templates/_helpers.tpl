@@ -60,6 +60,14 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
+Extra Annotations
+*/}}
+{{- define "extraAnnotations" -}}
+{{- with .Values.extraAnnotations }}
+{{ toYaml . }}
+{{- end }}
+
+{{/*
 Selector labels
 */}}
 {{- define "lightlytics.selectorLabels" -}}
