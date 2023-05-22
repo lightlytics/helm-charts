@@ -54,6 +54,18 @@ helm.sh/chart: {{ include "lightlytics.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- with .Values.extraLabels }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*
+Extra Annotations
+*/}}
+{{- define "extraAnnotations" -}}
+{{- with .Values.extraAnnotations }}
+{{ toYaml . }}
+{{- end }}
 {{- end }}
 
 {{/*

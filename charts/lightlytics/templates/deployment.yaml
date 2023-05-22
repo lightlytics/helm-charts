@@ -5,6 +5,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
   {{- include "lightlytics.labels" . | nindent 4 }}
+  annotations:
+  {{- include "extraAnnotations" . | indent 4 }}
+
 spec:
   replicas: {{ .Values.lightlytics.replicas }}
   selector:
