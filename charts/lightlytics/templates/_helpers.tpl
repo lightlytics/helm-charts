@@ -8,9 +8,8 @@ define ECR url based on the AWS account
 {{- end -}}
 
 {{- define "lightlytics.image-path" -}}
-    {{ .Values.registry }}/{{ .Values.lightlytics.image.name }}:{{ .Values.lightlytics.image.tag }}
+  {{ .Values.registry }}/{{ .Values.lightlytics.image.name }}:{{ .Values.lightlytics.image.tag }}
 {{- end -}}
-
 
 {{/*
 Expand the name of the chart.
