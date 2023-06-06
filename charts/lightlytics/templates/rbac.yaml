@@ -70,6 +70,14 @@ rules:
       - get
       - watch
       - list
+  - apiGroups:
+      - metrics.k8s.io
+    resources:
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
 
 ---
 apiVersion: v1

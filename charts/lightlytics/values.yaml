@@ -11,10 +11,10 @@ registry: public.ecr.aws/f1v0s3d7
 lightlytics:
   #lightlytics.apiToken --  Lightlytics API token for your Kubernetes cluster
   #ref :
-  apiToken: <LightlyticsAPIToken>
+  apiToken: bAoLg_Qe5RJ57FpjYKyq6xX3u1p7c9UXB1Z64sKyf4g
 
   #lightlytics.apiUrl -- Lightlytics site url
-  apiUrl: placeholder.lightlytics.com
+  apiUrl: kubecost.lightops.io
 
   #lightlytics.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
   fullScanScheduleSeconds: 1800
@@ -57,7 +57,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: master.454
+    tag: 4359535051_cost_k8s_process.492
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -69,6 +69,18 @@ lightlytics:
     #lightlytics.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
     name:
+
+  containers:
+    lightlytics-connector:
+      name: lightlytics-connector
+      command:
+        - /usr/local/bin/python
+        - connector.py
+    lightlytics-cost:
+      name: lightlytics-cost
+      command:
+        - /usr/local/bin/python
+        - cost.py
 
   resources:
     requests:
