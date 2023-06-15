@@ -11,10 +11,10 @@ registry: public.ecr.aws/f1v0s3d7
 lightlytics:
   #lightlytics.apiToken --  Lightlytics API token for your Kubernetes cluster
   #ref :
-  apiToken: bAoLg_Qe5RJ57FpjYKyq6xX3u1p7c9UXB1Z64sKyf4g
+  apiToken: qrQhmfnLjjUN5xkRVSKMMg42O-NurYJzf5cierblVc0
 
   #lightlytics.apiUrl -- Lightlytics site url
-  apiUrl: kubecost.lightops.io
+  apiUrl: kubecostevents.lightops.io
 
   #lightlytics.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
   fullScanScheduleSeconds: 1800
@@ -57,7 +57,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: 4359535051_cost_k8s_process.492
+    tag: k8sevents.502
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -77,7 +77,18 @@ lightlytics:
         - /usr/local/bin/python
         - main.py
         - krs
-
+    lightlytics-events:
+      name: lightlytics-events
+      command:
+        - /usr/local/bin/python
+        - main.py
+        - events
+    lightlytics-network-policy:
+      name: lightlytics-network-policy
+      command:
+        - /usr/local/bin/python
+        - main.py
+        - network_policy
   resources:
     requests:
       cpu: 50m
