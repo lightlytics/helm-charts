@@ -57,7 +57,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: 4359535051_cost_k8s_process.492
+    tag: 4359535051_cost_k8s_process.501
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -68,7 +68,7 @@ lightlytics:
 
     #lightlytics.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
-    name:
+    name: costsa
 
   containers:
     lightlytics-connector:
