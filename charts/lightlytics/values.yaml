@@ -81,6 +81,13 @@ lightlytics:
     #If not set and create is true, a name is generated using the fullname template
     name: costsa
 
+  clusterRole:
+    #lightlytics.clustRole.create
+    create: true
+    #lightlytics.serviceAccount.name -- The name of the Service account.
+    #If not set and create is true, a name is generated using the fullname template
+    name: costcr
+
   cost_containers:
     lightlytics-connector:
       name: lightlytics-connector

@@ -25,7 +25,7 @@ spec:
       containers:
       {{- range $container_name, $container_values := .Values.lightlytics.cost_containers }}
         - name: {{ $container_name }}
-          image: {{ template "lightlytics.image-path" $}}
+          image: {{ template "lightlytics.cost-image-path" $}}
           imagePullPolicy: {{ $.Values.lightlytics.cost_image.pullPolicy }}
           command:
             {{- range $container_values.command }}
