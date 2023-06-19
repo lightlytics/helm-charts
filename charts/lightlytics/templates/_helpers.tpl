@@ -73,3 +73,11 @@ Create the name of the service account to use
 {{- default "default" .Values.lightlytics.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "lightlytics.clusterRoleName" -}}
+{{- if .Values.lightlytics.clusterRole.create }}
+{{- default (include "lightlytics.name" .) .Values.lightlytics.clusterRole.name }}
+{{- else }}
+{{- default "default" .Values.lightlytics.clusterRole.name }}
+{{- end }}
+{{- end }}

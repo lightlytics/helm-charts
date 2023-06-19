@@ -11,7 +11,7 @@ registry: public.ecr.aws/f1v0s3d7
 lightlytics:
   #lightlytics.apiToken --  Lightlytics API token for your Kubernetes cluster
   #ref :
-  apiToken: qrQhmfnLjjUN5xkRVSKMMg42O-NurYJzf5cierblVc0
+  apiToken: rdDkbM23Ee9OWvylNxzXrIoIElZx_uI6TIeheOJ-v6k
 
   #lightlytics.apiUrl -- Lightlytics site url
   apiUrl: kubecostevents.lightops.io
@@ -57,7 +57,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: k8sevents.502
+    tag: k8sevents.506
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -68,6 +68,12 @@ lightlytics:
 
     #lightlytics.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
+    name:
+
+  clusterRole:
+    #lightlytics.clustRole.create
+    create: true
+
     name:
 
   containers:
