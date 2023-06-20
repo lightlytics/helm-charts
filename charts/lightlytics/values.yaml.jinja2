@@ -85,6 +85,8 @@ lightlytics:
     #lightlytics.clustRole.create
     create: true
     name:
+
+
   cost_containers:
     lightlytics-connector:
         name: lightlytics-connector
@@ -96,6 +98,25 @@ lightlytics:
         command:
             - /usr/local/bin/python
             - cost.py
+  lightlytics_containers:
+    lightlytics-krs:
+    name: lightlytics-krs
+    command:
+      - /usr/local/bin/python
+      - main.py
+      - krs
+  lightlytics-events:
+    name: lightlytics-events
+    command:
+      - /usr/local/bin/python
+      - main.py
+      - events
+  lightlytics-network-policy:
+    name: lightlytics-network-policy
+    command:
+      - /usr/local/bin/python
+      - main.py
+      - network_policy
 
   resources:
     requests:

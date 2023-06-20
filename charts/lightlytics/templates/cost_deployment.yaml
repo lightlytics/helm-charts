@@ -1,3 +1,4 @@
+{{- if .Values.lightlytics.cost_containers.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,7 +24,7 @@ spec:
       tolerations:
           {{- toYaml .Values.lightlytics.tolerations | nindent 8 }}
       containers:
-      {{- range $container_name, $container_values := .Values.lightlytics.cost_containers }}
+      {{- range $container_name, $container_values := .Values.lightlytics.cost_containers.containers }}
         - name: {{ $container_name }}
           image: {{ template "lightlytics.cost-image-path" $}}
           imagePullPolicy: {{ $.Values.lightlytics.cost_image.pullPolicy }}
@@ -71,3 +72,4 @@ spec:
               value: {{ $envVarValue | quote }}
             {{- end }}
     {{- end }}
+{{- end }}
