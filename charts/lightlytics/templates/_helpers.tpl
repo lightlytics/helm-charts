@@ -8,9 +8,12 @@ define ECR url based on the AWS account
 {{- end -}}
 
 {{- define "lightlytics.image-path" -}}
-    {{ .Values.registry }}/{{ .Values.lightlytics.image.name }}:{{ .Values.lightlytics.image.tag }}
+  {{ .Values.registry }}/{{ .Values.lightlytics.image.name }}:{{ .Values.lightlytics.image.tag }}
 {{- end -}}
 
+{{- define "lightlytics.cost-image-path" -}}
+  {{ .Values.registry }}/{{ .Values.lightlytics.image.name }}:{{ .Values.lightlytics.cost_image.tag }}
+{{- end -}}
 
 {{/*
 Expand the name of the chart.
@@ -72,5 +75,13 @@ Create the name of the service account to use
 {{- default (include "lightlytics.name" .) .Values.lightlytics.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.lightlytics.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{- define "lightlytics.clusterRoleName" -}}
+{{- if .Values.lightlytics.clusterRole.create }}
+{{- default (include "lightlytics.name" .) .Values.lightlytics.clusterRole.name }}
+{{- else }}
+{{- default "default" .Values.lightlytics.clusterRole.name }}
 {{- end }}
 {{- end }}

@@ -1,3 +1,4 @@
+{{- if .Values.lightlytics.lightlytics_containers.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,74 +20,82 @@ spec:
       securityContext:
         runAsUser: 1000
         runAsGroup: 3000
-        fsGroup: 2000  
+        fsGroup: 2000
       tolerations:
-          {{- toYaml .Values.lightlytics.tolerations | nindent 8 }}   
+          {{- toYaml .Values.lightlytics.tolerations | nindent 8 }}
       containers:
-        - name: lightlytics-agent
-          image: {{ template "lightlytics.image-path" . }}
-          imagePullPolicy: {{ .Values.lightlytics.image.pullPolicy }}
+      {{- range $container_name, $container_values := .Values.lightlytics.lightlytics_containers.containers }}
+        - name: {{ $container_name }}
+          image: {{ template "lightlytics.image-path" $}}
+          imagePullPolicy: {{ $.Values.lightlytics.image.pullPolicy }}
+          command:
+            {{- range $container_values.command }}
+            - {{ . }}
+            {{- end }}
           resources:
-{{ toYaml .Values.lightlytics.resources | indent 12 }}
+{{ toYaml $.Values.lightlytics.resources | indent 12 }}
           securityContext:
-              readOnlyRootFilesystem: true
-              allowPrivilegeEscalation: false
-              capabilities:
-                 drop:
-                    - all
-                 add:
-                    - NET_BIND_SERVICE
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+              add:
+                - NET_BIND_SERVICE
           readinessProbe:
-              exec:
-                 command:
-                   - cat
-                   - /main.py
-              initialDelaySeconds: 30
-              periodSeconds: 30
+            exec:
+              command:
+                - cat
+                - /main.py
+            initialDelaySeconds: 30
+            periodSeconds: 30
           livenessProbe:
-              exec:
-                 command:
-                   - cat
-                   - /main.py
-              initialDelaySeconds: 30
-              periodSeconds: 30
+            exec:
+              command:
+                - cat
+                - /main.py
+            initialDelaySeconds: 30
+            periodSeconds: 30
           env:
             - name: LIGHTLYTICS_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "lightlytics.fullname" . }}
+                  name: {{ template "lightlytics.fullname" $}}
                   key: api-key
             - name: LIGHTLYTICS_API_URL
-              value: {{ .Values.lightlytics.apiUrl | quote }}
+              value: {{ $.Values.lightlytics.apiUrl | quote }}
 
             - name: FULL_SCAN_SCHEDULE_SECONDS
-              value: {{ .Values.lightlytics.fullScanScheduleSeconds | quote }}
+              value: {{ $.Values.lightlytics.fullScanScheduleSeconds | quote }}
 
             - name: FILTER_RUNNING_PODS
-              value: {{ .Values.lightlytics.filterRunningPods | quote }}
+              value: {{ $.Values.lightlytics.filterRunningPods | quote }}
 
             - name: FIELD_SELECTORS_NAMESPACES
-              value: {{ .Values.lightlytics.fieldSelectorsNamespaces | quote }}
+              value: {{ $.Values.lightlytics.fieldSelectorsNamespaces | quote }}
 
             - name: FIELD_SELECTORS_NAMES
-              value: {{ .Values.lightlytics.fieldSelectorsNames | quote }}
+              value: {{ $.Values.lightlytics.fieldSelectorsNames | quote }}
 
             - name: IN_LABEL_SELECTOR
-              value: {{ .Values.lightlytics.inLabelSelector | quote }}
+              value: {{ $.Values.lightlytics.inLabelSelector | quote }}
 
             - name: EXISTS_LABEL_SELECTOR
-              value: {{ .Values.lightlytics.existLabelSelector | quote }}
+              value: {{ $.Values.lightlytics.existLabelSelector | quote }}
 
             - name: EQUALS_LABEL_SELECTOR
-              value: {{ .Values.lightlytics.equalsLabelSelector | quote }}
+              value: {{ $.Values.lightlytics.equalsLabelSelector | quote }}
 
             - name: WORKFLOW
-              value: {{ .Values.lightlytics.workflow | quote }}
-              
+              value: {{ $.Values.lightlytics.workflow | quote }}
+
             - name: PORT
-              value: {{ .Values.lightlytics.port | quote }}
-              
+              value: {{ $.Values.lightlytics.port | quote }}
+
             {{- range $envVarName, $envVarValue := $.Values.lightlytics.env }}
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
             {{- end }}
+    {{- end }}
+
+{{- end }}

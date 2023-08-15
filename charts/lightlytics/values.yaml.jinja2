@@ -62,6 +62,17 @@ lightlytics:
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
 
+
+  image:
+    #lightlytics.cost_image.name -- Lightlytics cost agent image name.
+    name: mika
+
+    #lightlytics.cost_image.tag -- Lightlytics cost agent tag to use.
+    tag: {{cost_image_tag}}
+
+    #lightlytics.cost_image.pullPolicy -- Lightlytics cost agent image pullPolicy
+    pullPolicy: IfNotPresent
+
   serviceAccount:
     #lightlytics.serviceAccount.create
     create: true
@@ -69,6 +80,43 @@ lightlytics:
     #lightlytics.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
     name:
+
+  clusterRole:
+    #lightlytics.clustRole.create
+    create: true
+    name:
+
+
+  cost_containers:
+    lightlytics-connector:
+        name: lightlytics-connector
+        command:
+            - /usr/local/bin/python
+            - connector.py
+    lightlytics-cost:
+        name: lightlytics-cost
+        command:
+            - /usr/local/bin/python
+            - cost.py
+  lightlytics_containers:
+    lightlytics-krs:
+    name: lightlytics-krs
+    command:
+      - /usr/local/bin/python
+      - main.py
+      - krs
+  lightlytics-events:
+    name: lightlytics-events
+    command:
+      - /usr/local/bin/python
+      - main.py
+      - events
+  lightlytics-network-policy:
+    name: lightlytics-network-policy
+    command:
+      - /usr/local/bin/python
+      - main.py
+      - network_policy
 
   resources:
     requests:

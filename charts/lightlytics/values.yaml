@@ -11,10 +11,10 @@ registry: public.ecr.aws/f1v0s3d7
 lightlytics:
   #lightlytics.apiToken --  Lightlytics API token for your Kubernetes cluster
   #ref :
-  apiToken: <LightlyticsAPIToken>
+  apiToken: 
 
   #lightlytics.apiUrl -- Lightlytics site url
-  apiUrl: placeholder.lightlytics.com
+  apiUrl:
 
   #lightlytics.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
   fullScanScheduleSeconds: 1800
@@ -57,9 +57,20 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: master.454
+    tag: k8sevents.529
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
+    pullPolicy: IfNotPresent
+
+
+  cost_image:
+    #lightlytics.cost_image.name -- Lightlytics cost agent image name.
+    name: mika
+
+    #lightlytics.cost_image.tag -- Lightlytics cost agent tag to use.
+    tag: 4359535051_cost_k8s_process.522
+
+    #lightlytics.cost_image.pullPolicy -- Lightlytics cost agent image pullPolicy
     pullPolicy: IfNotPresent
 
   serviceAccount:
@@ -68,7 +79,51 @@ lightlytics:
 
     #lightlytics.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
-    name:
+    name: lightlyticssa
+
+  clusterRole:
+    #lightlytics.clustRole.create
+    create: true
+    #lightlytics.serviceAccount.name -- The name of the Service account.
+    #If not set and create is true, a name is generated using the fullname template
+    name: lightltyicscr
+
+  cost_containers:
+    #lightlytics.cost_containers.enabled
+    enabled: true
+    containers:
+      lightlytics-connector:
+        name: lightlytics-connector
+        command:
+          - /usr/local/bin/python
+          - connector.py
+      lightlytics-cost:
+        name: lightlytics-cost
+        command:
+          - /usr/local/bin/python
+          - cost.py
+    
+  lightlytics_containers:
+    enabled: true
+    containers:
+      lightlytics-krs:
+        name: lightlytics-krs
+        command:
+          - /usr/local/bin/python
+          - main.py
+          - krs
+      lightlytics-events:
+        name: lightlytics-events
+        command:
+          - /usr/local/bin/python
+          - main.py
+          - events
+      lightlytics-network-policy:
+        name: lightlytics-network-policy
+        command:
+          - /usr/local/bin/python
+          - main.py
+          - network_policy
 
   resources:
     requests:
