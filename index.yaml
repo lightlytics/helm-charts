@@ -3,22 +3,42 @@ entries:
   lightlytics:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-03-08T13:30:32.672026+02:00"
+    created: "2023-08-15T12:25:32.854884+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
-    digest: 4e242bc1bc23f5e205f30a109576bfb1b0c572fdec32d9ea38fa4f2811752a91
+    digest: f2d94a9de7a3a694045810522a08f1bd536f67ce0401d8a080ccfb427da077b1
     name: lightlytics
     type: application
     urls:
-    - https://lightlytics.github.io/helm-charts/releases/lightlytics-0.1.4.tgz
+    - releases/lightlytics-1.1.0-beta.1.tgz
+    version: 1.1.0-beta.1
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-08-15T12:25:32.854338+03:00"
+    description: A Helm chart for Lightlytics Kubernetes agent
+    digest: 0cb20f1bf1bfdc05eb19f70e1c28bae9e52a7b284556e33a9991855f10af490a
+    name: lightlytics
+    type: application
+    urls:
+    - releases/lightlytics-0.1.4.tgz
     version: 0.1.4
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-03-08T13:30:32.669637+02:00"
+    created: "2023-08-15T12:25:32.853736+03:00"
+    description: A Helm chart for Lightlytics Kubernetes agent
+    digest: 5112c034ec4353beeeaea62c24727a852ed9eb1cc0b8d7590de8dcfda11e5096
+    name: lightlytics
+    type: application
+    urls:
+    - releases/lightlytics-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-08-15T12:25:32.853212+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 78d481e59312571a8cd3834ca1cba3047bdee7c47703579117d4a5fc55863284
     name: lightlytics
     type: application
     urls:
-    - https://lightlytics.github.io/helm-charts/releases/lightlytics-0.1.1.tgz
+    - releases/lightlytics-0.1.1.tgz
     version: 0.1.1
-generated: "2022-03-08T13:30:32.66569+02:00"
+generated: "2023-08-15T12:25:32.852035+03:00"
