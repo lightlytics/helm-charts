@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12d111ab-2c00-4c72-b8e0-e58e97965ee1" name="Default Changelist" comment="working on events helm chart">
+      <change afterPath="$PROJECT_DIR$/releases/lightlytics-1.0.0-beta.tgz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/lightlytics/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/lightlytics/Chart.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/lightlytics/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/charts/lightlytics/values.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/index.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +54,6 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/releases" />
       <recent name="$PROJECT_DIR$/charts/lightlytics/templates" />
       <recent name="$PROJECT_DIR$/charts/lightlytics" />
     </key>
@@ -202,7 +206,7 @@
       <workItem from="1690103624553" duration="762000" />
       <workItem from="1690296311525" duration="4726000" />
       <workItem from="1690702975410" duration="8000" />
-      <workItem from="1692005480255" duration="2706000" />
+      <workItem from="1692005480255" duration="2404000" />
     </task>
     <task id="LOCAL-00001" summary="Start working on helm charts">
       <created>1644846834809</created>
