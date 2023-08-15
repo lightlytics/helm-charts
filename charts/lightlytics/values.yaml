@@ -11,10 +11,10 @@ registry: public.ecr.aws/f1v0s3d7
 lightlytics:
   #lightlytics.apiToken --  Lightlytics API token for your Kubernetes cluster
   #ref :
-  apiToken: rdDkbM23Ee9OWvylNxzXrIoIElZx_uI6TIeheOJ-v6k
+  apiToken: 
 
   #lightlytics.apiUrl -- Lightlytics site url
-  apiUrl: kubecostevents.lightops.io
+  apiUrl:
 
   #lightlytics.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
   fullScanScheduleSeconds: 1800
@@ -57,7 +57,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: k8sevents.509
+    tag: k8sevents.529
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -68,7 +68,7 @@ lightlytics:
     name: mika
 
     #lightlytics.cost_image.tag -- Lightlytics cost agent tag to use.
-    tag: 4359535051_cost_k8s_process.507
+    tag: 4359535051_cost_k8s_process.522
 
     #lightlytics.cost_image.pullPolicy -- Lightlytics cost agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -79,18 +79,18 @@ lightlytics:
 
     #lightlytics.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
-    name: gayasa
+    name: lightlyticssa
 
   clusterRole:
     #lightlytics.clustRole.create
     create: true
     #lightlytics.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
-    name: gayacr
+    name: lightltyicscr
 
   cost_containers:
     #lightlytics.cost_containers.enabled
-    enabled: false
+    enabled: true
     containers:
       lightlytics-connector:
         name: lightlytics-connector
