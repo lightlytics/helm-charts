@@ -68,7 +68,7 @@ lightlytics:
     name: mika
 
     #lightlytics.cost_image.tag -- Lightlytics cost agent tag to use.
-    tag: 4359535051_cost_k8s_process.522
+    tag: 4359535051_cost_k8s_process.536
 
     #lightlytics.cost_image.pullPolicy -- Lightlytics cost agent image pullPolicy
     pullPolicy: IfNotPresent
