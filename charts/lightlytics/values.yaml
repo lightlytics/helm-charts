@@ -75,6 +75,16 @@ lightlytics:
     #lightlytics.cost_image.pullPolicy -- Lightlytics cost agent image pullPolicy
     pullPolicy: IfNotPresent
 
+  process_discovery_image:
+    #lightlytics.process_discovery_image.name -- Lightlytics process discovery agent image name.
+    name: mika
+
+    #lightlytics.process_discovery_image.tag -- Lightlytics process discovery agent tag to use.
+    tag: 4359535051_cost_k8s_process.542
+
+    #lightlytics.process_discovery_image.pullPolicy -- Lightlytics process discovery agent image pullPolicy
+    pullPolicy: IfNotPresent
+
   serviceAccount:
     #lightlytics.serviceAccount.create
     create: true
@@ -126,6 +136,16 @@ lightlytics:
           - /usr/local/bin/python
           - main.py
           - network_policy
+
+  process_discovery_containers:
+    enabled: false
+    containers:
+      lightlytics-process-discovery:
+        name: lightlytics-process-discovery
+        command:
+          - "/bin/sh"
+          - "-c"
+          - "sleep 3600"
 
   resources:
     requests:
