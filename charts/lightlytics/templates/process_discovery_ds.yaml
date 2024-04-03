@@ -61,7 +61,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.uid
             - name: APPLICATION_PORT
-              value: 8080
+              value: "8080"
               
             {{- range $envVarName, $envVarValue := $.Values.lightlytics.env }}
             - name: {{ $envVarName }}
