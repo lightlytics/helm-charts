@@ -142,10 +142,6 @@ lightlytics:
     containers:
       lightlytics-process-discovery:
         name: lightlytics-process-discovery
-        command:
-          - "/bin/sh"
-          - "-c"
-          - "sleep 3600"
 
   resources:
     requests:

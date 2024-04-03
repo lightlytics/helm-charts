@@ -29,10 +29,6 @@ spec:
         - name: {{ $container_name }}
           image: {{ template "lightlytics.process-discovery-image-path" $}}
           imagePullPolicy: {{ $.Values.lightlytics.process_discovery_image.pullPolicy }}
-          command:
-            {{- range $container_values.command }}
-            - {{ . }}
-            {{- end }}
           resources:
 {{ toYaml $.Values.lightlytics.resources | indent 12 }}
           securityContext:
