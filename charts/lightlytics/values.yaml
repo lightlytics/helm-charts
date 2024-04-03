@@ -80,7 +80,7 @@ lightlytics:
     name: k8s-proc-agent
 
     #lightlytics.process_discovery_image.tag -- Lightlytics process discovery agent tag to use.
-    tag: master.6
+    tag: master.7
 
     #lightlytics.process_discovery_image.pullPolicy -- Lightlytics process discovery agent image pullPolicy
     pullPolicy: IfNotPresent
