@@ -60,15 +60,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.uid
-            - name: LIGHTLYTICS_API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "lightlytics.fullname" $}}
-                  key: api-key
-            - name: LIGHTLYTICS_API_URL
-              value: {{ $.Values.lightlytics.apiUrl | quote }}
-            - name: PORT
-              value: {{ $.Values.lightlytics.port | quote }}
+            - name: APPLICATION_PORT
+              value: 8080
               
             {{- range $envVarName, $envVarValue := $.Values.lightlytics.env }}
             - name: {{ $envVarName }}
