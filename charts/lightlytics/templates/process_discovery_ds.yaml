@@ -88,3 +88,16 @@ spec:
             path: /proc
     {{- end }}
 {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "lightlytics.fullname" . }}-process-discovery
+spec:
+  clusterIP: None
+  selector:
+    app: {{ template "lightlytics.fullname" . }}-process-discovery
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
