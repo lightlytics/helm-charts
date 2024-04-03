@@ -77,10 +77,10 @@ lightlytics:
 
   process_discovery_image:
     #lightlytics.process_discovery_image.name -- Lightlytics process discovery agent image name.
-    name: mika
+    name: k8s-proc-agent
 
     #lightlytics.process_discovery_image.tag -- Lightlytics process discovery agent tag to use.
-    tag: 4359535051_cost_k8s_process.542
+    tag: master.2
 
     #lightlytics.process_discovery_image.pullPolicy -- Lightlytics process discovery agent image pullPolicy
     pullPolicy: IfNotPresent
