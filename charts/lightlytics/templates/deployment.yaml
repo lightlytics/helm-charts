@@ -69,7 +69,7 @@ spec:
               value: {{ $.Values.lightlytics.enablePodProcesses | quote }}
 
             - name: POD_PROCESSES_SERVICE
-              value: {{ template "lightlytics.fullname" . }}-process-discovery
+              value: {{ template "lightlytics.fullname" $}}-process-discovery
 
             - name: POD_PROCESSES_PORT
               value: "8080"
