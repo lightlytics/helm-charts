@@ -146,10 +146,10 @@ lightlytics:
   resources:
     requests:
       cpu: 50m
-      memory: 2048Mi
+      memory: 32Mi
     limits:
      cpu: 800m
-     memory: 4096Mi
+     memory: 2048Mi
   env:
     LOGLEVEL: INFO
     DEBUG: False
