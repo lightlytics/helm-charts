@@ -15,6 +15,10 @@ define ECR url based on the AWS account
   {{ .Values.registry }}/{{ .Values.lightlytics.image.name }}:{{ .Values.lightlytics.cost_image.tag }}
 {{- end -}}
 
+{{- define "lightlytics.process-discovery-image-path" -}}
+  {{ .Values.registry }}/{{ .Values.lightlytics.process_discovery_image.name }}:{{ .Values.lightlytics.process_discovery_image.tag }}
+{{- end -}}
+
 {{/*
 Expand the name of the chart.
 */}}

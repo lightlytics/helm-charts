@@ -1,0 +1,103 @@
+{{- if .Values.lightlytics.process_discovery_containers.enabled }}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ template "lightlytics.fullname" . }}-process-discovery
+  labels:
+  {{- include "lightlytics.labels" . | nindent 4 }}
+    app: {{ template "lightlytics.fullname" . }}-process-discovery
+spec:
+  selector:
+    matchLabels:
+  {{- include "lightlytics.selectorLabels" . | nindent 6 }}
+      app: {{ template "lightlytics.fullname" . }}-process-discovery
+  template:
+    metadata:
+      labels:
+    {{- include "lightlytics.selectorLabels" . | nindent 8 }}
+        app: {{ template "lightlytics.fullname" . }}-process-discovery
+    spec:
+      serviceAccountName: {{ template "lightlytics.serviceAccountName" . }}
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000  
+      tolerations:
+          {{- toYaml .Values.lightlytics.tolerations | nindent 8 }}
+      containers:
+      {{- range $container_name, $container_values := .Values.lightlytics.process_discovery_containers.containers }}
+        - name: {{ $container_name }}
+          image: {{ template "lightlytics.process-discovery-image-path" $}}
+          imagePullPolicy: {{ $.Values.lightlytics.process_discovery_image.pullPolicy }}
+          resources:
+{{ toYaml $.Values.lightlytics.resources | indent 12 }}
+          securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                 drop:
+                    - all
+                 add:
+                    - SYS_PTRACE
+                    - DAC_READ_SEARCH
+          readinessProbe:
+              exec:
+                 command:
+                   - cat
+                   - /app/main.py
+              initialDelaySeconds: 10
+              periodSeconds: 30
+          livenessProbe:
+              exec:
+                 command:
+                   - cat
+                   - /app/main.py
+              initialDelaySeconds: 10
+              periodSeconds: 30
+          env:
+            - name: POD_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
+            - name: APPLICATION_PORT
+              value: "8080"
+              
+            {{- range $envVarName, $envVarValue := $.Values.lightlytics.env }}
+            - name: {{ $envVarName }}
+              value: {{ $envVarValue | quote }}
+            {{- end }}
+          volumeMounts:
+            - name: cgroups
+              mountPath: /host/sys/fs/cgroup
+              readOnly: true
+            - name: passwd
+              mountPath: /etc/passwd
+              readOnly: true
+            - name: procdir
+              mountPath: /host/proc
+              readOnly: true
+      volumes:
+        - name: cgroups
+          hostPath:
+            path: /sys/fs/cgroup
+        - name: passwd
+          hostPath:
+            path: /etc/passwd
+        - name: procdir
+          hostPath:
+            path: /proc
+    {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "lightlytics.fullname" . }}-process-discovery
+spec:
+  clusterIP: None
+  selector:
+    app: {{ template "lightlytics.fullname" . }}-process-discovery
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+{{- end }}
