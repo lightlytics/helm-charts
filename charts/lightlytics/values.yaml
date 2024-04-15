@@ -100,7 +100,7 @@ lightlytics:
     create: true
     #lightlytics.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
-    name: lightltyicscrdotan
+    name: lightltyicscr
 
   cost_containers:
     #lightlytics.cost_containers.enabled
