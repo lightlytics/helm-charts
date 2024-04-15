@@ -66,7 +66,7 @@ spec:
               value: {{ $.Values.lightlytics.apiUrl | quote }}
 
             - name: ENABLE_POD_PROCESSES
-              value: {{ $.Values.lightlytics.enablePodProcesses | quote }}
+              value: {{ $.Values.lightlytics.process_discovery_containers.enabled | quote }}
 
             - name: POD_PROCESSES_SERVICE
               value: {{ template "lightlytics.fullname" $}}-process-discovery

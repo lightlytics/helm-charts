@@ -18,8 +18,6 @@ lightlytics:
   #lightlytics.apiUrl -- Lightlytics site url
   apiUrl:
 
-  enablePodProcesses: false
-
   #lightlytics.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
   fullScanScheduleSeconds: 1800
 
@@ -140,7 +138,7 @@ lightlytics:
           - network_policy
 
   process_discovery_containers:
-    enabled: true
+    enabled: false
     containers:
       lightlytics-process-discovery:
         name: lightlytics-process-discovery
