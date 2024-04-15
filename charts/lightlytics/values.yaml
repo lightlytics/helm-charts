@@ -18,7 +18,7 @@ lightlytics:
   #lightlytics.apiUrl -- Lightlytics site url
   apiUrl:
 
-  enablePodProcesses: true
+  enablePodProcesses: false
 
   #lightlytics.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
   fullScanScheduleSeconds: 1800
@@ -61,7 +61,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: pod_processes.543
+    tag: master.547
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -82,7 +82,7 @@ lightlytics:
     name: k8s-proc-agent
 
     #lightlytics.process_discovery_image.tag -- Lightlytics process discovery agent tag to use.
-    tag: master.9
+    tag: master.24
 
     #lightlytics.process_discovery_image.pullPolicy -- Lightlytics process discovery agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -100,7 +100,7 @@ lightlytics:
     create: true
     #lightlytics.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
-    name: lightltyicscr
+    name: lightltyicscrdotan
 
   cost_containers:
     #lightlytics.cost_containers.enabled
@@ -148,10 +148,10 @@ lightlytics:
   resources:
     requests:
       cpu: 50m
-      memory: 32Mi
+      memory: 2048Mi
     limits:
      cpu: 800m
-     memory: 2048Mi
+     memory: 4096Mi
   env:
     LOGLEVEL: INFO
     DEBUG: False
