@@ -6,6 +6,13 @@ metadata:
   labels:
   {{- include "lightlytics.labels" . | nindent 4 }}
     app: {{ template "lightlytics.fullname" . }}-process-discovery
+  {{- if .Values.userLabels }}
+  {{- include "user.labels" . | indent 4 }}
+  {{- end }}
+  {{- if .Values.userAnnotations }}
+  annotations:
+  {{- include "user.annotations" . | indent 4 }}
+  {{- end }}
 spec:
   selector:
     matchLabels:

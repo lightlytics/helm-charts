@@ -8,6 +8,10 @@ nameOverride:  # ""
 
 fullnameOverride:  # ""
 
+userLabels: {}
+
+userAnnotations: {}
+
 registry: public.ecr.aws/f1v0s3d7
 
 lightlytics:
