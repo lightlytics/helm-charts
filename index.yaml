@@ -3,7 +3,7 @@ entries:
   lightlytics:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-05-16T16:27:54.787343+03:00"
+    created: "2024-05-20T13:53:14.697868+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 5bf566b4857b6bd8ec5fb48643537dd1031819ff53d89affc4d18e4d8a2bf3a0
     name: lightlytics
@@ -13,7 +13,7 @@ entries:
     version: 1.1.0-beta.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-05-16T16:27:54.787034+03:00"
+    created: "2024-05-20T13:53:14.696379+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: f2d94a9de7a3a694045810522a08f1bd536f67ce0401d8a080ccfb427da077b1
     name: lightlytics
@@ -23,7 +23,17 @@ entries:
     version: 1.1.0-beta.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-05-16T16:27:54.786731+03:00"
+    created: "2024-05-20T13:53:14.693551+03:00"
+    description: A Helm chart for StreamSec Kubernetes agent
+    digest: 2f342f9abb8ef4c0bb7cf65021e977ea35ea70cc3940fcfba4c1f0c007b9834e
+    name: lightlytics
+    type: application
+    urls:
+    - https://lightlytics.github.io/helm-charts/releases/lightlytics-0.1.10.tgz
+    version: 0.1.10
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-05-20T13:53:14.696062+03:00"
     description: A Helm chart for StreamSec Kubernetes agent
     digest: 449c624ec9156c2b01a1e56d557e40ae26ce9fb9b09ee072efa82618962f2e02
     name: lightlytics
@@ -33,7 +43,7 @@ entries:
     version: 0.1.9
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-05-16T16:27:54.7864+03:00"
+    created: "2024-05-20T13:53:14.695759+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 75aae5edb87b9fc873372eea336a7a0d89f4241d2d238f901bf2cb5828cc962b
     name: lightlytics
@@ -43,7 +53,7 @@ entries:
     version: 0.1.8
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-05-16T16:27:54.786061+03:00"
+    created: "2024-05-20T13:53:14.695451+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: dc83f8afec1d57d3a8d412c5b2a53f17b4f2e8644484c3ab11e4a9dea201903b
     name: lightlytics
@@ -53,7 +63,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-05-16T16:27:54.785742+03:00"
+    created: "2024-05-20T13:53:14.695143+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 1ab34139c9f841c78c882e5b1e0d06368ceb18d78a164a62fed256e1e4d270e0
     name: lightlytics
@@ -63,7 +73,7 @@ entries:
     version: 0.1.6
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-05-16T16:27:54.785412+03:00"
+    created: "2024-05-20T13:53:14.694743+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: f034745ef053bf0a140aec6bdb478ac8e1685893094dafaefd26f5fb78765fdc
     name: lightlytics
@@ -73,7 +83,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-05-16T16:27:54.785078+03:00"
+    created: "2024-05-20T13:53:14.694228+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 0cb20f1bf1bfdc05eb19f70e1c28bae9e52a7b284556e33a9991855f10af490a
     name: lightlytics
@@ -83,7 +93,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-05-16T16:27:54.784832+03:00"
+    created: "2024-05-20T13:53:14.693892+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 5112c034ec4353beeeaea62c24727a852ed9eb1cc0b8d7590de8dcfda11e5096
     name: lightlytics
@@ -93,7 +103,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-05-16T16:27:54.784589+03:00"
+    created: "2024-05-20T13:53:14.693071+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 78d481e59312571a8cd3834ca1cba3047bdee7c47703579117d4a5fc55863284
     name: lightlytics
@@ -101,4 +111,4 @@ entries:
     urls:
     - https://lightlytics.github.io/helm-charts/releases/lightlytics-0.1.1.tgz
     version: 0.1.1
-generated: "2024-05-16T16:27:54.784259+03:00"
+generated: "2024-05-20T13:53:14.692446+03:00"

@@ -138,7 +138,7 @@ lightlytics:
           - network_policy
 
   process_discovery_containers:
-    enabled: false
+    enabled: true
     containers:
       lightlytics-process-discovery:
         name: lightlytics-process-discovery
