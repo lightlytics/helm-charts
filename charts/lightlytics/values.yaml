@@ -116,21 +116,23 @@ lightlytics:
           - cost.py
     
   lightlytics_containers:
-    enabled: true
     containers:
       lightlytics-krs:
+        enabled: true
         name: lightlytics-krs
         command:
           - /usr/local/bin/python
           - main.py
           - krs
       lightlytics-events:
+        enabled: true
         name: lightlytics-events
         command:
           - /usr/local/bin/python
           - main.py
           - events
       lightlytics-network-policy:
+        enabled: false
         name: lightlytics-network-policy
         command:
           - /usr/local/bin/python
