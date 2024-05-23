@@ -1,3 +1,4 @@
+{{- if .Values.lightlytics.lightlytics_containers.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

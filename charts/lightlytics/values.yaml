@@ -116,6 +116,7 @@ lightlytics:
           - cost.py
     
   lightlytics_containers:
+    enabled: true
     containers:
       lightlytics-krs:
         enabled: true
