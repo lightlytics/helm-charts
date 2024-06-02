@@ -25,6 +25,7 @@ spec:
           {{- toYaml .Values.lightlytics.tolerations | nindent 8 }}
       containers:
       {{- range $container_name, $container_values := .Values.lightlytics.lightlytics_containers.containers }}
+      {{- if .Values.lightlytics.lightlytics_containers.containers.$container_name.enabled }}
         - name: {{ $container_name }}
           image: {{ template "lightlytics.image-path" $}}
           imagePullPolicy: {{ $.Values.lightlytics.image.pullPolicy }}
@@ -67,6 +68,9 @@ spec:
 
             - name: ENABLE_POD_PROCESSES
               value: {{ $.Values.lightlytics.process_discovery_containers.enabled | quote }}
+
+            - name: ENABLE_NETWORK_POLICY_PROCESSES
+              value: {{ $.Values.lightlytics.lightlytics_containers.containers.lightlytics-network-policy.enabled | quote }}
 
             - name: POD_PROCESSES_SERVICE
               value: {{ template "lightlytics.fullname" $}}-process-discovery
