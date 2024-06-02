@@ -110,5 +110,5 @@ spec:
               value: {{ $envVarValue | quote }}
             {{- end }}
     {{- end }}
-
+    {{- end }}
 {{- end }}
