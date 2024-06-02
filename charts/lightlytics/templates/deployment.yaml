@@ -25,7 +25,7 @@ spec:
           {{- toYaml .Values.lightlytics.tolerations | nindent 8 }}
       containers:
       {{- range $container_name, $container_values := .Values.lightlytics.lightlytics_containers.containers }}
-      {{- if .Values.lightlytics.lightlytics_containers.containers.$container_name.enabled }}
+      {{- if $container_values.enabled }}
         - name: {{ $container_name }}
           image: {{ template "lightlytics.image-path" $}}
           imagePullPolicy: {{ $.Values.lightlytics.image.pullPolicy }}
