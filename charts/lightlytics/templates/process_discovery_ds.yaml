@@ -30,7 +30,7 @@ spec:
           image: {{ template "lightlytics.process-discovery-image-path" $}}
           imagePullPolicy: {{ $.Values.lightlytics.process_discovery_image.pullPolicy }}
           resources:
-{{ toYaml $.Values.lightlytics.process_discovery_containers.containers.$container_name.resources | indent 12 }}
+            {{- toYaml $container_values.resources | nindent 12 }}
           securityContext:
               readOnlyRootFilesystem: true
               allowPrivilegeEscalation: false
