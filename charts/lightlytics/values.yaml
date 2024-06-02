@@ -111,18 +111,26 @@ lightlytics:
         command:
           - /usr/local/bin/python
           - connector.py
+        resources:
+          requests:
+            cpu: 800m
+            memory: 1024Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
       lightlytics-cost:
         name: lightlytics-cost
         command:
           - /usr/local/bin/python
           - cost.py
-    resources:
-      requests:
-        cpu: 800m
-        memory: 1024Mi
-      limits:
-        cpu: 2000m
-        memory: 2048Mi
+        resources:
+          requests:
+            cpu: 800m
+            memory: 1024Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
+
     
   lightlytics_containers:
     enabled: true
@@ -173,6 +181,12 @@ lightlytics:
     containers:
       lightlytics-process-discovery:
         name: lightlytics-process-discovery
+        requests:
+          cpu: 800m
+          memory: 1024Mi
+        limits:
+          cpu: 2000m
+          memory: 2048Mi
 
   env:
     LOGLEVEL: INFO
