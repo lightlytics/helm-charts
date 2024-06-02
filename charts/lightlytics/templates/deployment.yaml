@@ -70,7 +70,7 @@ spec:
               value: {{ $.Values.lightlytics.process_discovery_containers.enabled | quote }}
 
             - name: ENABLE_NETWORK_POLICY_PROCESSES
-              value: {{ $.Values.lightlytics.lightlytics_containers.containers.lightlytics-network-policy.enabled | quote }}
+              value: {{ $.Values.lightlytics.lightlytics_containers.containers.lightlytics_network_policy.enabled | quote }}
 
             - name: POD_PROCESSES_SERVICE
               value: {{ template "lightlytics.fullname" $}}-process-discovery
