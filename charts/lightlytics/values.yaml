@@ -12,10 +12,12 @@ registry: public.ecr.aws/f1v0s3d7
 
 lightlytics:
   #lightlytics.apiToken --  Lightlytics API token for your Kubernetes cluster
+  #Required: Set your Lightlytics API token here
   #ref :
   apiToken: 
 
   #lightlytics.apiUrl -- Lightlytics site url
+  #Required: Set your Lightlytics API URL here
   apiUrl:
 
   #lightlytics.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
@@ -24,13 +26,13 @@ lightlytics:
   #lightlytics.filterRunningPods -- takes only pods which at status running
   filterRunningPods: true
 
-  #lightlytic.fieldSelectorsNamespaces -- filter/unfilter resources from specific namespace
+  #lightlytics.fieldSelectorsNamespaces -- filter/unfilter resources from specific namespace
   fieldSelectorsNamespaces:
 
-  #lightlytic.fieldSelectorsNames
+  #lightlytics.fieldSelectorsNames
   fieldSelectorsNames:
 
-  #lightlytic.inLabelSelector
+  #lightlytics.inLabelSelector
   inLabelSelector:
   
   #lightlytics.tolerations
@@ -40,10 +42,10 @@ lightlytics:
     value: "true"
     effect: "NoSchedule"
 
-  #lightlytic.existLabelSelector
+  #lightlytics.existLabelSelector
   existLabelSelector:
 
-  #lightlytic.equalsLabelSelector
+  #lightlytics.equalsLabelSelector
   equalsLabelSelector:
   
   #lightlytics.workflow -- lightlytics workflow type 
@@ -109,11 +111,26 @@ lightlytics:
         command:
           - /usr/local/bin/python
           - connector.py
+        resources:
+          requests:
+            cpu: 800m
+            memory: 1024Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
       lightlytics-cost:
         name: lightlytics-cost
         command:
           - /usr/local/bin/python
           - cost.py
+        resources:
+          requests:
+            cpu: 800m
+            memory: 1024Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
+
     
   lightlytics_containers:
     enabled: true
@@ -125,6 +142,13 @@ lightlytics:
           - /usr/local/bin/python
           - main.py
           - krs
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+          limits:
+            cpu: 2000m
+            memory: 4096Mi
       lightlytics-events:
         enabled: true
         name: lightlytics-events
@@ -132,6 +156,12 @@ lightlytics:
           - /usr/local/bin/python
           - main.py
           - events
+        requests:
+          cpu: 800m
+          memory: 1024Mi
+        limits:
+          cpu: 2000m
+          memory: 2048Mi
       lightlytics-network-policy:
         enabled: false
         name: lightlytics-network-policy
@@ -139,20 +169,25 @@ lightlytics:
           - /usr/local/bin/python
           - main.py
           - network_policy
+        requests:
+          cpu: 800m
+          memory: 1024Mi
+        limits:
+          cpu: 2000m
+          memory: 2048Mi
 
   process_discovery_containers:
     enabled: true
     containers:
       lightlytics-process-discovery:
         name: lightlytics-process-discovery
+        requests:
+          cpu: 800m
+          memory: 1024Mi
+        limits:
+          cpu: 2000m
+          memory: 2048Mi
 
-  resources:
-    requests:
-      cpu: 800m
-      memory: 1024Mi
-    limits:
-     cpu: 2
-     memory: 2048Mi
   env:
     LOGLEVEL: INFO
     DEBUG: False
