@@ -33,7 +33,7 @@ spec:
             - {{ . }}
             {{- end }}
           resources:
-{{ toYaml $.Values.lightlytics.resources | indent 12 }}
+{{ toYaml $.Values.lightlytics.cost_containers.$container_name.resources | indent 12 }}
           securityContext:
               readOnlyRootFilesystem: true
               allowPrivilegeEscalation: false
