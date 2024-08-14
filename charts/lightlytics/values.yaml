@@ -61,7 +61,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: vuln-fix.552
+    tag: master.554
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -72,7 +72,7 @@ lightlytics:
     name: mika
 
     #lightlytics.cost_image.tag -- Lightlytics cost agent tag to use.
-    tag: 4359535051_cost_k8s_process.542
+    tag: cost_k8s_process.553
 
     #lightlytics.cost_image.pullPolicy -- Lightlytics cost agent image pullPolicy
     pullPolicy: IfNotPresent
