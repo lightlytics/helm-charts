@@ -177,7 +177,7 @@ lightlytics:
           memory: 2048Mi
 
   process_discovery_containers:
-    enabled: true
+    enabled: false
     containers:
       lightlytics-process-discovery:
         name: lightlytics-process-discovery
