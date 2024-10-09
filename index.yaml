@@ -3,7 +3,7 @@ entries:
   lightlytics:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.429363+03:00"
+    created: "2024-10-09T11:52:24.33222+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 5bf566b4857b6bd8ec5fb48643537dd1031819ff53d89affc4d18e4d8a2bf3a0
     name: lightlytics
@@ -13,7 +13,7 @@ entries:
     version: 1.1.0-beta.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.428897+03:00"
+    created: "2024-10-09T11:52:24.331852+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: f2d94a9de7a3a694045810522a08f1bd536f67ce0401d8a080ccfb427da077b1
     name: lightlytics
@@ -22,8 +22,18 @@ entries:
     - https://lightlytics.github.io/helm-charts/releases/lightlytics-1.1.0-beta.1.tgz
     version: 1.1.0-beta.1
   - apiVersion: v2
+    appVersion: 1.18.0
+    created: "2024-10-09T11:52:24.326369+03:00"
+    description: A Helm chart for StreamSec Kubernetes agent
+    digest: aed95483a7cddc568e5d5361f718ebe6d7f2146132adb81e3929f0af60ac1b4b
+    name: lightlytics
+    type: application
+    urls:
+    - https://lightlytics.github.io/helm-charts/releases/lightlytics-0.1.14.tgz
+    version: 0.1.14
+  - apiVersion: v2
     appVersion: 1.17.0
-    created: "2024-09-17T17:18:36.425189+03:00"
+    created: "2024-10-09T11:52:24.325934+03:00"
     description: A Helm chart for StreamSec Kubernetes agent
     digest: 468a5fbcda372aa874d40795348d124709270c201ef517b88f72cb0e37f50cfb
     name: lightlytics
@@ -33,7 +43,7 @@ entries:
     version: 0.1.13
   - apiVersion: v2
     appVersion: 1.17.0
-    created: "2024-09-17T17:18:36.424614+03:00"
+    created: "2024-10-09T11:52:24.325333+03:00"
     description: A Helm chart for StreamSec Kubernetes agent
     digest: 0c7d76725e6cec4445973a09da3c9fded2de487ddcfdbff1a2cc67009570f29d
     name: lightlytics
@@ -43,7 +53,7 @@ entries:
     version: 0.1.12
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.424018+03:00"
+    created: "2024-10-09T11:52:24.324718+03:00"
     description: A Helm chart for StreamSec Kubernetes agent
     digest: c6122b98caf1b3213455b7b2d44eb2d41ee1ec64033cacf3335ce42549bc514e
     name: lightlytics
@@ -53,7 +63,7 @@ entries:
     version: 0.1.11
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.423125+03:00"
+    created: "2024-10-09T11:52:24.324053+03:00"
     description: A Helm chart for StreamSec Kubernetes agent
     digest: e3a555c2ad1190ce713c062292f307f8bcbbbf92fcd62486403b0de6b714bd9a
     name: lightlytics
@@ -63,7 +73,7 @@ entries:
     version: 0.1.10
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.428477+03:00"
+    created: "2024-10-09T11:52:24.331474+03:00"
     description: A Helm chart for StreamSec Kubernetes agent
     digest: 449c624ec9156c2b01a1e56d557e40ae26ce9fb9b09ee072efa82618962f2e02
     name: lightlytics
@@ -73,7 +83,7 @@ entries:
     version: 0.1.9
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.427929+03:00"
+    created: "2024-10-09T11:52:24.32897+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 75aae5edb87b9fc873372eea336a7a0d89f4241d2d238f901bf2cb5828cc962b
     name: lightlytics
@@ -83,7 +93,7 @@ entries:
     version: 0.1.8
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.427496+03:00"
+    created: "2024-10-09T11:52:24.328516+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: dc83f8afec1d57d3a8d412c5b2a53f17b4f2e8644484c3ab11e4a9dea201903b
     name: lightlytics
@@ -93,7 +103,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.427064+03:00"
+    created: "2024-10-09T11:52:24.328058+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 1ab34139c9f841c78c882e5b1e0d06368ceb18d78a164a62fed256e1e4d270e0
     name: lightlytics
@@ -103,7 +113,7 @@ entries:
     version: 0.1.6
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.42649+03:00"
+    created: "2024-10-09T11:52:24.32755+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: f034745ef053bf0a140aec6bdb478ac8e1685893094dafaefd26f5fb78765fdc
     name: lightlytics
@@ -113,7 +123,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.42602+03:00"
+    created: "2024-10-09T11:52:24.32713+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 0cb20f1bf1bfdc05eb19f70e1c28bae9e52a7b284556e33a9991855f10af490a
     name: lightlytics
@@ -123,7 +133,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.425601+03:00"
+    created: "2024-10-09T11:52:24.326718+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 5112c034ec4353beeeaea62c24727a852ed9eb1cc0b8d7590de8dcfda11e5096
     name: lightlytics
@@ -133,7 +143,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-09-17T17:18:36.421197+03:00"
+    created: "2024-10-09T11:52:24.32336+03:00"
     description: A Helm chart for Lightlytics Kubernetes agent
     digest: 78d481e59312571a8cd3834ca1cba3047bdee7c47703579117d4a5fc55863284
     name: lightlytics
@@ -141,4 +151,4 @@ entries:
     urls:
     - https://lightlytics.github.io/helm-charts/releases/lightlytics-0.1.1.tgz
     version: 0.1.1
-generated: "2024-09-17T17:18:36.420475+03:00"
+generated: "2024-10-09T11:52:24.322339+03:00"
