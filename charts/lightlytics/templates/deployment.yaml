@@ -23,6 +23,10 @@ spec:
         fsGroup: 2000
       tolerations:
           {{- toYaml .Values.lightlytics.tolerations | nindent 8 }}
+      {{- with .Values.lightlytics.dnsConfig }}
+      dnsConfig:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
       {{- range $container_name, $container_values := .Values.lightlytics.lightlytics_containers.containers }}
       {{- if $container_values.enabled }}

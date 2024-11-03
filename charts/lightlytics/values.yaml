@@ -34,6 +34,12 @@ lightlytics:
 
   #lightlytics.inLabelSelector
   inLabelSelector:
+
+  #lightlytics.dnsConfig
+  dnsConfig: {}
+    # options:
+    # - name: ndots
+    #   value: "2"
   
   #lightlytics.tolerations
   tolerations:
