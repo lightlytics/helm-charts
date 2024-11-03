@@ -56,6 +56,8 @@ lightlytics:
 
   replicas: 1
 
+  ndots: 2
+
   image:
     #lightlytics.image.name -- Lightlytics agent image name.
     name: mika
