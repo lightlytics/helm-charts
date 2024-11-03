@@ -56,8 +56,6 @@ lightlytics:
 
   replicas: 1
 
-  ndots: 2
-
   image:
     #lightlytics.image.name -- Lightlytics agent image name.
     name: mika
@@ -194,4 +192,14 @@ lightlytics:
     LOGLEVEL: INFO
     DEBUG: False
 
-
+  custom_dns_config:
+    enabled: false
+    # the values below are just example, please replace them with your own values before enabling
+    dnsConfig:
+      nameservers:
+        - 192.0.2.1 
+      searches:
+        - streamsec-agent.svc.cluster.local
+      options:
+        - name: ndots
+          value: "2"

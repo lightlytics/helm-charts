@@ -107,9 +107,9 @@ spec:
               value: {{ $envVarValue | quote }}
             {{- end }}
     {{- end }}
-    dnsConfig:
-      options:
-        - name: ndots
-        value: "{{ .Values.lightlytics.ndots }}"
+    {{- if $.Values.custom_dns_config.enabled }}
+        dnsConfig:
+        {{- toYaml $.Values.custom_dns_config.dnsConfig | nindent 4 }}
+    {{- end }}
     {{- end }}
 {{- end }}
