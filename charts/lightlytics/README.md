@@ -1,9 +1,9 @@
-# StreamSec Agent Advanced Documetation
-[StreamSec](https://www.stream.security) The Only Cloud Detection & Response Solution SecOps Teams Can Trust.
+# StreamSec Agent Advanced Documentation
+[StreamSecurity](https://www.stream.security) - The Only Cloud Detection & Response Solution SecOps Teams Can Trust.
 Real-Time Cloud Threat and Exposure Modeling Accelerates Response.
 
 ## How to use Lightlytics Helm repository
-You need to add Lightlytics helm repository to your local Helm repositories:
+To begin, add the Lightlytics Helm repository to your local Helm repositories:
 
 ```
 helm repo add lightlytics https://lightlytics.github.io/helm-charts
@@ -23,7 +23,7 @@ helm install lightlytics --version <latest version> --set lightlytics.apiToken=<
 
 ## custom Values
 ### dnsConfig
-The Helm Chart supports adding a custom dnsConfig, to pass the relevant values it can be done using 2 methods
+The Helm chart supports adding a custom dnsConfig. You can pass these values using one of two methods.
 1. Pass custom values as part of the helm install command as a set command, example below:
 ```
   --set dnsConfig.options[0].name="ndots" \
@@ -36,4 +36,4 @@ dnsConfig:
     - name: ndots
       value: "2"
 ```
-and refer to the file during helm install command using the -f <file name> parameter
+reference the file in the helm install command using the -f <file name> parameter.
