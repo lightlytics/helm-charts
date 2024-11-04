@@ -1,28 +1,14 @@
-# Lightlytics
-
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![AppVersion: 64](https://img.shields.io/badge/AppVersion-64-informational?style=flat-square)
-
-[Lighlytics](https://www.lightlytics.com) enables your SRE/DevOps team to automatically predict, pre-empt, and prevent failures, downtime, or business disruption caused by infrastructure development or updates by simulating all possible dependencies and impact on operations before deployment.
-This chart adds Lightlytics agent to your Kubernetes cluster via deployment.
-
+# StreamSec Agent Advanced Documentation
+[StreamSecurity](https://www.stream.security) - The Only Cloud Detection & Response Solution SecOps Teams Can Trust.
+Real-Time Cloud Threat and Exposure Modeling Accelerates Response.
 
 ## How to use Lightlytics Helm repository
-You need to add Lightlytics helm repository to your local Helm repositories:
+To begin, add the Lightlytics Helm repository to your local Helm repositories:
 
 ```
 helm repo add lightlytics https://lightlytics.github.io/helm-charts
 helm repo update
-```
-
-## Prerequisites
-
-## Quick start
-
-### Installing the Lightlytics Chart
-
-```bash
-helm install lightlytics --set lightlytics.apiToken=<LIGHTLYTICS_API_TOKEN> --set lightlytics.apiUrl=<LIGHTLYTICS_API_URL>
--n lightlytics --create-namespace lightlytics/lightlytics
+helm install lightlytics --version <latest version> --set lightlytics.apiToken=<YOUR_API_TOKEN> --set lightlytics.apiUrl=<YOUR_ENV_URL> -n StreamSec-Agent --create-namespace lightlytics/lightlytics
 ```
 
 ## Values
@@ -34,3 +20,20 @@ helm install lightlytics --set lightlytics.apiToken=<LIGHTLYTICS_API_TOKEN> --se
 | lightlytics.fullScanScheduleSeconds | int | `1800` | periodic Kubernetes resources scan at seconds |
 | lightlytics.filterRunningPods | bool | `true` | takes only pods which at status running |
 | lightlytics.fieldSelectorsNamespaces | string | `nil` | filter/unfilter resources from specific namespace |
+
+## custom Values
+### dnsConfig
+The Helm chart supports adding a custom dnsConfig. You can pass these values using one of two methods.
+1. Pass custom values as part of the helm install command as a set command, example below:
+```
+  --set dnsConfig.options[0].name="ndots" \
+  --set dnsConfig.options[0].value="2"
+```
+2. Creating a custom-values.yaml file, example below:
+```
+dnsConfig:
+  options:
+    - name: ndots
+      value: "2"
+```
+reference the file in the helm install command using the -f <file name> parameter.
