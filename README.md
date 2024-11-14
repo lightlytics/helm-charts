@@ -5,6 +5,8 @@ To Read more about The K8S Agent kindly refer to the following guide: https://do
 # Changelog
 ## Helm Chart Changes
 
+### [0.1.16] - 2024-11-14
+- Version bump, new Agent versions added 
 ### [0.1.15] - 2024-10-01
 - Added a support for a custom dnsConfig 
 ## [0.1.14] - 2024-10-09
@@ -13,6 +15,8 @@ To Read more about The K8S Agent kindly refer to the following guide: https://do
 - Set Process Discovery Agent deployment default value = False
 
 ## Agent Changes
+### [1.19.0]
+- Kubernetes Agent pod discovery improvements
 ### [1.18.0]
 - StreamSec Agent updated to version master.560 - Vulnerabilities fix
 - Cost Agent updated to version cost_k8s_process.559 - Vulnerabilities fix
