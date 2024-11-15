@@ -41,4 +41,5 @@ lightlytics:
       value: "<ndots value>"
 ```
 reference the file in the helm install command using the -f <file name> parameter, example:
-'helm upgrade --install lightlytics --version 0.1.16 -n streamsec-agent --create-namespace lightlytics/lightlytics -f values.yaml'
+
+'helm upgrade --install lightlytics --version 0.1.16 -n streamsec-agent --create-namespace lightlytics/lightlytics -f custom-values.yaml'
