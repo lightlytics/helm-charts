@@ -25,15 +25,20 @@ helm install lightlytics --version <latest version> --set lightlytics.apiToken=<
 ### dnsConfig
 The Helm chart supports adding a custom dnsConfig. You can pass these values using one of two methods.
 1. Pass custom values as part of the helm install command as a set command, example below:
+   (In case an error presented after command executed please use the second option)
 ```
-  --set dnsConfig.options[0].name="ndots" \
-  --set dnsConfig.options[0].value="2"
+  --set 'lightlytics.dnsConfig.options[0].name=ndots' \
+  --set 'lightlytics.dnsConfig.options[0].value=2'
 ```
 2. Creating a custom-values.yaml file, example below:
 ```
-dnsConfig:
-  options:
+lightlytics:
+  apiToken: <The API token>
+  apiUrl: <The Site URL>
+  dnsConfig:
+    options:
     - name: ndots
-      value: "2"
+      value: "<ndots value>"
 ```
-reference the file in the helm install command using the -f <file name> parameter.
+reference the file in the helm install command using the -f <file name> parameter, example:
+'helm upgrade --install lightlytics --version 0.1.16 -n streamsec-agent --create-namespace lightlytics/lightlytics -f values.yaml'
