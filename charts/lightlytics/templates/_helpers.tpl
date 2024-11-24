@@ -72,6 +72,14 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Return secret name to be used based on provided values.
+*/}}
+{{- define "lightlytics.apiTokenSecretName" -}}
+{{- $fullName := include "lightlytics.fullname" . -}}
+{{- default $fullName .Values.lightlytics.apiTokenExistingSecret | quote -}}
+{{- end -}}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "lightlytics.serviceAccountName" -}}
