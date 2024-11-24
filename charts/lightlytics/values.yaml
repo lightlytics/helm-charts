@@ -1,8 +1,6 @@
 ## Default values for Lightlytics agent
 ## See Lightlytics helm documentation:
 
-createSecret: true
-
 
 nameOverride:  # ""
 
@@ -14,7 +12,11 @@ lightlytics:
   #lightlytics.apiToken --  Lightlytics API token for your Kubernetes cluster
   #Required: Set your Lightlytics API token here
   #ref :
-  apiToken: 
+  apiToken:
+
+  # lightlytics.apiTokenExistingSecret -- Use existing Secret which stores API key instead of creating a new one. The value should be set with the `api-key` key inside the secret.
+  ## If set, this parameter takes precedence over "apiToken".
+  apiTokenExistingSecret:  # <API_TOKEN_SECRET>
 
   #lightlytics.apiUrl -- Lightlytics site url
   #Required: Set your Lightlytics API URL here
