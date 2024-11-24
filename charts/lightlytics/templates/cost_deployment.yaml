@@ -60,7 +60,7 @@ spec:
             - name: LIGHTLYTICS_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "lightlytics.apiTokenSecretName" . }}
+                  name: {{ template "lightlytics.apiTokenSecretName" $ }}
                   key: api-key
             - name: LIGHTLYTICS_API_URL
               value: {{ $.Values.lightlytics.apiUrl | quote }}
