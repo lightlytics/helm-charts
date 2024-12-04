@@ -69,7 +69,7 @@ lightlytics:
     name: mika
 
     #lightlytics.image.tag -- Lightlytics agent tag to use.
-    tag: master.564
+    tag: master.567
 
     #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -90,7 +90,7 @@ lightlytics:
     name: k8s-proc-agent
 
     #lightlytics.process_discovery_image.tag -- Lightlytics process discovery agent tag to use.
-    tag: master.69
+    tag: master.72
 
     #lightlytics.process_discovery_image.pullPolicy -- Lightlytics process discovery agent image pullPolicy
     pullPolicy: IfNotPresent
