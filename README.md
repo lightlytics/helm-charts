@@ -4,7 +4,8 @@ To Read more about The K8S Agent kindly refer to the following guide: https://do
 
 # Changelog
 ## Helm Chart Changes
-
+### [0.1.18] - 2024-12-04
+- Version bump, new Agent versions added 
 ### [0.1.16] - 2024-11-14
 - Version bump, new Agent versions added 
 ### [0.1.15] - 2024-10-01
@@ -15,6 +16,8 @@ To Read more about The K8S Agent kindly refer to the following guide: https://do
 - Set Process Discovery Agent deployment default value = False
 
 ## Agent Changes
+### [1.20.0]
+- Pod discovery logging enhancements
 ### [1.19.0]
 - Kubernetes Agent pod discovery improvements
 ### [1.18.0]
