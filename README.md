@@ -17,7 +17,7 @@ To Read more about The K8S Agent kindly refer to the following guide: https://do
 
 ## Agent Changes
 ### [1.20.0]
-- Pod discovery logging enhancements
+- Pod Process Discovery logging enhancements
 ### [1.19.0]
 - Kubernetes Agent pod discovery improvements
 ### [1.18.0]
