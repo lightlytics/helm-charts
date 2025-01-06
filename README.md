@@ -16,6 +16,8 @@ To Read more about The K8S Agent kindly refer to the following guide: https://do
 - Set Process Discovery Agent deployment default value = False
 
 ## Agent Changes
+### [1.21.0]
+- Packages upgrade
 ### [1.20.0]
 - Pod Process Discovery logging enhancements
 ### [1.19.0]
