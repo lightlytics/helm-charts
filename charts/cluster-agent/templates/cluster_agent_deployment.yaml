@@ -28,7 +28,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-      {{- range $container_name, $container_values := .Values.stream_security.stream_security_containers.containers }}
+      {{- range $container_name, $container_values := .Values.stream_security.cluster_agent_containers.containers }}
       {{- if $container_values.enabled }}
         - name: {{ $container_name }}
           image: {{ template "stream_security.image-path" $}}
