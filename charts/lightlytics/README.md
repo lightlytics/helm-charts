@@ -1,3 +1,5 @@
+# DEPRECATED - PLEASE USE THE CLUSTER-AGENT CHART
+
 # StreamSec Agent Advanced Documentation
 [StreamSecurity](https://www.stream.security) - The Only Cloud Detection & Response Solution SecOps Teams Can Trust.
 Real-Time Cloud Threat and Exposure Modeling Accelerates Response.
