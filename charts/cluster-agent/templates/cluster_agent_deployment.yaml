@@ -1,4 +1,4 @@
-{{- if .Values.stream_security.stream_security_containers.enabled }}
+{{- if .Values.stream_security.cluster_agent_containers.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
