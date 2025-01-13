@@ -1,7 +1,7 @@
 apiVersion: v2
-name: cluster-agent
+name: streamsec-agent
 
-description: Stream Security Cluster Agent Helm Chart
+description: Stream Security Agent Helm Chart
 
 # A chart can be either an 'application' or a 'library' chart.
 #

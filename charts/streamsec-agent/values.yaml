@@ -145,7 +145,7 @@ streamsec:
     containers:
       krs:
         enabled: true
-        name: streamsec-krs
+        name: krs
         command:
           - /usr/local/bin/python
           - main.py
@@ -159,7 +159,7 @@ streamsec:
             memory: 4096Mi
       events:
         enabled: true
-        name: streamsec-events
+        name: events
         command:
           - /usr/local/bin/python
           - main.py
