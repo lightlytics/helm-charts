@@ -1,38 +1,38 @@
-{{- if .Values.stream_security.cluster_agent_containers.enabled }}
+{{- if .Values.stream-security.cluster_agent_containers.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "stream_security.fullname" . }}
+  name: {{ template "stream-security.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-  {{- include "stream_security.labels" . | nindent 4 }}
+  {{- include "stream-security.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.stream_security.replicas }}
+  replicas: {{ .Values.stream-security.replicas }}
   selector:
     matchLabels:
-  {{- include "stream_security.selectorLabels" . | nindent 6 }}
+  {{- include "stream-security.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-    {{- include "stream_security.selectorLabels" . | nindent 8 }}
+    {{- include "stream-security.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ template "stream_security.serviceAccountName" . }}
+      serviceAccountName: {{ template "stream-security.serviceAccountName" . }}
       securityContext:
         runAsUser: 1000
         runAsGroup: 3000
         fsGroup: 2000
       tolerations:
-          {{- toYaml .Values.stream_security.tolerations | nindent 8 }}
-      {{- with .Values.stream_security.dnsConfig }}
+          {{- toYaml .Values.stream-security.tolerations | nindent 8 }}
+      {{- with .Values.stream-security.dnsConfig }}
       dnsConfig:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-      {{- range $container_name, $container_values := .Values.stream_security.cluster_agent_containers.containers }}
+      {{- range $container_name, $container_values := .Values.stream-security.cluster_agent_containers.containers }}
       {{- if $container_values.enabled }}
         - name: {{ $container_name }}
-          image: {{ template "stream_security.image-path" $}}
-          imagePullPolicy: {{ $.Values.stream_security.image.pullPolicy }}
+          image: {{ template "stream-security.image-path" $}}
+          imagePullPolicy: {{ $.Values.stream-security.image.pullPolicy }}
           command:
             {{- range $container_values.command }}
             - {{ . }}
@@ -65,48 +65,48 @@ spec:
             - name: STREAMSEC_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "stream_security.apiTokenSecretName" $ }}
+                  name: {{ template "stream-security.apiTokenSecretName" $ }}
                   key: api-key
             - name: STREAMSEC_API_URL
-              value: {{ $.Values.stream_security.apiUrl | quote }}
+              value: {{ $.Values.stream-security.apiUrl | quote }}
 
             - name: ENABLE_POD_PROCESSES
-              value: {{ $.Values.stream_security.process_discovery_containers.enabled | quote }}
+              value: {{ $.Values.stream-security.process_discovery_containers.enabled | quote }}
 
             - name: POD_PROCESSES_SERVICE
-              value: {{ template "stream_security.fullname" $}}-process-discovery
+              value: {{ template "stream-security.fullname" $}}-process-discovery
 
             - name: POD_PROCESSES_PORT
               value: "8080"
 
             - name: FULL_SCAN_SCHEDULE_SECONDS
-              value: {{ $.Values.stream_security.fullScanScheduleSeconds | quote }}
+              value: {{ $.Values.stream-security.fullScanScheduleSeconds | quote }}
 
             - name: FILTER_RUNNING_PODS
-              value: {{ $.Values.stream_security.filterRunningPods | quote }}
+              value: {{ $.Values.stream-security.filterRunningPods | quote }}
 
             - name: FIELD_SELECTORS_NAMESPACES
-              value: {{ $.Values.stream_security.fieldSelectorsNamespaces | quote }}
+              value: {{ $.Values.stream-security.fieldSelectorsNamespaces | quote }}
 
             - name: FIELD_SELECTORS_NAMES
-              value: {{ $.Values.stream_security.fieldSelectorsNames | quote }}
+              value: {{ $.Values.stream-security.fieldSelectorsNames | quote }}
 
             - name: IN_LABEL_SELECTOR
-              value: {{ $.Values.stream_security.inLabelSelector | quote }}
+              value: {{ $.Values.stream-security.inLabelSelector | quote }}
 
             - name: EXISTS_LABEL_SELECTOR
-              value: {{ $.Values.stream_security.existLabelSelector | quote }}
+              value: {{ $.Values.stream-security.existLabelSelector | quote }}
 
             - name: EQUALS_LABEL_SELECTOR
-              value: {{ $.Values.stream_security.equalsLabelSelector | quote }}
+              value: {{ $.Values.stream-security.equalsLabelSelector | quote }}
 
             - name: WORKFLOW
-              value: {{ $.Values.stream_security.workflow | quote }}
+              value: {{ $.Values.stream-security.workflow | quote }}
 
             - name: PORT
-              value: {{ $.Values.stream_security.port | quote }}
+              value: {{ $.Values.stream-security.port | quote }}
 
-            {{- range $envVarName, $envVarValue := $.Values.stream_security.env }}
+            {{- range $envVarName, $envVarValue := $.Values.stream-security.env }}
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
             {{- end }}

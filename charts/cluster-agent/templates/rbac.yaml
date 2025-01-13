@@ -2,10 +2,10 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ template "stream_security.clusterRoleName" . }}
+  name: {{ template "stream-security.clusterRoleName" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-  {{- include "stream_security.labels" . | nindent 4 }}
+  {{- include "stream-security.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - ""
@@ -83,11 +83,11 @@ rules:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ template "stream_security.serviceAccountName" . }}
+  name: {{ template "stream-security.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-  {{- include "stream_security.labels" . | nindent 4 }}
-  {{- with .Values.stream_security.serviceAccount.annotations }}
+  {{- include "stream-security.labels" . | nindent 4 }}
+  {{- with .Values.stream-security.serviceAccount.annotations }}
   annotations:
   {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -96,15 +96,15 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ template "stream_security.clusterRoleName" . }}
+  name: {{ template "stream-security.clusterRoleName" . }}
   labels:
-    {{- include "stream_security.labels" . | nindent 4 }}
+    {{- include "stream-security.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ template "stream_security.clusterRoleName" . }}
+  name: {{ template "stream-security.clusterRoleName" . }}
 subjects:
   - kind: ServiceAccount
-    name: {{ template "stream_security.serviceAccountName" . }}
+    name: {{ template "stream-security.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 
