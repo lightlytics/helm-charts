@@ -1,0 +1,203 @@
+## Default values for Stream Security agent
+## See Stream Security helm documentation:
+
+
+nameOverride:  # ""
+
+fullnameOverride:  # ""
+
+registry: public.ecr.aws/k6v9y5g3
+
+stream_security:
+  #stream_security.apiToken --  Stream Security API token for your Kubernetes cluster
+  #Required: Set your Stream Security API token here
+  #ref :
+  apiToken:
+
+  # stream_security.apiTokenExistingSecret -- Use existing Secret which stores API key instead of creating a new one. The value should be set with the `api-key` key inside the secret.
+  ## If set, this parameter takes precedence over "apiToken".
+  apiTokenExistingSecret:  # <API_TOKEN_SECRET>
+
+  #stream_security.apiUrl -- Stream Security site url
+  #Required: Set your Stream Security API URL here
+  apiUrl:
+
+  #stream_security.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
+  fullScanScheduleSeconds: 1800
+
+  #stream_security.filterRunningPods -- takes only pods which at status running
+  filterRunningPods: true
+
+  #stream_security.fieldSelectorsNamespaces -- filter/unfilter resources from specific namespace
+  fieldSelectorsNamespaces:
+
+  #stream_security.fieldSelectorsNames
+  fieldSelectorsNames:
+
+  #stream_security.inLabelSelector
+  inLabelSelector:
+
+  #stream_security.dnsConfig
+  dnsConfig: {}
+    # options:
+    # - name: ndots
+    #   value: "2"
+  
+  #stream_security.tolerations
+  tolerations:
+  - key: "re"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+
+  #stream_security.existLabelSelector
+  existLabelSelector:
+
+  #stream_security.equalsLabelSelector
+  equalsLabelSelector:
+  
+  #stream_security.workflow -- stream_security workflow type 
+  workflow: full_scan
+  
+  #stream_security.port -- stream_security port
+  port: 443
+
+  replicas: 1
+
+  image:
+    #stream_security.image.name -- Stream Security agent image name.
+    name: cluster-agent
+
+    #stream_security.image.tag -- Stream Security agent tag to use.
+    tag: master.577
+
+    #stream_security.image.pullPolicy -- Stream Security agent image pullPolicy
+    pullPolicy: IfNotPresent
+
+
+  cost_image:
+    #stream_security.cost_image.name -- Stream Security cost agent image name.
+    name: cluster-agent
+
+    #stream_security.cost_image.tag -- Stream Security cost agent tag to use.
+    tag: cost_k8s_process.578
+
+    #stream_security.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
+    pullPolicy: IfNotPresent
+
+  process_discovery_image:
+    #stream_security.process_discovery_image.name -- Stream Security process discovery agent image name.
+    name: process-agent
+
+    #stream_security.process_discovery_image.tag -- Stream Security process discovery agent tag to use.
+    tag: master.75
+
+    #stream_security.process_discovery_image.pullPolicy -- Stream Security process discovery agent image pullPolicy
+    pullPolicy: IfNotPresent
+
+  serviceAccount:
+    #stream_security.serviceAccount.create
+    create: true
+
+    #stream_security.serviceAccount.name -- The name of the Service account.
+    #If not set and create is true, a name is generated using the fullname template
+    name: ""
+
+  clusterRole:
+    #stream_security.clustRole.create
+    create: true
+    #stream_security.serviceAccount.name -- The name of the Service account.
+    #If not set and create is true, a name is generated using the fullname template
+    name: ""
+
+  cost_containers:
+    #stream_security.cost_containers.enabled
+    enabled: true
+    containers:
+      connector:
+        name: connector
+        command:
+          - /usr/local/bin/python
+          - connector.py
+        resources:
+          requests:
+            cpu: 800m
+            memory: 1024Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
+      cost:
+        name: cost
+        command:
+          - /usr/local/bin/python
+          - cost.py
+        resources:
+          requests:
+            cpu: 800m
+            memory: 1024Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
+
+    
+  cluster_agent_containers:
+    enabled: true
+    containers:
+      krs:
+        enabled: true
+        name: stream_security-krs
+        command:
+          - /usr/local/bin/python
+          - main.py
+          - krs
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+          limits:
+            cpu: 2000m
+            memory: 4096Mi
+      events:
+        enabled: true
+        name: stream_security-events
+        command:
+          - /usr/local/bin/python
+          - main.py
+          - events
+        requests:
+          cpu: 800m
+          memory: 1024Mi
+        limits:
+          cpu: 2000m
+          memory: 2048Mi
+      network-policy:
+        enabled: false
+        name: network-policy
+        command:
+          - /usr/local/bin/python
+          - main.py
+          - network_policy
+        requests:
+          cpu: 800m
+          memory: 1024Mi
+        limits:
+          cpu: 2000m
+          memory: 2048Mi
+
+  process_discovery_containers:
+    enabled: false
+    containers:
+      process-discovery:
+        name: process-discovery
+        requests:
+          cpu: 800m
+          memory: 1024Mi
+        limits:
+          cpu: 2000m
+          memory: 2048Mi
+
+  env:
+    LOGLEVEL: INFO
+    DEBUG: False
+
+
