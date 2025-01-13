@@ -8,110 +8,110 @@ fullnameOverride:  # ""
 
 registry: public.ecr.aws/k6v9y5g3
 
-stream-security:
-  #stream-security.apiToken --  Stream Security API token for your Kubernetes cluster
+streamsec:
+  #streamsec.apiToken --  Stream Security API token for your Kubernetes cluster
   #Required: Set your Stream Security API token here
   #ref :
   apiToken:
 
-  # stream-security.apiTokenExistingSecret -- Use existing Secret which stores API key instead of creating a new one. The value should be set with the `api-key` key inside the secret.
+  # streamsec.apiTokenExistingSecret -- Use existing Secret which stores API key instead of creating a new one. The value should be set with the `api-key` key inside the secret.
   ## If set, this parameter takes precedence over "apiToken".
   apiTokenExistingSecret:  # <API_TOKEN_SECRET>
 
-  #stream-security.apiUrl -- Stream Security site url
+  #streamsec.apiUrl -- Stream Security site url
   #Required: Set your Stream Security API URL here
   apiUrl:
 
-  #stream-security.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
+  #streamsec.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
   fullScanScheduleSeconds: 1800
 
-  #stream-security.filterRunningPods -- takes only pods which at status running
+  #streamsec.filterRunningPods -- takes only pods which at status running
   filterRunningPods: true
 
-  #stream-security.fieldSelectorsNamespaces -- filter/unfilter resources from specific namespace
+  #streamsec.fieldSelectorsNamespaces -- filter/unfilter resources from specific namespace
   fieldSelectorsNamespaces:
 
-  #stream-security.fieldSelectorsNames
+  #streamsec.fieldSelectorsNames
   fieldSelectorsNames:
 
-  #stream-security.inLabelSelector
+  #streamsec.inLabelSelector
   inLabelSelector:
 
-  #stream-security.dnsConfig
+  #streamsec.dnsConfig
   dnsConfig: {}
     # options:
     # - name: ndots
     #   value: "2"
   
-  #stream-security.tolerations
+  #streamsec.tolerations
   tolerations:
   - key: "re"
     operator: "Equal"
     value: "true"
     effect: "NoSchedule"
 
-  #stream-security.existLabelSelector
+  #streamsec.existLabelSelector
   existLabelSelector:
 
-  #stream-security.equalsLabelSelector
+  #streamsec.equalsLabelSelector
   equalsLabelSelector:
   
-  #stream-security.workflow -- stream-security workflow type 
+  #streamsec.workflow -- streamsec workflow type 
   workflow: full_scan
   
-  #stream-security.port -- stream-security port
+  #streamsec.port -- streamsec port
   port: 443
 
   replicas: 1
 
   image:
-    #stream-security.image.name -- Stream Security agent image name.
+    #streamsec.image.name -- Stream Security agent image name.
     name: cluster-agent
 
-    #stream-security.image.tag -- Stream Security agent tag to use.
+    #streamsec.image.tag -- Stream Security agent tag to use.
     tag: master.577
 
-    #stream-security.image.pullPolicy -- Stream Security agent image pullPolicy
+    #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
 
 
   cost_image:
-    #stream-security.cost_image.name -- Stream Security cost agent image name.
+    #streamsec.cost_image.name -- Stream Security cost agent image name.
     name: cluster-agent
 
-    #stream-security.cost_image.tag -- Stream Security cost agent tag to use.
+    #streamsec.cost_image.tag -- Stream Security cost agent tag to use.
     tag: cost_k8s_process.578
 
-    #stream-security.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
+    #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
     pullPolicy: IfNotPresent
 
   process_discovery_image:
-    #stream-security.process_discovery_image.name -- Stream Security process discovery agent image name.
+    #streamsec.process_discovery_image.name -- Stream Security process discovery agent image name.
     name: process-agent
 
-    #stream-security.process_discovery_image.tag -- Stream Security process discovery agent tag to use.
+    #streamsec.process_discovery_image.tag -- Stream Security process discovery agent tag to use.
     tag: master.75
 
-    #stream-security.process_discovery_image.pullPolicy -- Stream Security process discovery agent image pullPolicy
+    #streamsec.process_discovery_image.pullPolicy -- Stream Security process discovery agent image pullPolicy
     pullPolicy: IfNotPresent
 
   serviceAccount:
-    #stream-security.serviceAccount.create
+    #streamsec.serviceAccount.create
     create: true
 
-    #stream-security.serviceAccount.name -- The name of the Service account.
+    #streamsec.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
     name: ""
 
   clusterRole:
-    #stream-security.clustRole.create
+    #streamsec.clustRole.create
     create: true
-    #stream-security.serviceAccount.name -- The name of the Service account.
+    #streamsec.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
     name: ""
 
   cost_containers:
-    #stream-security.cost_containers.enabled
+    #streamsec.cost_containers.enabled
     enabled: true
     containers:
       connector:
@@ -145,7 +145,7 @@ stream-security:
     containers:
       krs:
         enabled: true
-        name: stream-security-krs
+        name: streamsec-krs
         command:
           - /usr/local/bin/python
           - main.py
@@ -159,7 +159,7 @@ stream-security:
             memory: 4096Mi
       events:
         enabled: true
-        name: stream-security-events
+        name: streamsec-events
         command:
           - /usr/local/bin/python
           - main.py

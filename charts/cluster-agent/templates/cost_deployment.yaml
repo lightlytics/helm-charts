@@ -1,33 +1,33 @@
-{{- if .Values.stream-security.cost_containers.enabled }}
+{{- if .Values.streamsec.cost_containers.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "stream-security.fullname" . }}-cost
+  name: {{ template "streamsec.fullname" . }}-cost
   namespace: {{ .Release.Namespace }}
   labels:
-  {{- include "stream-security.labels" . | nindent 4 }}
+  {{- include "streamsec.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.stream-security.replicas }}
+  replicas: {{ .Values.streamsec.replicas }}
   selector:
     matchLabels:
-  {{- include "stream-security.selectorLabels" . | nindent 6 }}
+  {{- include "streamsec.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-    {{- include "stream-security.selectorLabels" . | nindent 8 }}
+    {{- include "streamsec.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ template "stream-security.serviceAccountName" . }}
+      serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
       securityContext:
         runAsUser: 1000
         runAsGroup: 3000
         fsGroup: 2000  
       tolerations:
-          {{- toYaml .Values.stream-security.tolerations | nindent 8 }}
+          {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
       containers:
-      {{- range $container_name, $container_values := .Values.stream-security.cost_containers.containers }}
+      {{- range $container_name, $container_values := .Values.streamsec.cost_containers.containers }}
         - name: {{ $container_name }}
-          image: {{ template "stream-security.cost-image-path" $}}
-          imagePullPolicy: {{ $.Values.stream-security.cost_image.pullPolicy }}
+          image: {{ template "streamsec.cost-image-path" $}}
+          imagePullPolicy: {{ $.Values.streamsec.cost_image.pullPolicy }}
           command:
             {{- range $container_values.command }}
             - {{ . }}
@@ -60,14 +60,14 @@ spec:
             - name: STREAMSEC_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "stream-security.apiTokenSecretName" $ }}
+                  name: {{ template "streamsec.apiTokenSecretName" $ }}
                   key: api-key
             - name: STREAMSEC_API_URL
-              value: {{ $.Values.stream-security.apiUrl | quote }}
+              value: {{ $.Values.streamsec.apiUrl | quote }}
             - name: PORT
-              value: {{ $.Values.stream-security.port | quote }}
+              value: {{ $.Values.streamsec.port | quote }}
               
-            {{- range $envVarName, $envVarValue := $.Values.stream-security.env }}
+            {{- range $envVarName, $envVarValue := $.Values.streamsec.env }}
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
             {{- end }}

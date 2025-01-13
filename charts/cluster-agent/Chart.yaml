@@ -1,5 +1,5 @@
 apiVersion: v2
-name: stream-security
+name: streamsec
 
 description: A Helm chart for StreamSec Kubernetes agent
 

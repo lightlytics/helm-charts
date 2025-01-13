@@ -1,38 +1,38 @@
-{{- if .Values.stream-security.cluster_agent_containers.enabled }}
+{{- if .Values.streamsec.cluster_agent_containers.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "stream-security.fullname" . }}
+  name: {{ template "streamsec.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-  {{- include "stream-security.labels" . | nindent 4 }}
+  {{- include "streamsec.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.stream-security.replicas }}
+  replicas: {{ .Values.streamsec.replicas }}
   selector:
     matchLabels:
-  {{- include "stream-security.selectorLabels" . | nindent 6 }}
+  {{- include "streamsec.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-    {{- include "stream-security.selectorLabels" . | nindent 8 }}
+    {{- include "streamsec.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ template "stream-security.serviceAccountName" . }}
+      serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
       securityContext:
         runAsUser: 1000
         runAsGroup: 3000
         fsGroup: 2000
       tolerations:
-          {{- toYaml .Values.stream-security.tolerations | nindent 8 }}
-      {{- with .Values.stream-security.dnsConfig }}
+          {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
+      {{- with .Values.streamsec.dnsConfig }}
       dnsConfig:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-      {{- range $container_name, $container_values := .Values.stream-security.cluster_agent_containers.containers }}
+      {{- range $container_name, $container_values := .Values.streamsec.cluster_agent_containers.containers }}
       {{- if $container_values.enabled }}
         - name: {{ $container_name }}
-          image: {{ template "stream-security.image-path" $}}
-          imagePullPolicy: {{ $.Values.stream-security.image.pullPolicy }}
+          image: {{ template "streamsec.image-path" $}}
+          imagePullPolicy: {{ $.Values.streamsec.image.pullPolicy }}
           command:
             {{- range $container_values.command }}
             - {{ . }}
@@ -65,48 +65,48 @@ spec:
             - name: STREAMSEC_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "stream-security.apiTokenSecretName" $ }}
+                  name: {{ template "streamsec.apiTokenSecretName" $ }}
                   key: api-key
             - name: STREAMSEC_API_URL
-              value: {{ $.Values.stream-security.apiUrl | quote }}
+              value: {{ $.Values.streamsec.apiUrl | quote }}
 
             - name: ENABLE_POD_PROCESSES
-              value: {{ $.Values.stream-security.process_discovery_containers.enabled | quote }}
+              value: {{ $.Values.streamsec.process_discovery_containers.enabled | quote }}
 
             - name: POD_PROCESSES_SERVICE
-              value: {{ template "stream-security.fullname" $}}-process-discovery
+              value: {{ template "streamsec.fullname" $}}-process-discovery
 
             - name: POD_PROCESSES_PORT
               value: "8080"
 
             - name: FULL_SCAN_SCHEDULE_SECONDS
-              value: {{ $.Values.stream-security.fullScanScheduleSeconds | quote }}
+              value: {{ $.Values.streamsec.fullScanScheduleSeconds | quote }}
 
             - name: FILTER_RUNNING_PODS
-              value: {{ $.Values.stream-security.filterRunningPods | quote }}
+              value: {{ $.Values.streamsec.filterRunningPods | quote }}
 
             - name: FIELD_SELECTORS_NAMESPACES
-              value: {{ $.Values.stream-security.fieldSelectorsNamespaces | quote }}
+              value: {{ $.Values.streamsec.fieldSelectorsNamespaces | quote }}
 
             - name: FIELD_SELECTORS_NAMES
-              value: {{ $.Values.stream-security.fieldSelectorsNames | quote }}
+              value: {{ $.Values.streamsec.fieldSelectorsNames | quote }}
 
             - name: IN_LABEL_SELECTOR
-              value: {{ $.Values.stream-security.inLabelSelector | quote }}
+              value: {{ $.Values.streamsec.inLabelSelector | quote }}
 
             - name: EXISTS_LABEL_SELECTOR
-              value: {{ $.Values.stream-security.existLabelSelector | quote }}
+              value: {{ $.Values.streamsec.existLabelSelector | quote }}
 
             - name: EQUALS_LABEL_SELECTOR
-              value: {{ $.Values.stream-security.equalsLabelSelector | quote }}
+              value: {{ $.Values.streamsec.equalsLabelSelector | quote }}
 
             - name: WORKFLOW
-              value: {{ $.Values.stream-security.workflow | quote }}
+              value: {{ $.Values.streamsec.workflow | quote }}
 
             - name: PORT
-              value: {{ $.Values.stream-security.port | quote }}
+              value: {{ $.Values.streamsec.port | quote }}
 
-            {{- range $envVarName, $envVarValue := $.Values.stream-security.env }}
+            {{- range $envVarName, $envVarValue := $.Values.streamsec.env }}
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
             {{- end }}
