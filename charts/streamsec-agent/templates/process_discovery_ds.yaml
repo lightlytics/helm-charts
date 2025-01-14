@@ -1,0 +1,103 @@
+{{- if .Values.streamsec.process_discovery_containers.enabled }}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ template "streamsec.fullname" . }}-process-discovery
+  labels:
+  {{- include "streamsec.labels" . | nindent 4 }}
+    app: {{ template "streamsec.fullname" . }}-process-discovery
+spec:
+  selector:
+    matchLabels:
+  {{- include "streamsec.selectorLabels" . | nindent 6 }}
+      app: {{ template "streamsec.fullname" . }}-process-discovery
+  template:
+    metadata:
+      labels:
+    {{- include "streamsec.selectorLabels" . | nindent 8 }}
+        app: {{ template "streamsec.fullname" . }}-process-discovery
+    spec:
+      serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000  
+      tolerations:
+          {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
+      containers:
+      {{- range $container_name, $container_values := .Values.streamsec.process_discovery_containers.containers }}
+        - name: {{ $container_name }}
+          image: {{ template "streamsec.process-discovery-image-path" $}}
+          imagePullPolicy: {{ $.Values.streamsec.process_discovery_image.pullPolicy }}
+          resources:
+            {{- toYaml $container_values.resources | nindent 12 }}
+          securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                 drop:
+                    - all
+                 add:
+                    - SYS_PTRACE
+                    - DAC_READ_SEARCH
+          readinessProbe:
+              exec:
+                 command:
+                   - cat
+                   - /app/main.py
+              initialDelaySeconds: 10
+              periodSeconds: 30
+          livenessProbe:
+              exec:
+                 command:
+                   - cat
+                   - /app/main.py
+              initialDelaySeconds: 10
+              periodSeconds: 30
+          env:
+            - name: POD_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
+            - name: APPLICATION_PORT
+              value: "8080"
+              
+            {{- range $envVarName, $envVarValue := $.Values.streamsec.env }}
+            - name: {{ $envVarName }}
+              value: {{ $envVarValue | quote }}
+            {{- end }}
+          volumeMounts:
+            - name: cgroups
+              mountPath: /host/sys/fs/cgroup
+              readOnly: true
+            - name: passwd
+              mountPath: /etc/passwd
+              readOnly: true
+            - name: procdir
+              mountPath: /host/proc
+              readOnly: true
+      volumes:
+        - name: cgroups
+          hostPath:
+            path: /sys/fs/cgroup
+        - name: passwd
+          hostPath:
+            path: /etc/passwd
+        - name: procdir
+          hostPath:
+            path: /proc
+    {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "streamsec.fullname" . }}-process-discovery
+spec:
+  clusterIP: None
+  selector:
+    app: {{ template "streamsec.fullname" . }}-process-discovery
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+{{- end }}

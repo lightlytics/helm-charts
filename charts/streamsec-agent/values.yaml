@@ -1,5 +1,5 @@
-## Default values for Lightlytics agent
-## See Lightlytics helm documentation:
+## Default values for Stream Security agent
+## See Stream Security helm documentation:
 
 
 nameOverride:  # ""
@@ -8,114 +8,114 @@ fullnameOverride:  # ""
 
 registry: public.ecr.aws/k6v9y5g3
 
-lightlytics:
-  #lightlytics.apiToken --  Lightlytics API token for your Kubernetes cluster
-  #Required: Set your Lightlytics API token here
+streamsec:
+  #streamsec.apiToken --  Stream Security API token for your Kubernetes cluster
+  #Required: Set your Stream Security API token here
   #ref :
   apiToken:
 
-  # lightlytics.apiTokenExistingSecret -- Use existing Secret which stores API key instead of creating a new one. The value should be set with the `api-key` key inside the secret.
+  # streamsec.apiTokenExistingSecret -- Use existing Secret which stores API key instead of creating a new one. The value should be set with the `api-key` key inside the secret.
   ## If set, this parameter takes precedence over "apiToken".
   apiTokenExistingSecret:  # <API_TOKEN_SECRET>
 
-  #lightlytics.apiUrl -- Lightlytics site url
-  #Required: Set your Lightlytics API URL here
+  #streamsec.apiUrl -- Stream Security site url
+  #Required: Set your Stream Security API URL here
   apiUrl:
 
-  #lightlytics.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
+  #streamsec.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
   fullScanScheduleSeconds: 1800
 
-  #lightlytics.filterRunningPods -- takes only pods which at status running
+  #streamsec.filterRunningPods -- takes only pods which at status running
   filterRunningPods: true
 
-  #lightlytics.fieldSelectorsNamespaces -- filter/unfilter resources from specific namespace
+  #streamsec.fieldSelectorsNamespaces -- filter/unfilter resources from specific namespace
   fieldSelectorsNamespaces:
 
-  #lightlytics.fieldSelectorsNames
+  #streamsec.fieldSelectorsNames
   fieldSelectorsNames:
 
-  #lightlytics.inLabelSelector
+  #streamsec.inLabelSelector
   inLabelSelector:
 
-  #lightlytics.dnsConfig
+  #streamsec.dnsConfig
   dnsConfig: {}
     # options:
     # - name: ndots
     #   value: "2"
   
-  #lightlytics.tolerations
+  #streamsec.tolerations
   tolerations:
   - key: "re"
     operator: "Equal"
     value: "true"
     effect: "NoSchedule"
 
-  #lightlytics.existLabelSelector
+  #streamsec.existLabelSelector
   existLabelSelector:
 
-  #lightlytics.equalsLabelSelector
+  #streamsec.equalsLabelSelector
   equalsLabelSelector:
   
-  #lightlytics.workflow -- lightlytics workflow type 
+  #streamsec.workflow -- streamsec workflow type 
   workflow: full_scan
   
-  #lightlytics.port -- lightlytics port
+  #streamsec.port -- streamsec port
   port: 443
 
   replicas: 1
 
   image:
-    #lightlytics.image.name -- Lightlytics agent image name.
+    #streamsec.image.name -- Stream Security agent image name.
     name: cluster-agent
 
-    #lightlytics.image.tag -- Lightlytics agent tag to use.
+    #streamsec.image.tag -- Stream Security agent tag to use.
     tag: master.577
 
-    #lightlytics.image.pullPolicy -- Lightlytics agent image pullPolicy
+    #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
 
 
   cost_image:
-    #lightlytics.cost_image.name -- Lightlytics cost agent image name.
+    #streamsec.cost_image.name -- Stream Security cost agent image name.
     name: cluster-agent
 
-    #lightlytics.cost_image.tag -- Lightlytics cost agent tag to use.
+    #streamsec.cost_image.tag -- Stream Security cost agent tag to use.
     tag: cost_k8s_process.578
 
-    #lightlytics.cost_image.pullPolicy -- Lightlytics cost agent image pullPolicy
+    #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
     pullPolicy: IfNotPresent
 
   process_discovery_image:
-    #lightlytics.process_discovery_image.name -- Lightlytics process discovery agent image name.
+    #streamsec.process_discovery_image.name -- Stream Security process discovery agent image name.
     name: process-agent
 
-    #lightlytics.process_discovery_image.tag -- Lightlytics process discovery agent tag to use.
+    #streamsec.process_discovery_image.tag -- Stream Security process discovery agent tag to use.
     tag: master.75
 
-    #lightlytics.process_discovery_image.pullPolicy -- Lightlytics process discovery agent image pullPolicy
+    #streamsec.process_discovery_image.pullPolicy -- Stream Security process discovery agent image pullPolicy
     pullPolicy: IfNotPresent
 
   serviceAccount:
-    #lightlytics.serviceAccount.create
+    #streamsec.serviceAccount.create
     create: true
 
-    #lightlytics.serviceAccount.name -- The name of the Service account.
+    #streamsec.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
-    name: lightlyticssa
+    name: ""
 
   clusterRole:
-    #lightlytics.clustRole.create
+    #streamsec.clustRole.create
     create: true
-    #lightlytics.serviceAccount.name -- The name of the Service account.
+    #streamsec.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
-    name: lightltyicscr
+    name: ""
 
   cost_containers:
-    #lightlytics.cost_containers.enabled
+    #streamsec.cost_containers.enabled
     enabled: true
     containers:
-      lightlytics-connector:
-        name: lightlytics-connector
+      connector:
+        name: connector
         command:
           - /usr/local/bin/python
           - connector.py
@@ -126,8 +126,8 @@ lightlytics:
           limits:
             cpu: 2000m
             memory: 2048Mi
-      lightlytics-cost:
-        name: lightlytics-cost
+      cost:
+        name: cost
         command:
           - /usr/local/bin/python
           - cost.py
@@ -140,12 +140,12 @@ lightlytics:
             memory: 2048Mi
 
     
-  lightlytics_containers:
+  cluster_agent_containers:
     enabled: true
     containers:
-      lightlytics-krs:
+      krs:
         enabled: true
-        name: lightlytics-krs
+        name: krs
         command:
           - /usr/local/bin/python
           - main.py
@@ -157,9 +157,9 @@ lightlytics:
           limits:
             cpu: 2000m
             memory: 4096Mi
-      lightlytics-events:
+      events:
         enabled: true
-        name: lightlytics-events
+        name: events
         command:
           - /usr/local/bin/python
           - main.py
@@ -170,9 +170,9 @@ lightlytics:
         limits:
           cpu: 2000m
           memory: 2048Mi
-      lightlytics-network-policy:
+      network-policy:
         enabled: false
-        name: lightlytics-network-policy
+        name: network-policy
         command:
           - /usr/local/bin/python
           - main.py
@@ -187,8 +187,8 @@ lightlytics:
   process_discovery_containers:
     enabled: false
     containers:
-      lightlytics-process-discovery:
-        name: lightlytics-process-discovery
+      process-discovery:
+        name: process-discovery
         requests:
           cpu: 800m
           memory: 1024Mi

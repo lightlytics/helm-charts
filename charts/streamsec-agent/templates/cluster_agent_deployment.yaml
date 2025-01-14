@@ -1,0 +1,115 @@
+{{- if .Values.streamsec.cluster_agent_containers.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "streamsec.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "streamsec.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.streamsec.replicas }}
+  selector:
+    matchLabels:
+  {{- include "streamsec.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+    {{- include "streamsec.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+      tolerations:
+          {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
+      {{- with .Values.streamsec.dnsConfig }}
+      dnsConfig:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      {{- range $container_name, $container_values := .Values.streamsec.cluster_agent_containers.containers }}
+      {{- if $container_values.enabled }}
+        - name: {{ $container_name }}
+          image: {{ template "streamsec.image-path" $}}
+          imagePullPolicy: {{ $.Values.streamsec.image.pullPolicy }}
+          command:
+            {{- range $container_values.command }}
+            - {{ . }}
+            {{- end }}
+          resources:
+            {{- toYaml $container_values.resources | nindent 12 }}
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+              add:
+                - NET_BIND_SERVICE
+          readinessProbe:
+            exec:
+              command:
+                - cat
+                - /main.py
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          livenessProbe:
+            exec:
+              command:
+                - cat
+                - /main.py
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          env:
+            - name: STREAMSEC_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "streamsec.apiTokenSecretName" $ }}
+                  key: api-key
+            - name: STREAMSEC_API_URL
+              value: {{ $.Values.streamsec.apiUrl | quote }}
+
+            - name: ENABLE_POD_PROCESSES
+              value: {{ $.Values.streamsec.process_discovery_containers.enabled | quote }}
+
+            - name: POD_PROCESSES_SERVICE
+              value: {{ template "streamsec.fullname" $}}-process-discovery
+
+            - name: POD_PROCESSES_PORT
+              value: "8080"
+
+            - name: FULL_SCAN_SCHEDULE_SECONDS
+              value: {{ $.Values.streamsec.fullScanScheduleSeconds | quote }}
+
+            - name: FILTER_RUNNING_PODS
+              value: {{ $.Values.streamsec.filterRunningPods | quote }}
+
+            - name: FIELD_SELECTORS_NAMESPACES
+              value: {{ $.Values.streamsec.fieldSelectorsNamespaces | quote }}
+
+            - name: FIELD_SELECTORS_NAMES
+              value: {{ $.Values.streamsec.fieldSelectorsNames | quote }}
+
+            - name: IN_LABEL_SELECTOR
+              value: {{ $.Values.streamsec.inLabelSelector | quote }}
+
+            - name: EXISTS_LABEL_SELECTOR
+              value: {{ $.Values.streamsec.existLabelSelector | quote }}
+
+            - name: EQUALS_LABEL_SELECTOR
+              value: {{ $.Values.streamsec.equalsLabelSelector | quote }}
+
+            - name: WORKFLOW
+              value: {{ $.Values.streamsec.workflow | quote }}
+
+            - name: PORT
+              value: {{ $.Values.streamsec.port | quote }}
+
+            {{- range $envVarName, $envVarValue := $.Values.streamsec.env }}
+            - name: {{ $envVarName }}
+              value: {{ $envVarValue | quote }}
+            {{- end }}
+    {{- end }}
+    {{- end }}
+{{- end }}

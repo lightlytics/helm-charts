@@ -1,0 +1,110 @@
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ template "streamsec.clusterRoleName" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "streamsec.labels" . | nindent 4 }}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - events
+      - pods
+      - replicationcontrollers
+      - services
+      - endpoints
+      - namespaces
+      - configmaps
+      - nodes
+      - persistentvolumes
+      - persistentvolumeclaims
+      - serviceaccounts
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - rbac
+      - rbac.authorization.k8s.io
+    resources:
+      - clusterroles
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+      - daemonsets
+      - replicasets
+      - statefulsets
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - extensions
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - networking.k8s.io
+    resources:
+      - ingresses
+      - networkpolicies
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - metrics.k8s.io
+    resources:
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ template "streamsec.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "streamsec.labels" . | nindent 4 }}
+  {{- with .Values.streamsec.serviceAccount.annotations }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ template "streamsec.clusterRoleName" . }}
+  labels:
+    {{- include "streamsec.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ template "streamsec.clusterRoleName" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "streamsec.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+
