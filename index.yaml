@@ -221,4 +221,15 @@ entries:
     urls:
     - https://lightlytics.github.io/helm-charts/releases/lightlytics-0.1.1.tgz
     version: 0.1.1
-generated: "2025-01-09T20:18:06.665041+02:00"
+  streamsec-agent:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-01-14T07:21:15.147352214Z"
+    description: Stream Security Agent Helm Chart
+    digest: 53248ce6155c1e2143ab2cab0a6ab976c4e65362137c93418c563266c52c9dfa
+    name: streamsec-agent
+    type: application
+    urls:
+    - https://github.com/lightlytics/helm-charts/releases/download/streamsec-agent-1.0.0/streamsec-agent-1.0.0.tgz
+    version: 1.0.0
+generated: "2025-01-14T07:21:15.147412777Z"
