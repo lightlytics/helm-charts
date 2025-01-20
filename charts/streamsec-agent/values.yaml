@@ -118,7 +118,8 @@ streamsec:
         name: connector
         command:
           - /usr/local/bin/python
-          - connector.py
+          - main.py
+          - connector
         resources:
           requests:
             cpu: 800m
@@ -130,7 +131,8 @@ streamsec:
         name: cost
         command:
           - /usr/local/bin/python
-          - cost.py
+          - main.py
+          - cost
         resources:
           requests:
             cpu: 800m
