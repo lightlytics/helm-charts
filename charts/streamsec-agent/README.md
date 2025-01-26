@@ -1,8 +1,17 @@
-# cluster-agent
+# streamsec-agent
+
+## How to use Stream Security Agent Helm repository
+To begin, add the Stream Security Agent Helm repository to your local Helm repositories:
+
+```
+helm repo add streamsec https://lightlytics.github.io/helm-charts
+helm repo update
+helm install streamsec-agent --set streamsec.apiToken=<API_TOKEN> --set streamsec.apiUrl=<API_URL> -n streamsec-agent --create-namespace streamsec/streamsec-agent`
+
 
 ![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
-Stream Security Cluster Agent Helm Chart
+Stream Security Agent Helm Chart
 
 ## Values
 
