@@ -22,6 +22,16 @@ entries:
     - https://lightlytics.github.io/helm-charts/releases/lightlytics-1.1.0-beta.1.tgz
     version: 1.1.0-beta.1
   - apiVersion: v2
+    appVersion: 1.23.0
+    created: "2025-01-26T08:20:59.270088827Z"
+    description: A Helm chart for StreamSec Kubernetes agent
+    digest: e81d001f8fbacb5916e36b273b43b79dd440feb16075bc44771783709cb5d933
+    name: lightlytics
+    type: application
+    urls:
+    - https://github.com/lightlytics/helm-charts/releases/download/lightlytics-0.1.23/lightlytics-0.1.23.tgz
+    version: 0.1.23
+  - apiVersion: v2
     appVersion: 1.22.0
     created: "2025-01-09T20:18:06.672974+02:00"
     description: A Helm chart for StreamSec Kubernetes agent
@@ -223,6 +233,16 @@ entries:
     version: 0.1.1
   streamsec-agent:
   - apiVersion: v2
+    appVersion: 1.0.1
+    created: "2025-01-26T08:20:59.375303885Z"
+    description: Stream Security Agent Helm Chart
+    digest: 9ee582e47d125d3ad1320d2501d74f9e4510377d4232c93db583bc99341777e8
+    name: streamsec-agent
+    type: application
+    urls:
+    - https://github.com/lightlytics/helm-charts/releases/download/streamsec-agent-1.0.2/streamsec-agent-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
     appVersion: 1.0.0
     created: "2025-01-14T07:21:15.147352214Z"
     description: Stream Security Agent Helm Chart
@@ -232,4 +252,4 @@ entries:
     urls:
     - https://github.com/lightlytics/helm-charts/releases/download/streamsec-agent-1.0.0/streamsec-agent-1.0.0.tgz
     version: 1.0.0
-generated: "2025-01-14T07:21:15.147412777Z"
+generated: "2025-01-26T08:20:59.375506113Z"
