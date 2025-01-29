@@ -198,8 +198,17 @@ streamsec:
           cpu: 2000m
           memory: 2048Mi
 
+  runtime_agent:
+    enabled: false
+    # TODO
+
   env:
     LOGLEVEL: INFO
     DEBUG: False
 
+tetragon:
+  tetragon:
+    exportFileMaxSizeMB: 50
+    fieldFilters: |
+      {"fields": "parent", "action": "EXCLUDE"}
 
