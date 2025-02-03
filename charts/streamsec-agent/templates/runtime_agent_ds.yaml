@@ -40,8 +40,6 @@ spec:
                 secretKeyRef:
                   name: {{ template "streamsec.apiTokenSecretName" $ }}
                   key: api-key
-            - name: COMPRESS_EVENTS
-              value: "true"
           securityContext:
             privileged: true
           terminationMessagePolicy: FallbackToLogsOnError
@@ -63,7 +61,7 @@ spec:
       volumes:
         - hostPath:
             path: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}
-            type: File
+            type: FileOrCreate
           name: export-logs
         - hostPath:
             path: /sys/kernel
