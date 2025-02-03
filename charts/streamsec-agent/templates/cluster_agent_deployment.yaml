@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "streamsec.fullname" . }}
+  name: {{ template "streamsec.fullname" . }}-cluster-agent
   namespace: {{ .Release.Namespace }}
   labels:
   {{- include "streamsec.labels" . | nindent 4 }}
