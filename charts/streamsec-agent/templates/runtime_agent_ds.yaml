@@ -1,1 +1,76 @@
-# TODO
+{{- if and (.Values.streamsec.cluster_agent_containers.enabled) (.Values.streamsec.runtime_agent.enabled) }}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ template "streamsec.fullname" . }}-runtime-agent
+  labels:
+  {{- include "streamsec.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+  {{- include "streamsec.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+    {{- include "streamsec.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.streamsec.runtime_agent.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.streamsec.runtime_agent.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.streamsec.runtime_agent.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: runtime-agent
+          image: {{ template "streamsec.runtime-agent-image-path" $}}
+          imagePullPolicy: {{ .Values.streamsec.runtime_agent.image.pullPolicy }}
+          env:
+            - name: EVENTS_FILENAME
+              value: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}
+            - name: API_URL
+              value: {{ .Values.streamsec.apiUrl | quote }}
+            - name: API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "streamsec.apiTokenSecretName" $ }}
+                  key: api-key
+            - name: COMPRESS_EVENTS
+              value: "true"
+          securityContext:
+            privileged: true
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+            - mountPath: /sys/kernel
+              name: sys-kernel
+            - mountPath: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}
+              subPath: {{ .Values.streamsec.runtime_agent.tetragonFilePath | splitList "/" | last }}
+              name: export-logs
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      hostNetwork: true
+      hostPID: true
+      hostIPC: true
+      {{- with .Values.streamsec.runtime_agent.priorityClassName }}
+      priorityClassName: "{{ . }}"
+      {{- end }}
+      serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
+      terminationGracePeriodSeconds: 1
+      volumes:
+        - hostPath:
+            path: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}
+            type: File
+          name: export-logs
+        - hostPath:
+            path: /sys/kernel
+            type: DirectoryOrCreate
+          name: sys-kernel
+  {{- with .Values.updateStrategy }}
+  updateStrategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

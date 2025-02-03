@@ -8,6 +8,8 @@ fullnameOverride:  # ""
 
 registry: public.ecr.aws/k6v9y5g3
 
+dnsPolicy: Default
+
 streamsec:
   #streamsec.apiToken --  Stream Security API token for your Kubernetes cluster
   #Required: Set your Stream Security API token here
@@ -200,7 +202,16 @@ streamsec:
 
   runtime_agent:
     enabled: false
-    # TODO
+    tetragonFilePath: /var/run/cilium/tetragon/tetragon.log
+    nodeSelector: {}
+    tolerations:
+      - operator: Exists
+    affinity: {}
+    updateStrategy: {}
+    image:
+      name: runtime-agent
+      tag: 0.0.2
+      pullPolicy: IfNotPresent
 
   env:
     LOGLEVEL: INFO
