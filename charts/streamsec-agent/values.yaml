@@ -207,6 +207,7 @@ streamsec:
     tolerations:
       - operator: Exists
     affinity: {}
+    resources: {}
     updateStrategy: {}
     image:
       name: runtime-agent

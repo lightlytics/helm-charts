@@ -30,6 +30,10 @@ spec:
         - name: runtime-agent
           image: {{ template "streamsec.runtime-agent-image-path" $}}
           imagePullPolicy: {{ .Values.streamsec.runtime_agent.image.pullPolicy }}
+          {{- with .Values.streamsec.runtime_agent.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           env:
             - name: POD_NAME
               valueFrom:
