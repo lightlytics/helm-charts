@@ -47,7 +47,6 @@ spec:
             - mountPath: /sys/kernel
               name: sys-kernel
             - mountPath: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}
-              subPath: {{ .Values.streamsec.runtime_agent.tetragonFilePath | splitList "/" | last }}
               name: export-logs
       dnsPolicy: {{ .Values.dnsPolicy }}
       hostNetwork: true
