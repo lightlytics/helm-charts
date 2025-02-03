@@ -25,7 +25,6 @@ appVersion: 1.0.1
 
 dependencies:
   - name: tetragon
-    alias: tetragon
     condition: streamsec.runtime_agent.enabled
     version: 1.3.0
     repository: "https://helm.cilium.io"
