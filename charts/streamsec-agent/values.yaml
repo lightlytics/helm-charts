@@ -218,6 +218,8 @@ streamsec:
     DEBUG: False
 
 tetragon:
+  serviceAccount:
+    name: "tetragon"
   tetragon:
     exportFileMaxSizeMB: 50
     fieldFilters: |
