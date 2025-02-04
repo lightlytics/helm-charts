@@ -1,5 +1,5 @@
 helm-docs
 
-**/charts
+charts/streamsec-agent/charts
 
 test.yaml

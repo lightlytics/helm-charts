@@ -71,7 +71,7 @@ streamsec:
     name: cluster-agent
 
     #streamsec.image.tag -- Stream Security agent tag to use.
-    tag: master.584
+    tag: master.586
 
     #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -82,7 +82,7 @@ streamsec:
     name: cluster-agent
 
     #streamsec.cost_image.tag -- Stream Security cost agent tag to use.
-    tag: master.584
+    tag: master.586
 
     #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -168,12 +168,7 @@ streamsec:
           - /usr/local/bin/python
           - main.py
           - events
-        requests:
-          cpu: 800m
-          memory: 1024Mi
-        limits:
-          cpu: 2000m
-          memory: 2048Mi
+        resources: {}
       network-policy:
         enabled: false
         name: network-policy
@@ -181,24 +176,21 @@ streamsec:
           - /usr/local/bin/python
           - main.py
           - network_policy
-        requests:
-          cpu: 800m
-          memory: 1024Mi
-        limits:
-          cpu: 2000m
-          memory: 2048Mi
+        resources: {}
+      tracing-policy:
+        name: tracing-policy
+        command:
+          - /usr/local/bin/python
+          - main.py
+          - tracing_policy
+        resources: {}
 
   process_discovery_containers:
     enabled: false
     containers:
       process-discovery:
         name: process-discovery
-        requests:
-          cpu: 800m
-          memory: 1024Mi
-        limits:
-          cpu: 2000m
-          memory: 2048Mi
+        resources: {}
 
   runtime_agent:
     enabled: false
