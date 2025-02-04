@@ -78,7 +78,7 @@ rules:
       - get
       - list
       - watch
-  {{- if .Values.streamsec.cluster_agent_containers.enabled }}
+  {{- if .Values.streamsec.runtime_agent.enabled }}
   - apiGroups:
       - cilium.io
     resources:
