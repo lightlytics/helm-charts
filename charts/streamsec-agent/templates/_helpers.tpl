@@ -19,6 +19,10 @@ define ECR url based on the AWS account
   {{ .Values.registry }}/{{ .Values.streamsec.process_discovery_image.name }}:{{ .Values.streamsec.process_discovery_image.tag }}
 {{- end -}}
 
+{{- define "streamsec.runtime-agent-image-path" -}}
+  {{ .Values.registry }}/{{ .Values.streamsec.runtime_agent.image.name }}:{{ .Values.streamsec.runtime_agent.image.tag }}
+{{- end -}}
+
 {{/*
 Expand the name of the chart.
 */}}

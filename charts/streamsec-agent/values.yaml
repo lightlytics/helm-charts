@@ -8,6 +8,8 @@ fullnameOverride:  # ""
 
 registry: public.ecr.aws/k6v9y5g3
 
+dnsPolicy: Default
+
 streamsec:
   #streamsec.apiToken --  Stream Security API token for your Kubernetes cluster
   #Required: Set your Stream Security API token here
@@ -69,7 +71,7 @@ streamsec:
     name: cluster-agent
 
     #streamsec.image.tag -- Stream Security agent tag to use.
-    tag: master.584
+    tag: master.586
 
     #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -80,7 +82,7 @@ streamsec:
     name: cluster-agent
 
     #streamsec.cost_image.tag -- Stream Security cost agent tag to use.
-    tag: master.584
+    tag: master.586
 
     #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -166,12 +168,7 @@ streamsec:
           - /usr/local/bin/python
           - main.py
           - events
-        requests:
-          cpu: 800m
-          memory: 1024Mi
-        limits:
-          cpu: 2000m
-          memory: 2048Mi
+        resources: {}
       network-policy:
         enabled: false
         name: network-policy
@@ -179,27 +176,45 @@ streamsec:
           - /usr/local/bin/python
           - main.py
           - network_policy
-        requests:
-          cpu: 800m
-          memory: 1024Mi
-        limits:
-          cpu: 2000m
-          memory: 2048Mi
+        resources: {}
+      tracing-policy:
+        name: tracing-policy
+        command:
+          - /usr/local/bin/python
+          - main.py
+          - tracing_policy
+        resources: {}
 
   process_discovery_containers:
     enabled: false
     containers:
       process-discovery:
         name: process-discovery
-        requests:
-          cpu: 800m
-          memory: 1024Mi
-        limits:
-          cpu: 2000m
-          memory: 2048Mi
+        resources: {}
+
+  runtime_agent:
+    enabled: false
+    tetragonFilePath: /var/run/cilium/tetragon/tetragon.log
+    nodeSelector: {}
+    tolerations:
+      - operator: Exists
+    affinity: {}
+    resources: {}
+    updateStrategy: {}
+    image:
+      name: runtime-agent
+      tag: 0.0.3
+      pullPolicy: IfNotPresent
 
   env:
     LOGLEVEL: INFO
     DEBUG: False
 
+tetragon:
+  serviceAccount:
+    name: "tetragon"
+  tetragon:
+    exportFileMaxSizeMB: 50
+    fieldFilters: |
+      {"fields": "parent", "action": "EXCLUDE"}
 

@@ -78,6 +78,14 @@ rules:
       - get
       - list
       - watch
+  {{- if .Values.streamsec.runtime_agent.enabled }}
+  - apiGroups:
+      - cilium.io
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  {{- end }}
 
 ---
 apiVersion: v1
