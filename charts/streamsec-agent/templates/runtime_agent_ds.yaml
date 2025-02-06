@@ -44,7 +44,7 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
             - name: EVENTS_FILENAME
-              value: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}
+              value: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}{{ .Values.streamsec.runtime_agent.tetragonFileName }}
             - name: API_URL
               value: {{ .Values.streamsec.apiUrl | quote }}
             - name: API_TOKEN
@@ -72,7 +72,7 @@ spec:
       volumes:
         - hostPath:
             path: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}
-            type: FileOrCreate
+            type: DirectoryOrCreate
           name: export-logs
         - hostPath:
             path: /sys/kernel

@@ -194,7 +194,8 @@ streamsec:
 
   runtime_agent:
     enabled: false
-    tetragonFilePath: /var/run/cilium/tetragon/tetragon.log
+    tetragonFilePath: /var/run/cilium/tetragon/
+    tetragonFileName: tetragon.log
     nodeSelector: {}
     tolerations:
       - operator: Exists
