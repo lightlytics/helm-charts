@@ -4,6 +4,8 @@ To Read more about The K8S Agent kindly refer to the following guide: https://do
 
 # Changelog
 ## Helm Chart Changes
+### [1.2.0] - 2025-02-15
+- Version bump, new Agent versions added 
 ### [0.1.18] - 2024-12-04
 - Version bump, new Agent versions added 
 ### [0.1.16] - 2024-11-14
@@ -16,6 +18,9 @@ To Read more about The K8S Agent kindly refer to the following guide: https://do
 - Set Process Discovery Agent deployment default value = False
 
 ## Agent Changes
+### [1.2.0] - 2025-02-15
+- Runtime Agent - Version and Nodes report
+- Cluster Agent - Added Metrics
 ### [1.22.0]
 - Add timeouts to all external http requests
 ### [1.21.0]
