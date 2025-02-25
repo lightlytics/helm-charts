@@ -204,7 +204,7 @@ streamsec:
     updateStrategy: {}
     image:
       name: runtime-agent
-      tag: 0.0.4
+      tag: 0.0.6
       pullPolicy: IfNotPresent
 
   env:
