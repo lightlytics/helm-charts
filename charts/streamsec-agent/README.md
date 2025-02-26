@@ -67,7 +67,7 @@ Stream Security Agent Helm Chart
 | streamsec.cost_containers.containers.cost.resources.limits.memory | string | `"2048Mi"` |  |
 | streamsec.cost_containers.containers.cost.resources.requests.cpu | string | `"800m"` |  |
 | streamsec.cost_containers.containers.cost.resources.requests.memory | string | `"1024Mi"` |  |
-| streamsec.cost_containers.enabled | bool | `true` |  |
+| streamsec.cost_containers.enabled | bool | `false` |  |
 | streamsec.cost_image.name | string | `"cluster-agent"` | Stream Security cost agent image name. |
 | streamsec.cost_image.pullPolicy | string | `"IfNotPresent"` | Stream Security cost agent image pullPolicy |
 | streamsec.cost_image.tag | string | `"cost_k8s_process.578"` | Stream Security cost agent tag to use. |

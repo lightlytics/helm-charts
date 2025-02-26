@@ -114,7 +114,7 @@ streamsec:
 
   cost_containers:
     #streamsec.cost_containers.enabled
-    enabled: true
+    enabled: false
     containers:
       connector:
         name: connector
