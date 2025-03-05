@@ -26,6 +26,10 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      securityContext:
+        runAsUser: 0
+        fsGroup: 65534
+        runAsNonRoot: false
       containers:
         - name: runtime-agent
           image: {{ template "streamsec.runtime-agent-image-path" $}}
@@ -53,17 +57,25 @@ spec:
                   name: {{ template "streamsec.apiTokenSecretName" $ }}
                   key: api-key
           securityContext:
-            privileged: true
+            privileged: false
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - BPF
+                - NET_RAW
+                - SYS_RESOURCE
           terminationMessagePolicy: FallbackToLogsOnError
           volumeMounts:
             - mountPath: /sys/kernel
               name: sys-kernel
+              readOnly: true
             - mountPath: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}
               name: export-logs
+              readOnly: true
       dnsPolicy: {{ .Values.dnsPolicy }}
-      hostNetwork: true
-      hostPID: true
-      hostIPC: true
       {{- with .Values.streamsec.runtime_agent.priorityClassName }}
       priorityClassName: "{{ . }}"
       {{- end }}
