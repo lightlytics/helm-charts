@@ -216,6 +216,5 @@ tetragon:
     name: "tetragon"
   tetragon:
     exportFileMaxSizeMB: 50
-    fieldFilters: |
-      {"fields": "parent", "action": "EXCLUDE"}
+
 
