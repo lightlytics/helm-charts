@@ -216,6 +216,12 @@ tetragon:
     name: "tetragon"
   tetragon:
     exportFileMaxSizeMB: 50
+    image:
+      name: quay.io/cilium/tetragon-ci
+      tag: latest
+      pullPolicy: IfNotPresent
+    args:
+      - --enable-process-ancestors
     fieldFilters: |
       {"event_set":["PROCESS_KPROBE","PROCESS_EXIT"], "fields":"parent", "action":"EXCLUDE"}
 
