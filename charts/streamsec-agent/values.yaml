@@ -216,7 +216,7 @@ tetragon:
     name: "tetragon"
   tetragon:
     exportFileMaxSizeMB: 50
-  fieldFilters: |
-    {"event_set":["PROCESS_KPROBE","PROCESS_EXIT"], "fields":"parent", "action":"EXCLUDE"}
+    fieldFilters: |
+      {"event_set":["PROCESS_KPROBE","PROCESS_EXIT"], "fields":"parent", "action":"EXCLUDE"}
 
 
