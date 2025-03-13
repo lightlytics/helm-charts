@@ -214,8 +214,6 @@ streamsec:
 tetragon:
   serviceAccount:
     name: "tetragon"
-  export:
-    mode: ""
   tetragon:
     exportFileMaxSizeMB: 50
     fieldFilters: |
