@@ -216,6 +216,8 @@ tetragon:
     name: "tetragon"
   export:
     mode: ""
+  tetragonOperator:
+    tolerations: []
   tetragon:
     grpc:
       address: "localhost:59751"
