@@ -217,6 +217,10 @@ tetragon:
   export:
     mode: ""
   tetragon:
+    grpc:
+      address: "localhost:59751"
+    healthGrpc:
+      port: 9763
     exportFileMaxSizeMB: 50
     fieldFilters: |
       {"fields": "parent", "action": "EXCLUDE"}
