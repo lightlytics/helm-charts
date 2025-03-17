@@ -224,6 +224,13 @@ tetragon:
     healthGrpc:
       port: 9763
     exportFileMaxSizeMB: 50
+    image:
+      name: quay.io/cilium/tetragon-ci
+      tag: latest
+      pullPolicy: IfNotPresent
+    args:
+      - --enable-process-ancestors
     fieldFilters: |
-      {"fields": "parent", "action": "EXCLUDE"}
+      {"event_set":["PROCESS_KPROBE","PROCESS_EXIT"], "fields":"parent", "action":"EXCLUDE"}
+
 
