@@ -9,16 +9,16 @@ define ECR url based on the AWS account
 
 {{- define "streamsec.image-path" -}}
   {{- if .Values.streamsec.image.digest }}
-  {{ .Values.registry }}/{{ .Values.streamsec.image.name }}:{{ .Values.streamsec.image.tag }}@{{ .Values.streamsec.image.digest }}
+  {{- printf "%s/%s:%s@%s" .Values.registry .Values.streamsec.image.name .Values.streamsec.image.tag .Values.streamsec.image.digest }}
   {{- else }}
-  {{ .Values.registry }}/{{ .Values.streamsec.image.name }}:{{ .Values.streamsec.image.tag }}
+  {{- printf "%s/%s:%s" .Values.registry .Values.streamsec.image.name .Values.streamsec.image.tag }}
   {{- end }}
 {{- end -}}
 {{- define "streamsec.cost-image-path" -}}
-{{- if .Values.streamsec.cost_image.digest }}
-  {{ .Values.registry }}/{{ .Values.streamsec.cost_image.name }}:{{ .Values.streamsec.cost_image.tag }}@{{ .Values.streamsec.cost_image.digest }}
+  {{- if .Values.streamsec.cost_image.digest }}
+  {{- printf "%s/%s:%s@%s" .Values.registry .Values.streamsec.cost_image.name .Values.streamsec.cost_image.tag .Values.streamsec.cost_image.digest }}
   {{- else }}
-  {{ .Values.registry }}/{{ .Values.streamsec.cost_image.name }}:{{ .Values.streamsec.cost_image.tag }}
+  {{- printf "%s/%s:%s" .Values.registry .Values.streamsec.cost_image.name .Values.streamsec.cost_image.tag }}
   {{- end }}
 {{- end -}}
 
@@ -27,10 +27,10 @@ define ECR url based on the AWS account
 {{- end -}}
 
 {{- define "streamsec.runtime-agent-image-path" -}}
-  {{- if .Values.streamsec.image.digest }}
-  {{ .Values.registry }}/{{ .Values.streamsec.runtime_agent.image.name }}:{{ .Values.streamsec.runtime_agent.image.tag }}@{{ .Values.streamsec.runtime_agent.image.digest }}
+  {{- if .Values.streamsec.runtime_agent.image.digest }}
+  {{- printf "%s/%s:%s@%s" .Values.registry .Values.streamsec.runtime_agent.image.name .Values.streamsec.runtime_agent.image.tag .Values.streamsec.runtime_agent.image.digest }}
   {{- else }}
-  {{ .Values.registry }}/{{ .Values.streamsec.runtime_agent.image.name }}:{{ .Values.streamsec.runtime_agent.image.tag }}
+  {{- printf "%s/%s:%s" .Values.registry .Values.streamsec.runtime_agent.image.name .Values.streamsec.runtime_agent.image.tag }}
   {{- end }}
 {{- end -}}
 

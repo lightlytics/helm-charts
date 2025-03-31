@@ -6,7 +6,7 @@ nameOverride:  # ""
 
 fullnameOverride:  # ""
 
-registry: public.ecr.aws/k6v9y5g3
+registry: public.ecr.aws/stream-security
 
 dnsPolicy: Default
 
