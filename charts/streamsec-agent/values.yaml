@@ -74,7 +74,7 @@ streamsec:
     tag: 1.0.4
 
     #streamsec.image.digest -- Stream Security agent image digest to use.
-    digest: sha256:78ae97ef309287f2d74ed4bfcc111dd80a488dad5dbd2865b6aae47c572a0b6a
+    digest: sha256:2259a00af731ef85a1b334ba750c1e4d49dff953cb97dde8303b9ef5d08db449
 
     #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -88,7 +88,7 @@ streamsec:
     tag: 1.0.4
 
     #streamsec.cost_image.digest -- Stream Security cost agent image digest to use.
-    digest: sha256:78ae97ef309287f2d74ed4bfcc111dd80a488dad5dbd2865b6aae47c572a0b6a
+    digest: sha256:2259a00af731ef85a1b334ba750c1e4d49dff953cb97dde8303b9ef5d08db449
 
     #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
     pullPolicy: IfNotPresent
