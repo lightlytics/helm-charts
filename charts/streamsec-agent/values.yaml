@@ -1,133 +1,56 @@
-## Default values for Stream Security agent
-## See Stream Security helm documentation:
-
-
-nameOverride:  # ""
-
-fullnameOverride:  # ""
-
+nameOverride: null
+fullnameOverride: null
 registry: public.ecr.aws/k6v9y5g3
-
 dnsPolicy: Default
-
 streamsec:
-  #streamsec.apiToken --  Stream Security API token for your Kubernetes cluster
-  #Required: Set your Stream Security API token here
-  #ref :
-  apiToken:
-
-  # streamsec.apiTokenExistingSecret -- Use existing Secret which stores API key instead of creating a new one. The value should be set with the `api-key` key inside the secret.
-  ## If set, this parameter takes precedence over "apiToken".
-  apiTokenExistingSecret:  # <API_TOKEN_SECRET>
-
-  #streamsec.apiUrl -- Stream Security site url
-  #Required: Set your Stream Security API URL here
-  apiUrl:
-
-  #streamsec.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
+  apiToken: null
+  apiTokenExistingSecret: null
+  apiUrl: null
   fullScanScheduleSeconds: 1800
-
-  #streamsec.filterRunningPods -- takes only pods which at status running
   filterRunningPods: true
-
-  #streamsec.fieldSelectorsNamespaces -- filter/unfilter resources from specific namespace
-  fieldSelectorsNamespaces:
-
-  #streamsec.fieldSelectorsNames
-  fieldSelectorsNames:
-
-  #streamsec.inLabelSelector
-  inLabelSelector:
-
-  #streamsec.dnsConfig
+  fieldSelectorsNamespaces: null
+  fieldSelectorsNames: null
+  inLabelSelector: null
   dnsConfig: {}
-    # options:
-    # - name: ndots
-    #   value: "2"
-  
-  #streamsec.tolerations
   tolerations:
-  - key: "re"
-    operator: "Equal"
-    value: "true"
-    effect: "NoSchedule"
-
-  #streamsec.existLabelSelector
-  existLabelSelector:
-
-  #streamsec.equalsLabelSelector
-  equalsLabelSelector:
-  
-  #streamsec.workflow -- streamsec workflow type 
+  - key: re
+    operator: Equal
+    value: 'true'
+    effect: NoSchedule
+  existLabelSelector: null
+  equalsLabelSelector: null
   workflow: full_scan
-  
-  #streamsec.port -- streamsec port
   port: 443
-
   replicas: 1
-
   image:
-    #streamsec.image.name -- Stream Security agent image name.
     name: cluster-agent
-
-    #streamsec.image.tag -- Stream Security agent tag to use.
-    tag: 1.0.3
-
-    #streamsec.image.digest -- Stream Security agent image digest to use.
-    digest: sha256:78ae97ef309287f2d74ed4bfcc111dd80a488dad5dbd2865b6aae47c572a0b6a
-
-    #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
+    tag: 1.0.0
+    digest: sha256:4e12454a3861dc6962bb9cade2af6a15db791c017f89e0b64550ccc8bfd41036
     pullPolicy: IfNotPresent
-
-
   cost_image:
-    #streamsec.cost_image.name -- Stream Security cost agent image name.
     name: cluster-agent
-
-    #streamsec.cost_image.tag -- Stream Security cost agent tag to use.
-    tag: 1.0.3
-
-    #streamsec.cost_image.digest -- Stream Security cost agent image digest to use.
-    digest: sha256:78ae97ef309287f2d74ed4bfcc111dd80a488dad5dbd2865b6aae47c572a0b6a
-
-    #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
+    tag: 1.0.0
+    digest: sha256:4e12454a3861dc6962bb9cade2af6a15db791c017f89e0b64550ccc8bfd41036
     pullPolicy: IfNotPresent
-
   process_discovery_image:
-    #streamsec.process_discovery_image.name -- Stream Security process discovery agent image name.
     name: process-agent
-
-    #streamsec.process_discovery_image.tag -- Stream Security process discovery agent tag to use.
     tag: master.75
-
-    #streamsec.process_discovery_image.pullPolicy -- Stream Security process discovery agent image pullPolicy
     pullPolicy: IfNotPresent
-
   serviceAccount:
-    #streamsec.serviceAccount.create
     create: true
-
-    #streamsec.serviceAccount.name -- The name of the Service account.
-    #If not set and create is true, a name is generated using the fullname template
-    name: ""
-
+    name: ''
   clusterRole:
-    #streamsec.clustRole.create
     create: true
-    #streamsec.serviceAccount.name -- The name of the Service account.
-    #If not set and create is true, a name is generated using the fullname template
-    name: ""
-
+    name: ''
   cost_containers:
-    #streamsec.cost_containers.enabled
     enabled: false
     containers:
       connector:
         name: connector
         command:
-          - /usr/local/bin/python
-          - main.py
-          - connector
+        - /usr/local/bin/python
+        - main.py
+        - connector
         resources:
           requests:
             cpu: 800m
@@ -138,9 +61,9 @@ streamsec:
       cost:
         name: cost
         command:
-          - /usr/local/bin/python
-          - main.py
-          - cost
+        - /usr/local/bin/python
+        - main.py
+        - cost
         resources:
           requests:
             cpu: 800m
@@ -148,8 +71,6 @@ streamsec:
           limits:
             cpu: 2000m
             memory: 2048Mi
-
-    
   cluster_agent_containers:
     enabled: true
     containers:
@@ -157,9 +78,9 @@ streamsec:
         enabled: true
         name: krs
         command:
-          - /usr/local/bin/python
-          - main.py
-          - krs
+        - /usr/local/bin/python
+        - main.py
+        - krs
         resources:
           requests:
             cpu: 1000m
@@ -171,40 +92,38 @@ streamsec:
         enabled: true
         name: events
         command:
-          - /usr/local/bin/python
-          - main.py
-          - events
+        - /usr/local/bin/python
+        - main.py
+        - events
         resources: {}
       network-policy:
         enabled: false
         name: network-policy
         command:
-          - /usr/local/bin/python
-          - main.py
-          - network_policy
+        - /usr/local/bin/python
+        - main.py
+        - network_policy
         resources: {}
       tracing-policy:
         name: tracing-policy
         command:
-          - /usr/local/bin/python
-          - main.py
-          - tracing_policy
+        - /usr/local/bin/python
+        - main.py
+        - tracing_policy
         resources: {}
-
   process_discovery_containers:
     enabled: false
     containers:
       process-discovery:
         name: process-discovery
         resources: {}
-
   runtime_agent:
     enabled: false
     tetragonFilePath: /var/run/cilium/tetragon/
     tetragonFileName: tetragon.log
     nodeSelector: {}
     tolerations:
-      - operator: Exists
+    - operator: Exists
     affinity: {}
     resources: {}
     updateStrategy: {}
@@ -213,24 +132,21 @@ streamsec:
       tag: 1.0.1
       digest: sha256:f517aca6e6ea0787ab59f9c049da2ceea46c041f9334f5fe26add50bf55d60a7
       pullPolicy: IfNotPresent
-
   env:
     LOGLEVEL: INFO
-    DEBUG: False
-
+    DEBUG: false
 tetragon:
   serviceAccount:
-    name: "tetragon"
+    name: tetragon
   export:
-    mode: ""
+    mode: ''
   tetragonOperator:
     tolerations: []
   tetragon:
     grpc:
-      address: "localhost:59751"
+      address: localhost:59751
     healthGrpc:
       port: 9763
     exportFileMaxSizeMB: 50
     fieldFilters: |
       {"fields": "parent", "action": "EXCLUDE"}
-
