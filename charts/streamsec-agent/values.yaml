@@ -44,23 +44,21 @@ streamsec:
     # options:
     # - name: ndots
     #   value: "2"
-  
   #streamsec.tolerations
   tolerations:
-  - key: "re"
-    operator: "Equal"
-    value: "true"
-    effect: "NoSchedule"
+  - key: re
+    operator: Equal
+    value: 'true'
+    effect: NoSchedule
 
   #streamsec.existLabelSelector
   existLabelSelector:
 
   #streamsec.equalsLabelSelector
   equalsLabelSelector:
-  
   #streamsec.workflow -- streamsec workflow type 
   workflow: full_scan
-  
+
   #streamsec.port -- streamsec port
   port: 443
 
@@ -71,10 +69,10 @@ streamsec:
     name: cluster-agent
 
     #streamsec.image.tag -- Stream Security agent tag to use.
-    tag: 1.0.3
+    tag: 1.0.1
 
     #streamsec.image.digest -- Stream Security agent image digest to use.
-    digest: sha256:78ae97ef309287f2d74ed4bfcc111dd80a488dad5dbd2865b6aae47c572a0b6a
+    digest: 1.0.1
 
     #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -85,10 +83,10 @@ streamsec:
     name: cluster-agent
 
     #streamsec.cost_image.tag -- Stream Security cost agent tag to use.
-    tag: 1.0.3
+    tag: 1.0.1
 
     #streamsec.cost_image.digest -- Stream Security cost agent image digest to use.
-    digest: sha256:78ae97ef309287f2d74ed4bfcc111dd80a488dad5dbd2865b6aae47c572a0b6a
+    digest: 1.0.1
 
     #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -109,14 +107,14 @@ streamsec:
 
     #streamsec.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
-    name: ""
+    name: ''
 
   clusterRole:
     #streamsec.clustRole.create
     create: true
     #streamsec.serviceAccount.name -- The name of the Service account.
     #If not set and create is true, a name is generated using the fullname template
-    name: ""
+    name: ''
 
   cost_containers:
     #streamsec.cost_containers.enabled
@@ -125,9 +123,9 @@ streamsec:
       connector:
         name: connector
         command:
-          - /usr/local/bin/python
-          - main.py
-          - connector
+        - /usr/local/bin/python
+        - main.py
+        - connector
         resources:
           requests:
             cpu: 800m
@@ -138,9 +136,9 @@ streamsec:
       cost:
         name: cost
         command:
-          - /usr/local/bin/python
-          - main.py
-          - cost
+        - /usr/local/bin/python
+        - main.py
+        - cost
         resources:
           requests:
             cpu: 800m
@@ -149,7 +147,7 @@ streamsec:
             cpu: 2000m
             memory: 2048Mi
 
-    
+
   cluster_agent_containers:
     enabled: true
     containers:
@@ -157,9 +155,9 @@ streamsec:
         enabled: true
         name: krs
         command:
-          - /usr/local/bin/python
-          - main.py
-          - krs
+        - /usr/local/bin/python
+        - main.py
+        - krs
         resources:
           requests:
             cpu: 1000m
@@ -171,24 +169,24 @@ streamsec:
         enabled: true
         name: events
         command:
-          - /usr/local/bin/python
-          - main.py
-          - events
+        - /usr/local/bin/python
+        - main.py
+        - events
         resources: {}
       network-policy:
         enabled: false
         name: network-policy
         command:
-          - /usr/local/bin/python
-          - main.py
-          - network_policy
+        - /usr/local/bin/python
+        - main.py
+        - network_policy
         resources: {}
       tracing-policy:
         name: tracing-policy
         command:
-          - /usr/local/bin/python
-          - main.py
-          - tracing_policy
+        - /usr/local/bin/python
+        - main.py
+        - tracing_policy
         resources: {}
 
   process_discovery_containers:
@@ -204,7 +202,7 @@ streamsec:
     tetragonFileName: tetragon.log
     nodeSelector: {}
     tolerations:
-      - operator: Exists
+    - operator: Exists
     affinity: {}
     resources: {}
     updateStrategy: {}
@@ -216,18 +214,18 @@ streamsec:
 
   env:
     LOGLEVEL: INFO
-    DEBUG: False
+    DEBUG: false
 
 tetragon:
   serviceAccount:
-    name: "tetragon"
+    name: tetragon
   export:
-    mode: ""
+    mode: ''
   tetragonOperator:
     tolerations: []
   tetragon:
     grpc:
-      address: "localhost:59751"
+      address: localhost:59751
     healthGrpc:
       port: 9763
     exportFileMaxSizeMB: 50
