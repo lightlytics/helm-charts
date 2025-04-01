@@ -224,11 +224,18 @@ tetragon:
   tetragonOperator:
     tolerations: []
   tetragon:
+    image:
+      repository: quay.io/cilium/tetragon
+      tag: v1.4.0
+      pullPolicy: IfNotPresent
     grpc:
       address: localhost:59751
     healthGrpc:
       port: 9763
+    extraArgs: { 'enable-process-ancestors', 'enable-process-cred' }
     exportFileMaxSizeMB: 50
     fieldFilters: |
-      {"fields": "parent", "action": "EXCLUDE"}
+      {"event_set":["PROCESS_KPROBE","PROCESS_EXIT"], "fields":"parent", "action":"EXCLUDE"}
+      {"event_set":["PROCESS_KPROBE","PROCESS_EXIT","PROCESS_EXEC"],"fields":"process.parent_exec_id,parent.parent_exec_id,ancestors.parent_exec_id,parent.cwd,ancestors.exec_id", "action":"EXCLUDE"}"
+      {"event_set":["PROCESS_EXEC"],"fields":"process.cap,parent.cap,parent.process_credentials,ancestors.cap,ancestors.process_credentials", "action":"EXCLUDE"}"
 
