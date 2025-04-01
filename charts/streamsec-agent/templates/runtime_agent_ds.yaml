@@ -28,7 +28,7 @@ spec:
       {{- end }}
       containers:
         - name: runtime-agent
-          image: {{ template "streamsec.runtime-agent-image-path" $}}
+          image: {{ include "streamsec.runtime-agent-image-path" $ }}
           imagePullPolicy: {{ .Values.streamsec.runtime_agent.image.pullPolicy }}
           {{- with .Values.streamsec.runtime_agent.resources }}
           resources:

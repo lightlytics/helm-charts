@@ -8,11 +8,18 @@ define ECR url based on the AWS account
 {{- end -}}
 
 {{- define "streamsec.image-path" -}}
-  {{ .Values.registry }}/{{ .Values.streamsec.image.name }}:{{ .Values.streamsec.image.tag }}
+  {{- if .Values.streamsec.image.digest }}
+  {{- printf "%s/%s:%s@%s" .Values.registry .Values.streamsec.image.name .Values.streamsec.image.tag .Values.streamsec.image.digest }}
+  {{- else }}
+  {{- printf "%s/%s:%s" .Values.registry .Values.streamsec.image.name .Values.streamsec.image.tag }}
+  {{- end }}
 {{- end -}}
-
 {{- define "streamsec.cost-image-path" -}}
-  {{ .Values.registry }}/{{ .Values.streamsec.image.name }}:{{ .Values.streamsec.cost_image.tag }}
+  {{- if .Values.streamsec.cost_image.digest }}
+  {{- printf "%s/%s:%s@%s" .Values.registry .Values.streamsec.cost_image.name .Values.streamsec.cost_image.tag .Values.streamsec.cost_image.digest }}
+  {{- else }}
+  {{- printf "%s/%s:%s" .Values.registry .Values.streamsec.cost_image.name .Values.streamsec.cost_image.tag }}
+  {{- end }}
 {{- end -}}
 
 {{- define "streamsec.process-discovery-image-path" -}}
@@ -20,7 +27,11 @@ define ECR url based on the AWS account
 {{- end -}}
 
 {{- define "streamsec.runtime-agent-image-path" -}}
-  {{ .Values.registry }}/{{ .Values.streamsec.runtime_agent.image.name }}:{{ .Values.streamsec.runtime_agent.image.tag }}
+  {{- if .Values.streamsec.runtime_agent.image.digest }}
+  {{- printf "%s/%s:%s@%s" .Values.registry .Values.streamsec.runtime_agent.image.name .Values.streamsec.runtime_agent.image.tag .Values.streamsec.runtime_agent.image.digest }}
+  {{- else }}
+  {{- printf "%s/%s:%s" .Values.registry .Values.streamsec.runtime_agent.image.name .Values.streamsec.runtime_agent.image.tag }}
+  {{- end }}
 {{- end -}}
 
 {{/*

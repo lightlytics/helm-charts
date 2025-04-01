@@ -6,7 +6,7 @@ nameOverride:  # ""
 
 fullnameOverride:  # ""
 
-registry: public.ecr.aws/k6v9y5g3
+registry: public.ecr.aws/stream-security
 
 dnsPolicy: Default
 
@@ -73,6 +73,9 @@ streamsec:
     #streamsec.image.tag -- Stream Security agent tag to use.
     tag: 1.0.4
 
+    #streamsec.image.digest -- Stream Security agent image digest to use.
+    digest: sha256:2259a00af731ef85a1b334ba750c1e4d49dff953cb97dde8303b9ef5d08db449
+
     #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
 
@@ -83,6 +86,9 @@ streamsec:
 
     #streamsec.cost_image.tag -- Stream Security cost agent tag to use.
     tag: 1.0.4
+
+    #streamsec.cost_image.digest -- Stream Security cost agent image digest to use.
+    digest: sha256:2259a00af731ef85a1b334ba750c1e4d49dff953cb97dde8303b9ef5d08db449
 
     #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -205,6 +211,7 @@ streamsec:
     image:
       name: runtime-agent
       tag: 1.0.1
+      digest: sha256:f517aca6e6ea0787ab59f9c049da2ceea46c041f9334f5fe26add50bf55d60a7
       pullPolicy: IfNotPresent
 
   env:

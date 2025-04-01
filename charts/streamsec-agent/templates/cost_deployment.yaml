@@ -26,7 +26,7 @@ spec:
       containers:
       {{- range $container_name, $container_values := .Values.streamsec.cost_containers.containers }}
         - name: {{ $container_name }}
-          image: {{ template "streamsec.cost-image-path" $}}
+          image: {{ include "streamsec.cost-image-path" $ }}
           imagePullPolicy: {{ $.Values.streamsec.cost_image.pullPolicy }}
           command:
             {{- range $container_values.command }}

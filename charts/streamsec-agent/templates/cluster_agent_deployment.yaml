@@ -31,7 +31,7 @@ spec:
       {{- range $container_name, $container_values := .Values.streamsec.cluster_agent_containers.containers }}
       {{- if or ($container_values.enabled) (and (eq $container_name "tracing-policy") ($.Values.streamsec.runtime_agent.enabled)) }}
         - name: {{ $container_name }}
-          image: {{ template "streamsec.image-path" $}}
+          image: {{ include "streamsec.image-path" $ }}
           imagePullPolicy: {{ $.Values.streamsec.image.pullPolicy }}
           command:
             {{- range $container_values.command }}
