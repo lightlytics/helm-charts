@@ -228,7 +228,9 @@ tetragon:
       address: localhost:59751
     healthGrpc:
       port: 9763
-    extraArgs: { 'enable-process-ancestors', 'enable-process-cred' }
+    extraArgs: 
+      enable-process-ancestors:
+      enable-process-cred:
     exportFileMaxSizeMB: 50
     fieldFilters: |
       {"event_set":["PROCESS_KPROBE","PROCESS_EXIT"], "fields":"parent", "action":"EXCLUDE"}
