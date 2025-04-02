@@ -224,10 +224,6 @@ tetragon:
   tetragonOperator:
     tolerations: []
   tetragon:
-    image:
-      repository: quay.io/cilium/tetragon
-      tag: v1.4.0
-      pullPolicy: IfNotPresent
     grpc:
       address: localhost:59751
     healthGrpc:
