@@ -69,10 +69,10 @@ streamsec:
     name: cluster-agent
 
     #streamsec.image.tag -- Stream Security agent tag to use.
-    tag: 1.0.4
+    tag: 1.0.5
 
     #streamsec.image.digest -- Stream Security agent image digest to use.
-    digest: sha256:2259a00af731ef85a1b334ba750c1e4d49dff953cb97dde8303b9ef5d08db449
+    digest: sha256:12edf123892c43dca03857af98cd0573248debf193289d58ae275a880598f58c
 
     #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -83,10 +83,10 @@ streamsec:
     name: cluster-agent
 
     #streamsec.cost_image.tag -- Stream Security cost agent tag to use.
-    tag: 1.0.4
+    tag: 1.0.5
 
     #streamsec.cost_image.digest -- Stream Security cost agent image digest to use.
-    digest: sha256:2259a00af731ef85a1b334ba750c1e4d49dff953cb97dde8303b9ef5d08db449
+    digest: sha256:12edf123892c43dca03857af98cd0573248debf193289d58ae275a880598f58c
 
     #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -228,7 +228,7 @@ tetragon:
       address: localhost:59751
     healthGrpc:
       port: 9763
-    extraArgs: 
+    extraArgs:
       enable-process-ancestors: true
       enable-process-cred: true
     exportFileMaxSizeMB: 50
