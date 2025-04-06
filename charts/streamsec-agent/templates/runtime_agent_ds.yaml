@@ -60,6 +60,8 @@ spec:
               name: sys-kernel
             - mountPath: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}
               name: export-logs
+            - mountPath: /host/proc
+              name: proc
       dnsPolicy: {{ .Values.dnsPolicy }}
       hostNetwork: true
       hostPID: true
@@ -78,6 +80,10 @@ spec:
             path: /sys/kernel
             type: DirectoryOrCreate
           name: sys-kernel
+        - hostPath:
+            path: /proc
+            type: DirectoryOrCreate
+          name: proc
   {{- with .Values.updateStrategy }}
   updateStrategy:
     {{- toYaml . | nindent 4 }}
