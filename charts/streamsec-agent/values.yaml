@@ -206,6 +206,10 @@ streamsec:
     affinity: {}
     resources: {}
     updateStrategy: {}
+    volumeMounts:
+      - name: proc
+        mountPath: /host/proc
+        readOnly: true
     image:
       name: runtime-agent
       tag: 1.0.1
