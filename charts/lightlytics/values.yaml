@@ -186,6 +186,20 @@ lightlytics:
           cpu: 2000m
           memory: 2048Mi
 
+    lightlytics-sbom:
+      enabled: false
+      name: lightlytics-sbom
+      command:
+        - /usr/local/bin/python
+        - main.py
+        - sbom
+      requests:
+        cpu: 800m
+        memory: 1024Mi
+      limits:
+        cpu: 2000m
+        memory: 2048Mi
+
   process_discovery_containers:
     enabled: false
     containers:
