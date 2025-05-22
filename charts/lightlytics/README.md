@@ -75,6 +75,15 @@ A Helm chart for StreamSec Kubernetes agent
 | lightlytics.lightlytics_containers.containers.lightlytics-network-policy.requests.cpu | string | `"800m"` |  |
 | lightlytics.lightlytics_containers.containers.lightlytics-network-policy.requests.memory | string | `"1024Mi"` |  |
 | lightlytics.lightlytics_containers.enabled | bool | `true` |  |
+| lightlytics.lightlytics_containers.lightlytics-sbom.command[0] | string | `"/usr/local/bin/python"` |  |
+| lightlytics.lightlytics_containers.lightlytics-sbom.command[1] | string | `"main.py"` |  |
+| lightlytics.lightlytics_containers.lightlytics-sbom.command[2] | string | `"sbom"` |  |
+| lightlytics.lightlytics_containers.lightlytics-sbom.enabled | bool | `false` |  |
+| lightlytics.lightlytics_containers.lightlytics-sbom.limits.cpu | string | `"2000m"` |  |
+| lightlytics.lightlytics_containers.lightlytics-sbom.limits.memory | string | `"2048Mi"` |  |
+| lightlytics.lightlytics_containers.lightlytics-sbom.name | string | `"lightlytics-sbom"` |  |
+| lightlytics.lightlytics_containers.lightlytics-sbom.requests.cpu | string | `"800m"` |  |
+| lightlytics.lightlytics_containers.lightlytics-sbom.requests.memory | string | `"1024Mi"` |  |
 | lightlytics.port | int | `443` | lightlytics port |
 | lightlytics.process_discovery_containers.containers.lightlytics-process-discovery.limits.cpu | string | `"2000m"` |  |
 | lightlytics.process_discovery_containers.containers.lightlytics-process-discovery.limits.memory | string | `"2048Mi"` |  |
