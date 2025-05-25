@@ -234,6 +234,21 @@ entries:
   streamsec-agent:
   - apiVersion: v2
     appVersion: 1.1.4
+    created: "2025-05-25T10:16:40.341972296Z"
+    dependencies:
+    - condition: streamsec.runtime_agent.enabled
+      name: tetragon
+      repository: https://helm.cilium.io
+      version: 1.4.0
+    description: Stream Security Agent Helm Chart
+    digest: 379234eab4a85e8b38b79f7430a4986dcde3dddddf948c849f1c0d56c4c7e64c
+    name: streamsec-agent
+    type: application
+    urls:
+    - https://github.com/lightlytics/helm-charts/releases/download/streamsec-agent-1.1.29/streamsec-agent-1.1.29.tgz
+    version: 1.1.29
+  - apiVersion: v2
+    appVersion: 1.1.4
     created: "2025-05-25T09:20:27.709585649Z"
     dependencies:
     - condition: streamsec.runtime_agent.enabled
@@ -687,4 +702,4 @@ entries:
     urls:
     - https://github.com/lightlytics/helm-charts/releases/download/streamsec-agent-1.0.0/streamsec-agent-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-25T09:20:27.710008156Z"
+generated: "2025-05-25T10:16:40.342382787Z"
