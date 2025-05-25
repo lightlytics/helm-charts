@@ -69,10 +69,10 @@ streamsec:
     name: cluster-agent
 
     #streamsec.image.tag -- Stream Security agent tag to use.
-    tag: 1.1.23
+    tag: 1.1.24
 
     #streamsec.image.digest -- Stream Security agent image digest to use.
-    digest: sha256:16d43c5922fd5d317c75562b13b4e4d3b1a336db630c218bb2da5d8fc7c9b190
+    digest: sha256:33078457dd725a102982d1e3c2fb9a6d46c20a62ecedbfe80c8ebbed3c8378cc
 
     #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -83,10 +83,10 @@ streamsec:
     name: cluster-agent
 
     #streamsec.cost_image.tag -- Stream Security cost agent tag to use.
-    tag: 1.1.23
+    tag: 1.1.24
 
     #streamsec.cost_image.digest -- Stream Security cost agent image digest to use.
-    digest: sha256:16d43c5922fd5d317c75562b13b4e4d3b1a336db630c218bb2da5d8fc7c9b190
+    digest: sha256:33078457dd725a102982d1e3c2fb9a6d46c20a62ecedbfe80c8ebbed3c8378cc
 
     #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
     pullPolicy: IfNotPresent
