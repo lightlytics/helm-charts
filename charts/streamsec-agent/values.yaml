@@ -152,7 +152,7 @@ streamsec:
     enabled: true
     containers:
       krs:
-        enabled: true
+        enabled: false
         name: krs
         command:
         - /usr/local/bin/python
@@ -165,9 +165,9 @@ streamsec:
           limits:
             cpu: 2000m
             memory: 4096Mi
-      lightlytics-sbom:
+      sbom:
         enabled: true
-        name: lightlytics-sbom
+        name: sbom
         command:
           - /usr/local/bin/python
           - main.py
@@ -179,7 +179,7 @@ streamsec:
           cpu: 2000m
           memory: 4096Mi
       events:
-        enabled: true
+        enabled: false
         name: events
         command:
         - /usr/local/bin/python

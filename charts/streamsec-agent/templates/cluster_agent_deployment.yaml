@@ -32,6 +32,9 @@ spec:
       {{- if or ($container_values.enabled) (and (eq $container_name "tracing-policy") ($.Values.streamsec.runtime_agent.enabled)) }}
         - name: {{ $container_name }}
           image: {{ include "streamsec.image-path" $ }}
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
           imagePullPolicy: {{ $.Values.streamsec.image.pullPolicy }}
           command:
             {{- range $container_values.command }}
@@ -79,6 +82,9 @@ spec:
             - name: POD_PROCESSES_PORT
               value: "8080"
 
+            - name: HOME
+              value: /tmp
+
             - name: FULL_SCAN_SCHEDULE_SECONDS
               value: {{ $.Values.streamsec.fullScanScheduleSeconds | quote }}
 
@@ -110,6 +116,9 @@ spec:
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
             {{- end }}
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}
     {{- end }}
     {{- end }}
 {{- end }}
