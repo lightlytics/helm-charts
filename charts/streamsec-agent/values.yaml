@@ -204,11 +204,7 @@ streamsec:
     tolerations:
     - operator: Exists
     affinity: {}
-    resources: 
-      requests:
-        cpu: 100m
-        memory: 128Mi
-      limits: {}
+    resources: {}
     updateStrategy: {}
     image:
       name: runtime-agent
@@ -230,11 +226,7 @@ tetragon:
   tetragon:
     grpc:
       address: localhost:59751
-    resources:
-      requests:
-        cpu: 200m
-        memory: 384Mi
-      limits: {}
+    resources: {}
     healthGrpc:
       port: 9763
     extraArgs:
