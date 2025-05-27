@@ -1,0 +1,13 @@
+streamsec:
+  runtime_agent:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+
+tetragon:
+  tetragon:
+    resources:
+      requests:
+        cpu: 200m
+        memory: 400Mi
