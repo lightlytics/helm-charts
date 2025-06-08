@@ -41,6 +41,20 @@ streamsec:
 
   #streamsec.nodeSelector
   nodeSelector: {}
+  # Example:
+  # nodeSelector:
+  #   node.kubernetes.io/instance-type: m5.large
+  #streamsec.affinity
+  affinity: {}
+  # Example:
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #          - matchExpressions:
+  #            - key: eks.amazonaws.com/compute-type
+  #              operator: NotIn
+  #              values: ["fargate"]
 
   #streamsec.dnsConfig
   dnsConfig: {}

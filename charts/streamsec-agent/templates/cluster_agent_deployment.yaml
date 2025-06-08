@@ -27,6 +27,10 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- with .Values.streamsec.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.streamsec.dnsConfig }}
       dnsConfig:
         {{- toYaml . | nindent 8 }}
