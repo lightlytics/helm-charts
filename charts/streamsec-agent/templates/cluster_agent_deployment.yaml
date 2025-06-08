@@ -23,6 +23,10 @@ spec:
         fsGroup: 2000
       tolerations:
           {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
+      {{- with .Values.streamsec.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.streamsec.dnsConfig }}
       dnsConfig:
         {{- toYaml . | nindent 8 }}
