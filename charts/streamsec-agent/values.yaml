@@ -39,6 +39,9 @@ streamsec:
   #streamsec.inLabelSelector
   inLabelSelector:
 
+  #streamsec.nodeSelector
+  nodeSelector: {}
+
   #streamsec.dnsConfig
   dnsConfig: {}
     # options:
