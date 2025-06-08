@@ -18,6 +18,7 @@ Stream Security Agent Helm Chart
 | fullnameOverride | string | `nil` |  |
 | nameOverride | string | `nil` |  |
 | registry | string | `"public.ecr.aws/stream-security"` |  |
+| streamsec.affinity | object | `{}` |  |
 | streamsec.apiToken | string | `nil` | Stream Security API token for your Kubernetes cluster Required: Set your Stream Security API token here ref : |
 | streamsec.apiTokenExistingSecret | string | `nil` | Use existing Secret which stores API key instead of creating a new one. The value should be set with the `api-key` key inside the secret. # If set, this parameter takes precedence over "apiToken". |
 | streamsec.apiUrl | string | `nil` | Stream Security site url Required: Set your Stream Security API URL here |
@@ -93,6 +94,7 @@ Stream Security Agent Helm Chart
 | streamsec.process_discovery_image.pullPolicy | string | `"IfNotPresent"` | Stream Security process discovery agent image pullPolicy |
 | streamsec.process_discovery_image.tag | string | `"master.75"` | Stream Security process discovery agent tag to use. |
 | streamsec.replicas | int | `1` |  |
+| streamsec.nodeSelector | object | `{}` |  |
 | streamsec.runtime_agent.affinity | object | `{}` |  |
 | streamsec.runtime_agent.enabled | bool | `false` |  |
 | streamsec.runtime_agent.image.digest | string | `"sha256:4b8c4c44158640a14d951cd3d250a8ceb39f21656659d351bb32d8b5cee93539"` |  |
