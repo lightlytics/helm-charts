@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       labels:
-    {{- include "streamsec.selectorLabels" . | nindent 8 }}
+      {{- include "streamsec.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
       securityContext:
@@ -22,7 +22,7 @@ spec:
         runAsGroup: 3000
         fsGroup: 2000
       tolerations:
-          {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
+        {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
       {{- with .Values.streamsec.dnsConfig }}
       dnsConfig:
         {{- toYaml . | nindent 8 }}
@@ -35,6 +35,11 @@ spec:
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume
+            {{- if eq $container_name "sbom" }}
+            - mountPath: /root/.docker
+              name: docker-config
+              readOnly: true
+            {{- end }}
           imagePullPolicy: {{ $.Values.streamsec.image.pullPolicy }}
           command:
             {{- range $container_values.command }}
@@ -72,46 +77,32 @@ spec:
                   key: api-key
             - name: STREAMSEC_API_URL
               value: {{ $.Values.streamsec.apiUrl | quote }}
-
             - name: ENABLE_POD_PROCESSES
               value: {{ $.Values.streamsec.process_discovery_containers.enabled | quote }}
-
             - name: POD_PROCESSES_SERVICE
               value: {{ template "streamsec.fullname" $}}-process-discovery
-
             - name: POD_PROCESSES_PORT
               value: "8080"
-
             - name: HOME
               value: /tmp
-
             - name: FULL_SCAN_SCHEDULE_SECONDS
               value: {{ $.Values.streamsec.fullScanScheduleSeconds | quote }}
-
             - name: FILTER_RUNNING_PODS
               value: {{ $.Values.streamsec.filterRunningPods | quote }}
-
             - name: FIELD_SELECTORS_NAMESPACES
               value: {{ $.Values.streamsec.fieldSelectorsNamespaces | quote }}
-
             - name: FIELD_SELECTORS_NAMES
               value: {{ $.Values.streamsec.fieldSelectorsNames | quote }}
-
             - name: IN_LABEL_SELECTOR
               value: {{ $.Values.streamsec.inLabelSelector | quote }}
-
             - name: EXISTS_LABEL_SELECTOR
               value: {{ $.Values.streamsec.existLabelSelector | quote }}
-
             - name: EQUALS_LABEL_SELECTOR
               value: {{ $.Values.streamsec.equalsLabelSelector | quote }}
-
             - name: WORKFLOW
               value: {{ $.Values.streamsec.workflow | quote }}
-
             - name: PORT
               value: {{ $.Values.streamsec.port | quote }}
-
             {{- range $envVarName, $envVarValue := $.Values.streamsec.env }}
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
@@ -119,6 +110,12 @@ spec:
       volumes:
         - name: tmp-volume
           emptyDir: {}
+        - name: docker-config
+          secret:
+            secretName: regcred
+            items:
+              - key: .dockerconfigjson
+                path: config.json
     {{- end }}
     {{- end }}
 {{- end }}
