@@ -114,6 +114,11 @@ spec:
             - name: PORT
               value: {{ $.Values.streamsec.port | quote }}
 
+            {{- if $.Values.streamsec.env.CLUSTER_NAME }}
+            - name: CLUSTER_NAME
+              value: {{ $.Values.streamsec.env.CLUSTER_NAME | quote }}
+            {{- end }}
+
             {{- range $envVarName, $envVarValue := $.Values.streamsec.env }}
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
