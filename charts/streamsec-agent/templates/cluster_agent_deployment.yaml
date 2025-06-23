@@ -115,9 +115,12 @@ spec:
               value: {{ $.Values.streamsec.port | quote }}
 
             {{- range $envVarName, $envVarValue := $.Values.streamsec.env }}
+              {{- if $envVarValue }}
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
+              {{- end }}
             {{- end }}
+
     {{- end }}
     {{- end }}
 {{- end }}
