@@ -234,7 +234,7 @@ streamsec:
 
   env:
     LOGLEVEL: INFO
-    DEBUG: false
+    DEBUG: "false"
     CLUSTER_NAME:  # "" 
 
 tetragon:
