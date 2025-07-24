@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.1.35](https://img.shields.io/badge/Version-1.1.35-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.1.42](https://img.shields.io/badge/Version-1.1.42-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -18,6 +18,7 @@ Stream Security Agent Helm Chart
 | fullnameOverride | string | `nil` |  |
 | nameOverride | string | `nil` |  |
 | registry | string | `"public.ecr.aws/stream-security"` |  |
+| streamsec.affinity | object | `{}` |  |
 | streamsec.apiToken | string | `nil` | Stream Security API token for your Kubernetes cluster Required: Set your Stream Security API token here ref : |
 | streamsec.apiTokenExistingSecret | string | `nil` | Use existing Secret which stores API key instead of creating a new one. The value should be set with the `api-key` key inside the secret. # If set, this parameter takes precedence over "apiToken". |
 | streamsec.apiUrl | string | `nil` | Stream Security site url Required: Set your Stream Security API URL here |
@@ -67,12 +68,13 @@ Stream Security Agent Helm Chart
 | streamsec.cost_containers.containers.cost.resources.requests.cpu | string | `"800m"` |  |
 | streamsec.cost_containers.containers.cost.resources.requests.memory | string | `"1024Mi"` |  |
 | streamsec.cost_containers.enabled | bool | `false` |  |
-| streamsec.cost_image.digest | string | `"sha256:33078457dd725a102982d1e3c2fb9a6d46c20a62ecedbfe80c8ebbed3c8378cc"` | Stream Security cost agent image digest to use. |
+| streamsec.cost_image.digest | string | `"sha256:e772e83c664d483614a708b47b34d0c3cda8308e72c1ddf6416b419a398b896e"` | Stream Security cost agent image digest to use. |
 | streamsec.cost_image.name | string | `"cluster-agent"` | Stream Security cost agent image name. |
 | streamsec.cost_image.pullPolicy | string | `"IfNotPresent"` | Stream Security cost agent image pullPolicy |
-| streamsec.cost_image.tag | string | `"1.1.24"` | Stream Security cost agent tag to use. |
+| streamsec.cost_image.tag | string | `"1.1.5"` | Stream Security cost agent tag to use. |
 | streamsec.dnsConfig | object | `{}` |  |
-| streamsec.env.DEBUG | bool | `false` |  |
+| streamsec.env.CLUSTER_NAME | string | `nil` |  |
+| streamsec.env.DEBUG | string | `"false"` |  |
 | streamsec.env.LOGLEVEL | string | `"INFO"` |  |
 | streamsec.equalsLabelSelector | string | `nil` |  |
 | streamsec.existLabelSelector | string | `nil` |  |
@@ -80,11 +82,12 @@ Stream Security Agent Helm Chart
 | streamsec.fieldSelectorsNamespaces | string | `nil` | filter/unfilter resources from specific namespace |
 | streamsec.filterRunningPods | bool | `true` | takes only pods which at status running |
 | streamsec.fullScanScheduleSeconds | int | `1800` | periodic Kubernetes resources scan at seconds |
-| streamsec.image.digest | string | `"sha256:33078457dd725a102982d1e3c2fb9a6d46c20a62ecedbfe80c8ebbed3c8378cc"` | Stream Security agent image digest to use. |
+| streamsec.image.digest | string | `"sha256:e772e83c664d483614a708b47b34d0c3cda8308e72c1ddf6416b419a398b896e"` | Stream Security agent image digest to use. |
 | streamsec.image.name | string | `"cluster-agent"` | Stream Security agent image name. |
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
-| streamsec.image.tag | string | `"1.1.24"` | Stream Security agent tag to use. |
+| streamsec.image.tag | string | `"1.1.5"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
+| streamsec.nodeSelector | object | `{}` |  |
 | streamsec.port | int | `443` | streamsec port |
 | streamsec.process_discovery_containers.containers.process-discovery.name | string | `"process-discovery"` |  |
 | streamsec.process_discovery_containers.containers.process-discovery.resources | object | `{}` |  |
@@ -95,12 +98,13 @@ Stream Security Agent Helm Chart
 | streamsec.replicas | int | `1` |  |
 | streamsec.runtime_agent.affinity | object | `{}` |  |
 | streamsec.runtime_agent.enabled | bool | `false` |  |
-| streamsec.runtime_agent.image.digest | string | `"sha256:4b8c4c44158640a14d951cd3d250a8ceb39f21656659d351bb32d8b5cee93539"` |  |
+| streamsec.runtime_agent.image.digest | string | `"sha256:51dfbd8b3cf78eab6c9ea909e702f30e9dd34deb31f18b7e7211a7d597cc975b"` |  |
 | streamsec.runtime_agent.image.name | string | `"runtime-agent"` |  |
 | streamsec.runtime_agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| streamsec.runtime_agent.image.tag | string | `"1.1.3"` |  |
+| streamsec.runtime_agent.image.tag | string | `"1.2.0"` |  |
 | streamsec.runtime_agent.nodeSelector | object | `{}` |  |
-| streamsec.runtime_agent.resources | object | `{}` |  |
+| streamsec.runtime_agent.resources.requests.cpu | string | `"100m"` |  |
+| streamsec.runtime_agent.resources.requests.memory | string | `"128Mi"` |  |
 | streamsec.runtime_agent.tetragonFileName | string | `"tetragon.log"` |  |
 | streamsec.runtime_agent.tetragonFilePath | string | `"/var/run/cilium/tetragon/"` |  |
 | streamsec.runtime_agent.tolerations[0].operator | string | `"Exists"` |  |
@@ -117,9 +121,11 @@ Stream Security Agent Helm Chart
 | tetragon.tetragon.exportFileMaxSizeMB | int | `50` |  |
 | tetragon.tetragon.extraArgs.enable-process-ancestors | bool | `true` |  |
 | tetragon.tetragon.extraArgs.enable-process-cred | bool | `true` |  |
-| tetragon.tetragon.fieldFilters | string | `"{\"event_set\":[\"PROCESS_KPROBE\",\"PROCESS_EXIT\"], \"fields\":\"parent\", \"action\":\"EXCLUDE\"}\n{\"event_set\":[\"PROCESS_KPROBE\",\"PROCESS_EXIT\",\"PROCESS_EXEC\"],\"fields\":\"process.parent_exec_id,parent.parent_exec_id,ancestors.parent_exec_id,parent.cwd,ancestors.exec_id\", \"action\":\"EXCLUDE\"}\"\n{\"event_set\":[\"PROCESS_EXEC\"],\"fields\":\"process.cap,parent.cap,parent.process_credentials,ancestors.cap,ancestors.process_credentials\", \"action\":\"EXCLUDE\"}\"\n"` |  |
+| tetragon.tetragon.fieldFilters | string | `"{\"event_set\":[\"PROCESS_KPROBE\",\"PROCESS_EXIT\"], \"fields\":\"parent\", \"action\":\"EXCLUDE\"}\n{\"event_set\":[\"PROCESS_KPROBE\",\"PROCESS_EXIT\",\"PROCESS_EXEC\"],\"fields\":\"process.parent_exec_id,parent.parent_exec_id,ancestors.parent_exec_id,parent.cwd,ancestors.exec_id\", \"action\":\"EXCLUDE\"}\n{\"event_set\":[\"PROCESS_EXEC\"],\"fields\":\"process.cap,parent.cap,parent.process_credentials,ancestors.cap,ancestors.process_credentials\", \"action\":\"EXCLUDE\"}\n"` |  |
 | tetragon.tetragon.grpc.address | string | `"localhost:59751"` |  |
 | tetragon.tetragon.healthGrpc.port | int | `9763` |  |
+| tetragon.tetragon.resources.requests.cpu | string | `"200m"` |  |
+| tetragon.tetragon.resources.requests.memory | string | `"400Mi"` |  |
 | tetragon.tetragonOperator.tolerations | list | `[]` |  |
 
 ----------------------------------------------
