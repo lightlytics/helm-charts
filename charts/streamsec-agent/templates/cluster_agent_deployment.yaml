@@ -35,8 +35,8 @@ spec:
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume
-            {{- if eq $container_name "sbom" }}
-            - mountPath: /root/.docker
+            {{- if and (eq $container_name "sbom") $.Values.streamsec.cluster_agent_containers.dockerConfigSecret.enabled }}
+            - mountPath: /tmp/.docker
               name: docker-config
               readOnly: true
             {{- end }}
@@ -110,12 +110,14 @@ spec:
       volumes:
         - name: tmp-volume
           emptyDir: {}
+      {{- if $.Values.streamsec.cluster_agent_containers.dockerConfigSecret.enabled }}
         - name: docker-config
           secret:
-            secretName: regcred
+            secretName: {{ $.Values.streamsec.cluster_agent_containers.dockerConfigSecret.name }}
             items:
               - key: .dockerconfigjson
                 path: config.json
+      {{- end }}
     {{- end }}
     {{- end }}
 {{- end }}

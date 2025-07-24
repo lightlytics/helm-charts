@@ -202,6 +202,10 @@ streamsec:
         - tracing_policy
         resources: {}
 
+    dockerConfigSecret:
+      enabled: true                # Set to true to mount secret to sbom container
+      name: regcred
+
   process_discovery_containers:
     enabled: false
     containers:
