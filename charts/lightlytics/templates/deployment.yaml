@@ -32,6 +32,9 @@ spec:
       {{- if $container_values.enabled }}
         - name: {{ $container_name }}
           image: {{ template "lightlytics.image-path" $}}
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
           imagePullPolicy: {{ $.Values.lightlytics.image.pullPolicy }}
           command:
             {{- range $container_values.command }}
@@ -106,10 +109,16 @@ spec:
             - name: PORT
               value: {{ $.Values.lightlytics.port | quote }}
 
+            - name: HOME
+              value: /tmp
+
             {{- range $envVarName, $envVarValue := $.Values.lightlytics.env }}
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
             {{- end }}
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}
     {{- end }}
     {{- end }}
 {{- end }}

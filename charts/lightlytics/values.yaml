@@ -146,7 +146,7 @@ lightlytics:
     enabled: true
     containers:
       lightlytics-krs:
-        enabled: true
+        enabled: false
         name: lightlytics-krs
         command:
           - /usr/local/bin/python
@@ -160,7 +160,7 @@ lightlytics:
             cpu: 2000m
             memory: 4096Mi
       lightlytics-events:
-        enabled: true
+        enabled: false
         name: lightlytics-events
         command:
           - /usr/local/bin/python
