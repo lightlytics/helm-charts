@@ -89,7 +89,7 @@ streamsec:
     tag: 1.1.5
 
     #streamsec.image.digest -- Stream Security agent image digest to use.
-    digest: sha256:e772e83c664d483614a708b47b34d0c3cda8308e72c1ddf6416b419a398b896e
+    digest: sha256:7f96909de021d67c03c5b65fc8454b47aabdd056e866f407a391fd19f7943d3c
 
     #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -169,7 +169,7 @@ streamsec:
     enabled: true
     containers:
       krs:
-        enabled: false
+        enabled: true
         name: krs
         command:
         - /usr/local/bin/python
@@ -183,7 +183,7 @@ streamsec:
             cpu: 2000m
             memory: 4096Mi
       sbom:
-        enabled: true
+        enabled: false
         name: sbom
         command:
           - /usr/local/bin/python
@@ -220,7 +220,7 @@ streamsec:
         resources: {}
 
     dockerConfigSecret:
-      enabled: true                # Set to true to mount secret to sbom container
+      enabled: false                # Set to true to mount secret to sbom container
       name: regcred
 
   process_discovery_containers:
