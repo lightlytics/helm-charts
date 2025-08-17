@@ -235,8 +235,7 @@ streamsec:
   env:
     LOGLEVEL: INFO
     DEBUG: 'false'
-    CLUSTER_NAME:  # ""
-    RESOURCE_GROUP:  # ""
+    CLUSTER_NAME:  # "" 
 
 tetragon:
   serviceAccount:
