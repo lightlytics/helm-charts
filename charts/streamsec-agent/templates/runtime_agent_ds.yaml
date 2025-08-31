@@ -6,6 +6,10 @@ metadata:
   labels:
   {{- include "streamsec.labels" . | nindent 4 }}
 spec:
+  {{- with .Values.streamsec.runtime_agent.nodeSelector }}
+  nodeSelector:
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
   selector:
     matchLabels:
   {{- include "streamsec.selectorLabels" . | nindent 6 }}
@@ -14,10 +18,6 @@ spec:
       labels:
     {{- include "streamsec.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.streamsec.runtime_agent.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       {{- with .Values.streamsec.runtime_agent.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}

@@ -7,6 +7,10 @@ metadata:
   labels:
   {{- include "streamsec.labels" . | nindent 4 }}
 spec:
+  {{- with .Values.streamsec.nodeSelector }}
+  nodeSelector:
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
   replicas: {{ .Values.streamsec.replicas }}
   selector:
     matchLabels:
@@ -23,10 +27,6 @@ spec:
         fsGroup: 2000
       tolerations:
           {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
-      {{- with .Values.streamsec.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       {{- with .Values.streamsec.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
