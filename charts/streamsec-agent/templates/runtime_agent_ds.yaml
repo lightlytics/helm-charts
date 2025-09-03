@@ -5,6 +5,10 @@ metadata:
   name: {{ template "streamsec.fullname" . }}-runtime-agent
   labels:
   {{- include "streamsec.labels" . | nindent 4 }}
+  annotations:
+    {{- if not .Values.streamsec.apiTokenExistingSecret }}
+      checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+    {{- end }}
 spec:
   selector:
     matchLabels:
