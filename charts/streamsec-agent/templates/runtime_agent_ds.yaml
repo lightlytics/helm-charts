@@ -60,6 +60,10 @@ spec:
             - name: CLUSTER_NAME
               value: {{ .Values.streamsec.env.CLUSTER_NAME | quote }}
             {{- end }}
+            {{- if .Values.streamsec.env.RESOURCE_GROUP }}
+            - name: RESOURCE_GROUP
+              value: {{ .Values.streamsec.env.RESOURCE_GROUP | quote }}
+            {{- end }}
           securityContext:
             privileged: true
           terminationMessagePolicy: FallbackToLogsOnError
