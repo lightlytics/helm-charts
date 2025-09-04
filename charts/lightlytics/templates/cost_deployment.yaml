@@ -6,10 +6,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
   {{- include "lightlytics.labels" . | nindent 4 }}
-  annotations:
-    {{- if not .Values.lightlytics.apiTokenExistingSecret }}
-      checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
-    {{- end }}
 spec:
   replicas: {{ .Values.lightlytics.replicas }}
   selector:
