@@ -6,6 +6,10 @@ metadata:
   labels:
   {{- include "streamsec.labels" . | nindent 4 }}
     app: {{ template "streamsec.fullname" . }}-process-discovery
+  annotations:
+    {{- if not .Values.streamsec.apiTokenExistingSecret }}
+      checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+    {{- end }}
 spec:
   selector:
     matchLabels:
