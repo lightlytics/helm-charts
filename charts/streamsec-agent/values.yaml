@@ -229,7 +229,7 @@ streamsec:
     image:
       name: runtime-agent
       tag: 1.2.3
-      digest: sha256:5df78e41d7ac45b5b8ab465c73fbbb7efef02b1ab72e8cc5bda5f8a014af6382
+      digest: sha256:05cc1d6568436d5fd03cb5c1c01c381281f4163c4882bf363c407603d91aa749
       pullPolicy: IfNotPresent
 
   env:
