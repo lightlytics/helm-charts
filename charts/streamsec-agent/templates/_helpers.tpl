@@ -106,5 +106,5 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "streamsec.clusterRoleName" -}}
-{{- coalesce (.Values.streamsec.clusterRole.name) (printf "%s-cluster-role-sbom" .Release.Name) }}
+{{- coalesce (.Values.streamsec.clusterRole.name) (printf "%s-cluster-role" .Release.Name) }}
 {{- end }}
