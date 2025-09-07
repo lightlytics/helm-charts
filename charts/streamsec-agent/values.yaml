@@ -89,7 +89,7 @@ streamsec:
     tag: 1.1.5
 
     #streamsec.image.digest -- Stream Security agent image digest to use.
-    digest: sha256:7f96909de021d67c03c5b65fc8454b47aabdd056e866f407a391fd19f7943d3c
+    digest: sha256:09facb926acc9d05cf2d626dae467c65523dc412f5610a8d6ad8adc05fe46275
 
     #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -163,8 +163,6 @@ streamsec:
           limits:
             cpu: 2000m
             memory: 2048Mi
-
-
   cluster_agent_containers:
     enabled: true
     containers:
@@ -196,7 +194,7 @@ streamsec:
           cpu: 2000m
           memory: 4096Mi
       events:
-        enabled: false
+        enabled: true
         name: events
         command:
         - /usr/local/bin/python
