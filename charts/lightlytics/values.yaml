@@ -160,7 +160,7 @@ lightlytics:
             cpu: 2000m
             memory: 4096Mi
       lightlytics-events:
-        enabled: false
+        enabled: true
         name: lightlytics-events
         command:
           - /usr/local/bin/python
@@ -201,7 +201,7 @@ lightlytics:
         memory: 2048Mi
 
   process_discovery_containers:
-    enabled: true
+    enabled: false
     containers:
       lightlytics-process-discovery:
         name: lightlytics-process-discovery
