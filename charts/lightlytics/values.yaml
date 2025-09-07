@@ -146,7 +146,7 @@ lightlytics:
     enabled: true
     containers:
       lightlytics-krs:
-        enabled: false
+        enabled: true
         name: lightlytics-krs
         command:
           - /usr/local/bin/python
@@ -201,7 +201,7 @@ lightlytics:
         memory: 2048Mi
 
   process_discovery_containers:
-    enabled: false
+    enabled: true
     containers:
       lightlytics-process-discovery:
         name: lightlytics-process-discovery
