@@ -189,12 +189,13 @@ streamsec:
           - /usr/local/bin/python
           - main.py
           - sbom
-        requests:
-          cpu: 1000m
-          memory: 2048Mi
-        limits:
-          cpu: 2000m
-          memory: 4096Mi
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+          limits:
+            cpu: 2000m
+            memory: 4096Mi
       events:
         enabled: true
         name: events
