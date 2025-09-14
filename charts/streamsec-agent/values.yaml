@@ -86,10 +86,10 @@ streamsec:
     name: cluster-agent
 
     #streamsec.image.tag -- Stream Security agent tag to use.
-    tag: 1.1.6
+    tag: 1.1.7
 
     #streamsec.image.digest -- Stream Security agent image digest to use.
-    digest: sha256:aa59c2ce2b662de85bda93444da26644eb22d9a8d1df96861e61b4ddb9d824fd
+    digest: sha256:5a94ebc9fc3f913af6e1f910903e6cecf64f43b3c21cfa1f9f0917bb4e9bd7ba
 
     #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -100,10 +100,10 @@ streamsec:
     name: cluster-agent
 
     #streamsec.cost_image.tag -- Stream Security cost agent tag to use.
-    tag: 1.1.6
+    tag: 1.1.7
 
     #streamsec.cost_image.digest -- Stream Security cost agent image digest to use.
-    digest: sha256:aa59c2ce2b662de85bda93444da26644eb22d9a8d1df96861e61b4ddb9d824fd
+    digest: sha256:5a94ebc9fc3f913af6e1f910903e6cecf64f43b3c21cfa1f9f0917bb4e9bd7ba
 
     #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -182,6 +182,20 @@ streamsec:
           limits:
             cpu: 2000m
             memory: 4096Mi
+      sbom:
+        enabled: false
+        name: sbom
+        command:
+          - /usr/local/bin/python
+          - main.py
+          - sbom
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+          limits:
+            cpu: 2000m
+            memory: 4096Mi
       events:
         enabled: true
         name: events
@@ -205,6 +219,10 @@ streamsec:
         - main.py
         - tracing_policy
         resources: {}
+
+    dockerConfigSecret:
+      enabled: false                # Set to true to mount secret to sbom container
+      name: regcred
 
   process_discovery_containers:
     enabled: false
