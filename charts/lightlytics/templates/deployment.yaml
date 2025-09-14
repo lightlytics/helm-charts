@@ -1,50 +1,38 @@
-{{- if .Values.streamsec.cluster_agent_containers.enabled }}
+{{- if .Values.lightlytics.lightlytics_containers.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "streamsec.fullname" . }}-cluster-agent
+  name: {{ template "lightlytics.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-  {{- include "streamsec.labels" . | nindent 4 }}
-  annotations:
-    {{- if not .Values.streamsec.apiTokenExistingSecret }}
-    checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
-    {{- end }}
+  {{- include "lightlytics.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.streamsec.replicas }}
+  replicas: {{ .Values.lightlytics.replicas }}
   selector:
     matchLabels:
-  {{- include "streamsec.selectorLabels" . | nindent 6 }}
+  {{- include "lightlytics.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-    {{- include "streamsec.selectorLabels" . | nindent 8 }}
+    {{- include "lightlytics.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
+      serviceAccountName: {{ template "lightlytics.serviceAccountName" . }}
       securityContext:
         runAsUser: 1000
         runAsGroup: 3000
         fsGroup: 2000
       tolerations:
-          {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
-      {{- with .Values.streamsec.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.streamsec.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.streamsec.dnsConfig }}
+          {{- toYaml .Values.lightlytics.tolerations | nindent 8 }}
+      {{- with .Values.lightlytics.dnsConfig }}
       dnsConfig:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-      {{- range $container_name, $container_values := .Values.streamsec.cluster_agent_containers.containers }}
-      {{- if or ($container_values.enabled) (and (eq $container_name "tracing-policy") ($.Values.streamsec.runtime_agent.enabled)) }}
+      {{- range $container_name, $container_values := .Values.lightlytics.lightlytics_containers.containers }}
+      {{- if $container_values.enabled }}
         - name: {{ $container_name }}
-          image: {{ include "streamsec.image-path" $ }}
-          imagePullPolicy: {{ $.Values.streamsec.image.pullPolicy }}
+          image: {{ template "lightlytics.image-path" $}}
+          imagePullPolicy: {{ $.Values.lightlytics.image.pullPolicy }}
           command:
             {{- range $container_values.command }}
             - {{ . }}
@@ -74,57 +62,54 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 30
           env:
-            - name: STREAMSEC_API_TOKEN
+            - name: LIGHTLYTICS_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "streamsec.apiTokenSecretName" $ }}
+                  name: {{ template "lightlytics.apiTokenSecretName" $ }}
                   key: api-key
-            - name: STREAMSEC_API_URL
-              value: {{ $.Values.streamsec.apiUrl | quote }}
+            - name: LIGHTLYTICS_API_URL
+              value: {{ $.Values.lightlytics.apiUrl | quote }}
 
             - name: ENABLE_POD_PROCESSES
-              value: {{ $.Values.streamsec.process_discovery_containers.enabled | quote }}
+              value: {{ $.Values.lightlytics.process_discovery_containers.enabled | quote }}
 
             - name: POD_PROCESSES_SERVICE
-              value: {{ template "streamsec.fullname" $}}-process-discovery
+              value: {{ template "lightlytics.fullname" $}}-process-discovery
 
             - name: POD_PROCESSES_PORT
               value: "8080"
 
             - name: FULL_SCAN_SCHEDULE_SECONDS
-              value: {{ $.Values.streamsec.fullScanScheduleSeconds | quote }}
+              value: {{ $.Values.lightlytics.fullScanScheduleSeconds | quote }}
 
             - name: FILTER_RUNNING_PODS
-              value: {{ $.Values.streamsec.filterRunningPods | quote }}
+              value: {{ $.Values.lightlytics.filterRunningPods | quote }}
 
             - name: FIELD_SELECTORS_NAMESPACES
-              value: {{ $.Values.streamsec.fieldSelectorsNamespaces | quote }}
+              value: {{ $.Values.lightlytics.fieldSelectorsNamespaces | quote }}
 
             - name: FIELD_SELECTORS_NAMES
-              value: {{ $.Values.streamsec.fieldSelectorsNames | quote }}
+              value: {{ $.Values.lightlytics.fieldSelectorsNames | quote }}
 
             - name: IN_LABEL_SELECTOR
-              value: {{ $.Values.streamsec.inLabelSelector | quote }}
+              value: {{ $.Values.lightlytics.inLabelSelector | quote }}
 
             - name: EXISTS_LABEL_SELECTOR
-              value: {{ $.Values.streamsec.existLabelSelector | quote }}
+              value: {{ $.Values.lightlytics.existLabelSelector | quote }}
 
             - name: EQUALS_LABEL_SELECTOR
-              value: {{ $.Values.streamsec.equalsLabelSelector | quote }}
+              value: {{ $.Values.lightlytics.equalsLabelSelector | quote }}
 
             - name: WORKFLOW
-              value: {{ $.Values.streamsec.workflow | quote }}
+              value: {{ $.Values.lightlytics.workflow | quote }}
 
             - name: PORT
-              value: {{ $.Values.streamsec.port | quote }}
+              value: {{ $.Values.lightlytics.port | quote }}
 
-            {{- range $envVarName, $envVarValue := $.Values.streamsec.env }}
-              {{- if $envVarValue }}
+            {{- range $envVarName, $envVarValue := $.Values.lightlytics.env }}
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
-              {{- end }}
             {{- end }}
-
     {{- end }}
     {{- end }}
 {{- end }}
