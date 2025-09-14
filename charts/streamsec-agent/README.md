@@ -73,7 +73,7 @@ Stream Security Agent Helm Chart
 | streamsec.cost_image.pullPolicy | string | `"IfNotPresent"` | Stream Security cost agent image pullPolicy |
 | streamsec.cost_image.tag | string | `"1.1.6"` | Stream Security cost agent tag to use. |
 | streamsec.dnsConfig | object | `{}` |  |
-| streamsec.env.CLUSTER_NAME | string | `nil` |  |
+| streamsec.env.CLUSTER_NAME | string | `nil` |  | In case ec2:DescribeTags permission missing, used to propagate the EKS Cluser name to the Agents
 | streamsec.env.DEBUG | string | `"false"` |  |
 | streamsec.env.LOGLEVEL | string | `"INFO"` |  |
 | streamsec.env.RESOURCE_GROUP | string | `nil` |  |
