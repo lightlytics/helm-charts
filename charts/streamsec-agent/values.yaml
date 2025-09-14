@@ -163,6 +163,8 @@ streamsec:
           limits:
             cpu: 2000m
             memory: 2048Mi
+
+
   cluster_agent_containers:
     enabled: true
     containers:
@@ -243,14 +245,15 @@ streamsec:
     updateStrategy: {}
     image:
       name: runtime-agent
-      tag: 1.2.0
-      digest: sha256:51dfbd8b3cf78eab6c9ea909e702f30e9dd34deb31f18b7e7211a7d597cc975b
+      tag: 1.2.3
+      digest: sha256:05cc1d6568436d5fd03cb5c1c01c381281f4163c4882bf363c407603d91aa749
       pullPolicy: IfNotPresent
 
   env:
     LOGLEVEL: INFO
     DEBUG: 'false'
     CLUSTER_NAME:  # "" 
+    RESOURCE_GROUP:  # ""
 
 tetragon:
   serviceAccount:
