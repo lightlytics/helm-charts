@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.1.49](https://img.shields.io/badge/Version-1.1.49-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.1.57](https://img.shields.io/badge/Version-1.1.57-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -45,11 +45,22 @@ Stream Security Agent Helm Chart
 | streamsec.cluster_agent_containers.containers.network-policy.enabled | bool | `false` |  |
 | streamsec.cluster_agent_containers.containers.network-policy.name | string | `"network-policy"` |  |
 | streamsec.cluster_agent_containers.containers.network-policy.resources | object | `{}` |  |
+| streamsec.cluster_agent_containers.containers.sbom.command[0] | string | `"/usr/local/bin/python"` |  |
+| streamsec.cluster_agent_containers.containers.sbom.command[1] | string | `"main.py"` |  |
+| streamsec.cluster_agent_containers.containers.sbom.command[2] | string | `"sbom"` |  |
+| streamsec.cluster_agent_containers.containers.sbom.enabled | bool | `false` |  |
+| streamsec.cluster_agent_containers.containers.sbom.name | string | `"sbom"` |  |
+| streamsec.cluster_agent_containers.containers.sbom.resources.limits.cpu | string | `"2000m"` |  |
+| streamsec.cluster_agent_containers.containers.sbom.resources.limits.memory | string | `"4096Mi"` |  |
+| streamsec.cluster_agent_containers.containers.sbom.resources.requests.cpu | string | `"1000m"` |  |
+| streamsec.cluster_agent_containers.containers.sbom.resources.requests.memory | string | `"2048Mi"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.command[0] | string | `"/usr/local/bin/python"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.command[1] | string | `"main.py"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.command[2] | string | `"tracing_policy"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.name | string | `"tracing-policy"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.resources | object | `{}` |  |
+| streamsec.cluster_agent_containers.dockerConfigSecret.enabled | bool | `false` |  |
+| streamsec.cluster_agent_containers.dockerConfigSecret.name | string | `"regcred"` |  |
 | streamsec.cluster_agent_containers.enabled | bool | `true` |  |
 | streamsec.cost_containers.containers.connector.command[0] | string | `"/usr/local/bin/python"` |  |
 | streamsec.cost_containers.containers.connector.command[1] | string | `"main.py"` |  |
@@ -68,10 +79,10 @@ Stream Security Agent Helm Chart
 | streamsec.cost_containers.containers.cost.resources.requests.cpu | string | `"800m"` |  |
 | streamsec.cost_containers.containers.cost.resources.requests.memory | string | `"1024Mi"` |  |
 | streamsec.cost_containers.enabled | bool | `false` |  |
-| streamsec.cost_image.digest | string | `"sha256:aa59c2ce2b662de85bda93444da26644eb22d9a8d1df96861e61b4ddb9d824fd"` | Stream Security cost agent image digest to use. |
+| streamsec.cost_image.digest | string | `"sha256:4682db901be6bb3f0d0340de931427625f703ba2e35b489faa69bfa50afb8d8c"` | Stream Security cost agent image digest to use. |
 | streamsec.cost_image.name | string | `"cluster-agent"` | Stream Security cost agent image name. |
 | streamsec.cost_image.pullPolicy | string | `"IfNotPresent"` | Stream Security cost agent image pullPolicy |
-| streamsec.cost_image.tag | string | `"1.1.6"` | Stream Security cost agent tag to use. |
+| streamsec.cost_image.tag | string | `"1.2.0"` | Stream Security cost agent tag to use. |
 | streamsec.dnsConfig | object | `{}` |  |
 | streamsec.env.CLUSTER_NAME | string | `nil` |  |
 | streamsec.env.DEBUG | string | `"false"` |  |
@@ -83,10 +94,10 @@ Stream Security Agent Helm Chart
 | streamsec.fieldSelectorsNamespaces | string | `nil` | filter/unfilter resources from specific namespace |
 | streamsec.filterRunningPods | bool | `true` | takes only pods which at status running |
 | streamsec.fullScanScheduleSeconds | int | `1800` | periodic Kubernetes resources scan at seconds |
-| streamsec.image.digest | string | `"sha256:aa59c2ce2b662de85bda93444da26644eb22d9a8d1df96861e61b4ddb9d824fd"` | Stream Security agent image digest to use. |
+| streamsec.image.digest | string | `"sha256:4682db901be6bb3f0d0340de931427625f703ba2e35b489faa69bfa50afb8d8c"` | Stream Security agent image digest to use. |
 | streamsec.image.name | string | `"cluster-agent"` | Stream Security agent image name. |
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
-| streamsec.image.tag | string | `"1.1.6"` | Stream Security agent tag to use. |
+| streamsec.image.tag | string | `"1.2.0"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
 | streamsec.nodeSelector | object | `{}` |  |
 | streamsec.port | int | `443` | streamsec port |
@@ -99,10 +110,10 @@ Stream Security Agent Helm Chart
 | streamsec.replicas | int | `1` |  |
 | streamsec.runtime_agent.affinity | object | `{}` |  |
 | streamsec.runtime_agent.enabled | bool | `false` |  |
-| streamsec.runtime_agent.image.digest | string | `"sha256:cfcd12d85d88aff2d345af5fc8ee3195adbc8c605f674632a28a979ca0ae3739"` |  |
+| streamsec.runtime_agent.image.digest | string | `"sha256:05cc1d6568436d5fd03cb5c1c01c381281f4163c4882bf363c407603d91aa749"` |  |
 | streamsec.runtime_agent.image.name | string | `"runtime-agent"` |  |
 | streamsec.runtime_agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| streamsec.runtime_agent.image.tag | string | `"1.2.1"` |  |
+| streamsec.runtime_agent.image.tag | string | `"1.2.3"` |  |
 | streamsec.runtime_agent.nodeSelector | object | `{}` |  |
 | streamsec.runtime_agent.resources.requests.cpu | string | `"100m"` |  |
 | streamsec.runtime_agent.resources.requests.memory | string | `"128Mi"` |  |
