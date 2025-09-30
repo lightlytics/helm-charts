@@ -276,7 +276,9 @@ tetragon:
       enable-process-ancestors: true
       enable-process-cred: true
     exportFileMaxSizeMB: 50
+    exportDenyList: |-
+      {"event_set": ["PROCESS_EXIT"]}
     fieldFilters: |
-      {"event_set":["PROCESS_KPROBE","PROCESS_EXIT"], "fields":"parent", "action":"EXCLUDE"}
-      {"event_set":["PROCESS_KPROBE","PROCESS_EXIT","PROCESS_EXEC"],"fields":"process.parent_exec_id,parent.parent_exec_id,ancestors.parent_exec_id,parent.cwd,ancestors.exec_id", "action":"EXCLUDE"}
+      {"event_set":["PROCESS_KPROBE"], "fields":"parent", "action":"EXCLUDE"}
+      {"event_set":["PROCESS_KPROBE","PROCESS_EXEC"],"fields":"process.parent_exec_id,parent.parent_exec_id,ancestors.parent_exec_id,parent.cwd,ancestors.exec_id", "action":"EXCLUDE"}
       {"event_set":["PROCESS_EXEC"],"fields":"process.cap,parent.cap,parent.process_credentials,ancestors.cap,ancestors.process_credentials", "action":"EXCLUDE"}
