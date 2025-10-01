@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.1.57](https://img.shields.io/badge/Version-1.1.57-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.1.58](https://img.shields.io/badge/Version-1.1.58-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -79,10 +79,10 @@ Stream Security Agent Helm Chart
 | streamsec.cost_containers.containers.cost.resources.requests.cpu | string | `"800m"` |  |
 | streamsec.cost_containers.containers.cost.resources.requests.memory | string | `"1024Mi"` |  |
 | streamsec.cost_containers.enabled | bool | `false` |  |
-| streamsec.cost_image.digest | string | `"sha256:4682db901be6bb3f0d0340de931427625f703ba2e35b489faa69bfa50afb8d8c"` | Stream Security cost agent image digest to use. |
+| streamsec.cost_image.digest | string | `"sha256:385df15ca0c63f6ecd0eb755ec5fec3b3b8ca3a776ddcd1d249e2190e1d3c89e"` | Stream Security cost agent image digest to use. |
 | streamsec.cost_image.name | string | `"cluster-agent"` | Stream Security cost agent image name. |
 | streamsec.cost_image.pullPolicy | string | `"IfNotPresent"` | Stream Security cost agent image pullPolicy |
-| streamsec.cost_image.tag | string | `"1.2.0"` | Stream Security cost agent tag to use. |
+| streamsec.cost_image.tag | string | `"1.2.1"` | Stream Security cost agent tag to use. |
 | streamsec.dnsConfig | object | `{}` |  |
 | streamsec.env.CLUSTER_NAME | string | `nil` |  |
 | streamsec.env.DEBUG | string | `"false"` |  |
@@ -94,10 +94,10 @@ Stream Security Agent Helm Chart
 | streamsec.fieldSelectorsNamespaces | string | `nil` | filter/unfilter resources from specific namespace |
 | streamsec.filterRunningPods | bool | `true` | takes only pods which at status running |
 | streamsec.fullScanScheduleSeconds | int | `1800` | periodic Kubernetes resources scan at seconds |
-| streamsec.image.digest | string | `"sha256:4682db901be6bb3f0d0340de931427625f703ba2e35b489faa69bfa50afb8d8c"` | Stream Security agent image digest to use. |
+| streamsec.image.digest | string | `"sha256:385df15ca0c63f6ecd0eb755ec5fec3b3b8ca3a776ddcd1d249e2190e1d3c89e"` | Stream Security agent image digest to use. |
 | streamsec.image.name | string | `"cluster-agent"` | Stream Security agent image name. |
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
-| streamsec.image.tag | string | `"1.2.0"` | Stream Security agent tag to use. |
+| streamsec.image.tag | string | `"1.2.1"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
 | streamsec.nodeSelector | object | `{}` |  |
 | streamsec.port | int | `443` | streamsec port |
@@ -130,10 +130,11 @@ Stream Security Agent Helm Chart
 | streamsec.workflow | string | `"full_scan"` | streamsec workflow type  |
 | tetragon.export.mode | string | `""` |  |
 | tetragon.serviceAccount.name | string | `"tetragon"` |  |
+| tetragon.tetragon.exportDenyList | string | `"{\"event_set\": [\"PROCESS_EXIT\"]}"` |  |
 | tetragon.tetragon.exportFileMaxSizeMB | int | `50` |  |
 | tetragon.tetragon.extraArgs.enable-process-ancestors | bool | `true` |  |
 | tetragon.tetragon.extraArgs.enable-process-cred | bool | `true` |  |
-| tetragon.tetragon.fieldFilters | string | `"{\"event_set\":[\"PROCESS_KPROBE\",\"PROCESS_EXIT\"], \"fields\":\"parent\", \"action\":\"EXCLUDE\"}\n{\"event_set\":[\"PROCESS_KPROBE\",\"PROCESS_EXIT\",\"PROCESS_EXEC\"],\"fields\":\"process.parent_exec_id,parent.parent_exec_id,ancestors.parent_exec_id,parent.cwd,ancestors.exec_id\", \"action\":\"EXCLUDE\"}\n{\"event_set\":[\"PROCESS_EXEC\"],\"fields\":\"process.cap,parent.cap,parent.process_credentials,ancestors.cap,ancestors.process_credentials\", \"action\":\"EXCLUDE\"}\n"` |  |
+| tetragon.tetragon.fieldFilters | string | `"{\"event_set\":[\"PROCESS_KPROBE\"], \"fields\":\"parent\", \"action\":\"EXCLUDE\"}\n{\"event_set\":[\"PROCESS_KPROBE\",\"PROCESS_EXEC\"],\"fields\":\"process.parent_exec_id,parent.parent_exec_id,ancestors.parent_exec_id,parent.cwd,ancestors.exec_id\", \"action\":\"EXCLUDE\"}\n{\"event_set\":[\"PROCESS_EXEC\"],\"fields\":\"process.cap,parent.cap,parent.process_credentials,ancestors.cap,ancestors.process_credentials\", \"action\":\"EXCLUDE\"}\n"` |  |
 | tetragon.tetragon.grpc.address | string | `"localhost:59751"` |  |
 | tetragon.tetragon.healthGrpc.port | int | `9763` |  |
 | tetragon.tetragon.resources.requests.cpu | string | `"200m"` |  |
