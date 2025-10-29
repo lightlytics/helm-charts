@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.1.60](https://img.shields.io/badge/Version-1.1.60-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.1.61](https://img.shields.io/badge/Version-1.1.61-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -110,10 +110,10 @@ Stream Security Agent Helm Chart
 | streamsec.replicas | int | `1` |  |
 | streamsec.runtime_agent.affinity | object | `{}` |  |
 | streamsec.runtime_agent.enabled | bool | `false` |  |
-| streamsec.runtime_agent.image.digest | string | `"sha256:1c1a97efcb9b2315cb79012c879c527b4130202ebb3391c64084aa4ad9989025"` |  |
+| streamsec.runtime_agent.image.digest | string | `"sha256:f33a33d958ce290b807bc477c620b739fe6fbd26b09c4d1bca3ac1f7f6391f84"` |  |
 | streamsec.runtime_agent.image.name | string | `"runtime-agent"` |  |
 | streamsec.runtime_agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| streamsec.runtime_agent.image.tag | string | `"1.3.0"` |  |
+| streamsec.runtime_agent.image.tag | string | `"1.3.1"` |  |
 | streamsec.runtime_agent.nodeSelector | object | `{}` |  |
 | streamsec.runtime_agent.resources.requests.cpu | string | `"100m"` |  |
 | streamsec.runtime_agent.resources.requests.memory | string | `"128Mi"` |  |
