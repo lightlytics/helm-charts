@@ -56,6 +56,10 @@ spec:
                 secretKeyRef:
                   name: {{ template "streamsec.apiTokenSecretName" $ }}
                   key: api-key
+            {{- if .Values.streamsec.env.CLUSTER_ID }}
+            - name: CLUSTER_ID
+              value: {{ .Values.streamsec.env.CLUSTER_ID | quote }}
+            {{- end }}
             {{- if .Values.streamsec.env.CLUSTER_NAME }}
             - name: CLUSTER_NAME
               value: {{ .Values.streamsec.env.CLUSTER_NAME | quote }}

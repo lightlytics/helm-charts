@@ -253,6 +253,7 @@ streamsec:
   env:
     LOGLEVEL: INFO
     DEBUG: 'false'
+    CLUSTER_ID:  # "" 
     CLUSTER_NAME:  # "" 
     RESOURCE_GROUP:  # ""
 
