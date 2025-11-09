@@ -255,6 +255,8 @@ streamsec:
     DEBUG: 'false'
     CLUSTER_ID:  # "" 
     CLUSTER_NAME:  # "" 
+    ACCOUNT_ID:  # "" 
+    REGION:  # "" 
     RESOURCE_GROUP:  # ""
 
 tetragon:
