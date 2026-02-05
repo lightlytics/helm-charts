@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.1.66](https://img.shields.io/badge/Version-1.1.66-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.1.69](https://img.shields.io/badge/Version-1.1.69-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -79,10 +79,10 @@ Stream Security Agent Helm Chart
 | streamsec.cost_containers.containers.cost.resources.requests.cpu | string | `"800m"` |  |
 | streamsec.cost_containers.containers.cost.resources.requests.memory | string | `"1024Mi"` |  |
 | streamsec.cost_containers.enabled | bool | `false` |  |
-| streamsec.cost_image.digest | string | `"sha256:71379e88c33e9989341eabf62a61f95cb800445de62b12cddc6f80ada557c521"` | Stream Security cost agent image digest to use. |
+| streamsec.cost_image.digest | string | `"sha256:6b5021f226cc7dd217615a0715790b4b00515d6fd162ec6790d2956410b84f93"` | Stream Security cost agent image digest to use. |
 | streamsec.cost_image.name | string | `"cluster-agent"` | Stream Security cost agent image name. |
 | streamsec.cost_image.pullPolicy | string | `"IfNotPresent"` | Stream Security cost agent image pullPolicy |
-| streamsec.cost_image.tag | string | `"1.2.6"` | Stream Security cost agent tag to use. |
+| streamsec.cost_image.tag | string | `"1.2.10"` | Stream Security cost agent tag to use. |
 | streamsec.dnsConfig | object | `{}` |  |
 | streamsec.env.ACCOUNT_ID | string | `nil` |  |
 | streamsec.env.CLUSTER_ID | string | `nil` |  |
@@ -97,10 +97,10 @@ Stream Security Agent Helm Chart
 | streamsec.fieldSelectorsNamespaces | string | `nil` | filter/unfilter resources from specific namespace |
 | streamsec.filterRunningPods | bool | `true` | takes only pods which at status running |
 | streamsec.fullScanScheduleSeconds | int | `1800` | periodic Kubernetes resources scan at seconds |
-| streamsec.image.digest | string | `"sha256:71379e88c33e9989341eabf62a61f95cb800445de62b12cddc6f80ada557c521"` | Stream Security agent image digest to use. |
+| streamsec.image.digest | string | `"sha256:6b5021f226cc7dd217615a0715790b4b00515d6fd162ec6790d2956410b84f93"` | Stream Security agent image digest to use. |
 | streamsec.image.name | string | `"cluster-agent"` | Stream Security agent image name. |
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
-| streamsec.image.tag | string | `"1.2.6"` | Stream Security agent tag to use. |
+| streamsec.image.tag | string | `"1.2.10"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
 | streamsec.nodeSelector | object | `{}` |  |
 | streamsec.port | int | `443` | streamsec port |
@@ -113,10 +113,10 @@ Stream Security Agent Helm Chart
 | streamsec.replicas | int | `1` |  |
 | streamsec.runtime_agent.affinity | object | `{}` |  |
 | streamsec.runtime_agent.enabled | bool | `false` |  |
-| streamsec.runtime_agent.image.digest | string | `"sha256:f33a33d958ce290b807bc477c620b739fe6fbd26b09c4d1bca3ac1f7f6391f84"` |  |
+| streamsec.runtime_agent.image.digest | string | `"sha256:3452bacea055c7acce5dcd03a1927a1c555a9e970b29de257efe7416ac1201a4"` |  |
 | streamsec.runtime_agent.image.name | string | `"runtime-agent"` |  |
 | streamsec.runtime_agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| streamsec.runtime_agent.image.tag | string | `"1.3.1"` |  |
+| streamsec.runtime_agent.image.tag | string | `"1.3.4"` |  |
 | streamsec.runtime_agent.nodeSelector | object | `{}` |  |
 | streamsec.runtime_agent.resources.requests.cpu | string | `"100m"` |  |
 | streamsec.runtime_agent.resources.requests.memory | string | `"128Mi"` |  |
