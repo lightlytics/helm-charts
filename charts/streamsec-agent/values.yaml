@@ -81,6 +81,17 @@ streamsec:
 
   replicas: 1
 
+  # podSecurityContext -- Security context applied at the pod level for all non-privileged workloads
+  # (cluster_agent, cost, process_discovery). Override in your values to adjust for your PSP/PSS policies.
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 3000
+    fsGroup: 2000
+    supplementalGroups: [1000]
+    seccompProfile:
+      type: RuntimeDefault
+
   image:
     #streamsec.image.name -- Stream Security agent image name.
     name: cluster-agent
