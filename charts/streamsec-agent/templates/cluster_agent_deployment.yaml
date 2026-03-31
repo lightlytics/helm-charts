@@ -22,9 +22,7 @@ spec:
     spec:
       serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 3000
-        fsGroup: 2000
+        {{- toYaml .Values.streamsec.podSecurityContext | nindent 8 }}
       tolerations:
         {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
       {{- with .Values.streamsec.nodeSelector }}
@@ -65,8 +63,6 @@ spec:
             capabilities:
               drop:
                 - all
-              add:
-                - NET_BIND_SERVICE
           readinessProbe:
             exec:
               command:
