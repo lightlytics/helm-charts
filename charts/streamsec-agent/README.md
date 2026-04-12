@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.1.69](https://img.shields.io/badge/Version-1.1.69-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.1.70](https://img.shields.io/badge/Version-1.1.70-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -103,6 +103,12 @@ Stream Security Agent Helm Chart
 | streamsec.image.tag | string | `"1.2.10"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
 | streamsec.nodeSelector | object | `{}` |  |
+| streamsec.podSecurityContext.fsGroup | int | `2000` |  |
+| streamsec.podSecurityContext.runAsGroup | int | `3000` |  |
+| streamsec.podSecurityContext.runAsNonRoot | bool | `true` |  |
+| streamsec.podSecurityContext.runAsUser | int | `1000` |  |
+| streamsec.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
+| streamsec.podSecurityContext.supplementalGroups[0] | int | `1000` |  |
 | streamsec.port | int | `443` | streamsec port |
 | streamsec.process_discovery_containers.containers.process-discovery.name | string | `"process-discovery"` |  |
 | streamsec.process_discovery_containers.containers.process-discovery.resources | object | `{}` |  |
@@ -113,10 +119,10 @@ Stream Security Agent Helm Chart
 | streamsec.replicas | int | `1` |  |
 | streamsec.runtime_agent.affinity | object | `{}` |  |
 | streamsec.runtime_agent.enabled | bool | `false` |  |
-| streamsec.runtime_agent.image.digest | string | `"sha256:3452bacea055c7acce5dcd03a1927a1c555a9e970b29de257efe7416ac1201a4"` |  |
+| streamsec.runtime_agent.image.digest | string | `"sha256:655db8f5dec1399706e6c33a01dfca87acc6649315e99c7f0d7b849db3907730"` |  |
 | streamsec.runtime_agent.image.name | string | `"runtime-agent"` |  |
 | streamsec.runtime_agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| streamsec.runtime_agent.image.tag | string | `"1.3.4"` |  |
+| streamsec.runtime_agent.image.tag | string | `"1.4.0"` |  |
 | streamsec.runtime_agent.nodeSelector | object | `{}` |  |
 | streamsec.runtime_agent.resources.requests.cpu | string | `"100m"` |  |
 | streamsec.runtime_agent.resources.requests.memory | string | `"128Mi"` |  |
