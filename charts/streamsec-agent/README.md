@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.1.70](https://img.shields.io/badge/Version-1.1.70-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.1.71](https://img.shields.io/badge/Version-1.1.71-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -8,7 +8,7 @@ Stream Security Agent Helm Chart
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.cilium.io | tetragon | 1.4.1 |
+| https://helm.cilium.io | tetragon | 1.6.1 |
 
 ## Values
 
