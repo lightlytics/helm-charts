@@ -141,7 +141,7 @@ Stream Security Agent Helm Chart
 | tetragon.serviceAccount.name | string | `"tetragon"` |  |
 | tetragon.tetragon.exportDenyList | string | `"{\"event_set\": [\"PROCESS_EXIT\"]}"` |  |
 | tetragon.tetragon.exportFileMaxSizeMB | int | `50` |  |
-| tetragon.tetragon.extraArgs.enable-ancestors | string | `"[\"base\"]"` |  |
+| tetragon.tetragon.extraArgs.enable-ancestors | string | `"base"` |  |
 | tetragon.tetragon.extraArgs.enable-process-cred | bool | `true` |  |
 | tetragon.tetragon.fieldFilters | string | `"{\"event_set\":[\"PROCESS_KPROBE\"], \"fields\":\"parent\", \"action\":\"EXCLUDE\"}\n{\"event_set\":[\"PROCESS_KPROBE\",\"PROCESS_EXEC\"],\"fields\":\"process.parent_exec_id,parent.parent_exec_id,ancestors.parent_exec_id,parent.cwd,ancestors.exec_id\", \"action\":\"EXCLUDE\"}\n{\"event_set\":[\"PROCESS_EXEC\"],\"fields\":\"process.cap,parent.cap,parent.process_credentials,ancestors.cap,ancestors.process_credentials\", \"action\":\"EXCLUDE\"}\n"` |  |
 | tetragon.tetragon.grpc.address | string | `"localhost:59751"` |  |
