@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.1.70](https://img.shields.io/badge/Version-1.1.70-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.1.71](https://img.shields.io/badge/Version-1.1.71-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -8,7 +8,7 @@ Stream Security Agent Helm Chart
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.cilium.io | tetragon | 1.4.1 |
+| https://helm.cilium.io | tetragon | 1.6.1 |
 
 ## Values
 
@@ -141,7 +141,7 @@ Stream Security Agent Helm Chart
 | tetragon.serviceAccount.name | string | `"tetragon"` |  |
 | tetragon.tetragon.exportDenyList | string | `"{\"event_set\": [\"PROCESS_EXIT\"]}"` |  |
 | tetragon.tetragon.exportFileMaxSizeMB | int | `50` |  |
-| tetragon.tetragon.extraArgs.enable-process-ancestors | bool | `true` |  |
+| tetragon.tetragon.extraArgs.enable-ancestors | string | `"[\"base\"]"` |  |
 | tetragon.tetragon.extraArgs.enable-process-cred | bool | `true` |  |
 | tetragon.tetragon.fieldFilters | string | `"{\"event_set\":[\"PROCESS_KPROBE\"], \"fields\":\"parent\", \"action\":\"EXCLUDE\"}\n{\"event_set\":[\"PROCESS_KPROBE\",\"PROCESS_EXEC\"],\"fields\":\"process.parent_exec_id,parent.parent_exec_id,ancestors.parent_exec_id,parent.cwd,ancestors.exec_id\", \"action\":\"EXCLUDE\"}\n{\"event_set\":[\"PROCESS_EXEC\"],\"fields\":\"process.cap,parent.cap,parent.process_credentials,ancestors.cap,ancestors.process_credentials\", \"action\":\"EXCLUDE\"}\n"` |  |
 | tetragon.tetragon.grpc.address | string | `"localhost:59751"` |  |

@@ -287,7 +287,7 @@ tetragon:
     healthGrpc:
       port: 9763
     extraArgs:
-      enable-process-ancestors: true
+      enable-ancestors: '["base"]'
       enable-process-cred: true
     exportFileMaxSizeMB: 50
     exportDenyList: |-
