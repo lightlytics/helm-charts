@@ -43,6 +43,12 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            {{- end }}
             - name: NODE_NAME
               valueFrom:
                 fieldRef:
@@ -76,6 +82,10 @@ spec:
             - name: RESOURCE_GROUP
               value: {{ .Values.streamsec.env.RESOURCE_GROUP | quote }}
             {{- end }}
+            {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
+            - name: RESPONSE_ACTIONS_ENABLED
+              value: "true"
+            {{- end }}
           securityContext:
             privileged: true
           terminationMessagePolicy: FallbackToLogsOnError
@@ -86,6 +96,10 @@ spec:
               name: export-logs
             - mountPath: /host/proc
               name: proc
+            {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
+            - mountPath: /run/containerd/containerd.sock
+              name: containerd-sock
+            {{- end }}
       dnsPolicy: {{ .Values.dnsPolicy }}
       hostNetwork: true
       hostPID: true
@@ -108,6 +122,12 @@ spec:
             path: /proc
             type: DirectoryOrCreate
           name: proc
+        {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
+        - hostPath:
+            path: /run/containerd/containerd.sock
+            type: Socket
+          name: containerd-sock
+        {{- end }}
   {{- with .Values.updateStrategy }}
   updateStrategy:
     {{- toYaml . | nindent 4 }}

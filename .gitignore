@@ -1,5 +1,6 @@
 helm-docs
 
 charts/streamsec-agent/charts
+charts/streamsec-agent/Chart.lock
 
 test.yaml
