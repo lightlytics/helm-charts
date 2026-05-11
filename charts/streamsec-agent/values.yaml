@@ -257,8 +257,8 @@ streamsec:
     updateStrategy: {}
     image:
       name: runtime-agent
-      tag: 1.4.0
-      digest: sha256:655db8f5dec1399706e6c33a01dfca87acc6649315e99c7f0d7b849db3907730
+      tag: 1.4.2
+      digest: sha256:a71d1dd3cf8c4408e957733f9c16c75dd45a9612ac40bbd1d7c12813b0e05e5a
       pullPolicy: IfNotPresent
 
   env:
