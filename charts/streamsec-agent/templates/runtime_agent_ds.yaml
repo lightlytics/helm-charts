@@ -86,6 +86,14 @@ spec:
             - name: RESPONSE_ACTIONS_ENABLED
               value: "true"
             {{- end }}
+            {{- if .Values.streamsec.env.AI_BODY_ENABLED }}
+            - name: AI_BODY_ENABLED
+              value: {{ .Values.streamsec.env.AI_BODY_ENABLED | quote }}
+            {{- end }}
+            {{- if .Values.streamsec.env.EXTERNAL_INBOUND_BODY_ENABLED }}
+            - name: EXTERNAL_INBOUND_BODY_ENABLED
+              value: {{ .Values.streamsec.env.EXTERNAL_INBOUND_BODY_ENABLED | quote }}
+            {{- end }}
           securityContext:
             privileged: true
           terminationMessagePolicy: FallbackToLogsOnError
