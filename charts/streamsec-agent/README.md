@@ -85,6 +85,8 @@ Stream Security Agent Helm Chart
 | streamsec.cost_image.tag | string | `"1.2.10"` | Stream Security cost agent tag to use. |
 | streamsec.dnsConfig | object | `{}` |  |
 | streamsec.env.ACCOUNT_ID | string | `nil` |  |
+| streamsec.env.AI_BODY_ENABLED | string | `nil` | Enable AI body processing |
+| streamsec.env.EXTERNAL_INBOUND_BODY_ENABLED | string | `nil` | Enable external inbound body processing |
 | streamsec.env.CLUSTER_ID | string | `nil` |  |
 | streamsec.env.CLUSTER_NAME | string | `nil` |  |
 | streamsec.env.DEBUG | string | `"false"` |  |

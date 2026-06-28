@@ -269,6 +269,8 @@ streamsec:
     ACCOUNT_ID:  # "" 
     REGION:  # "" 
     RESOURCE_GROUP:  # ""
+    AI_BODY_ENABLED:  # ""
+    EXTERNAL_INBOUND_BODY_ENABLED:  # ""
 
 tetragon:
   serviceAccount:
