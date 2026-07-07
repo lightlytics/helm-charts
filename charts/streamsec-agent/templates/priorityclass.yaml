@@ -1,0 +1,15 @@
+{{- if and .Values.streamsec.priorityClass.enabled .Values.streamsec.priorityClass.create }}
+# Cluster-scoped PriorityClass for the StreamSec node-agent DaemonSets (see DEV-20663).
+# Created by Helm at install time using the installer's credentials (needs create on
+# scheduling.k8s.io/priorityclasses) — NOT by the agent runtime ServiceAccount.
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: {{ .Values.streamsec.priorityClass.name }}
+  labels:
+  {{- include "streamsec.labels" . | nindent 4 }}
+value: {{ .Values.streamsec.priorityClass.value | int }}
+globalDefault: false
+preemptionPolicy: {{ .Values.streamsec.priorityClass.preemptionPolicy | default "PreemptLowerPriority" }}
+description: {{ .Values.streamsec.priorityClass.description | quote }}
+{{- end }}

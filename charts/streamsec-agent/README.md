@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.1.76](https://img.shields.io/badge/Version-1.1.76-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -112,6 +112,12 @@ Stream Security Agent Helm Chart
 | streamsec.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | streamsec.podSecurityContext.supplementalGroups[0] | int | `1000` |  |
 | streamsec.port | int | `443` | streamsec port |
+| streamsec.priorityClass.create | bool | `true` | Render the PriorityClass object with the chart. Set false to reference an externally pre-created class of the same `name`. Only takes effect when enabled: true. |
+| streamsec.priorityClass.description | string | `"StreamSec node agents - must run on every node."` | Human-readable description on the PriorityClass object. |
+| streamsec.priorityClass.enabled | bool | `false` | Master switch. When true, the node-agent DaemonSets (runtime-agent, process-discovery) get priorityClassName set so they can schedule/preempt on fully-packed nodes (DEV-20663). Default false for staged rollout. |
+| streamsec.priorityClass.name | string | `"streamsec-agent-critical"` | Name of the PriorityClass, used for both the created object and the priorityClassName reference. |
+| streamsec.priorityClass.preemptionPolicy | string | `"PreemptLowerPriority"` | PreemptLowerPriority lets the agent evict a priority-0 pod to fit on a full node. Set to Never for schedule-only (no eviction). |
+| streamsec.priorityClass.value | int | `1000000000` | Priority value. Must be >> 0 and < system-cluster-critical (2000000000). Immutable after creation. |
 | streamsec.process_discovery_containers.containers.process-discovery.name | string | `"process-discovery"` |  |
 | streamsec.process_discovery_containers.containers.process-discovery.resources | object | `{}` |  |
 | streamsec.process_discovery_containers.enabled | bool | `false` |  |
@@ -140,6 +146,7 @@ Stream Security Agent Helm Chart
 | streamsec.tolerations[0].value | string | `"true"` |  |
 | streamsec.workflow | string | `"full_scan"` | streamsec workflow type  |
 | tetragon.export.mode | string | `""` |  |
+| tetragon.priorityClassName | string | `""` | PriorityClass for the Tetragon sensor DaemonSet (the ~200m node agent runtime-agent reads from). When enabling streamsec.priorityClass, set this to the SAME class name (default: streamsec-agent-critical). Tetragon is a subchart and cannot read streamsec.priorityClass.enabled, so set it explicitly. |
 | tetragon.serviceAccount.name | string | `"tetragon"` |  |
 | tetragon.tetragon.exportDenyList | string | `"{\"event_set\": [\"PROCESS_EXIT\"]}"` |  |
 | tetragon.tetragon.exportFileMaxSizeMB | int | `50` |  |
