@@ -22,6 +22,10 @@ spec:
         app: {{ template "streamsec.fullname" . }}-process-discovery
     spec:
       serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
+      {{- $priorityClassName := include "streamsec.priorityClassName" . }}
+      {{- if $priorityClassName }}
+      priorityClassName: {{ $priorityClassName | quote }}
+      {{- end }}
       securityContext:
         {{- toYaml .Values.streamsec.podSecurityContext | nindent 8 }}
       tolerations:

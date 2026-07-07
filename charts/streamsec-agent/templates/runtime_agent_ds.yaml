@@ -112,8 +112,9 @@ spec:
       hostNetwork: true
       hostPID: true
       hostIPC: true
-      {{- with .Values.streamsec.runtime_agent.priorityClassName }}
-      priorityClassName: "{{ . }}"
+      {{- $priorityClassName := default (include "streamsec.priorityClassName" .) .Values.streamsec.runtime_agent.priorityClassName }}
+      {{- if $priorityClassName }}
+      priorityClassName: {{ $priorityClassName | quote }}
       {{- end }}
       serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
       terminationGracePeriodSeconds: 1

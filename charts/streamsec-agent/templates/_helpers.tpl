@@ -108,3 +108,14 @@ Create the name of the service account to use
 {{- define "streamsec.clusterRoleName" -}}
 {{- coalesce (.Values.streamsec.clusterRole.name) (printf "%s-cluster-role" .Release.Name) }}
 {{- end }}
+
+{{/*
+Effective PriorityClass name for the node-agent DaemonSets.
+Returns the configured name only when priorityClass.enabled is true, otherwise empty
+(so callers can `if`/`default` on it and omit priorityClassName entirely when disabled).
+*/}}
+{{- define "streamsec.priorityClassName" -}}
+{{- if .Values.streamsec.priorityClass.enabled -}}
+{{- .Values.streamsec.priorityClass.name -}}
+{{- end -}}
+{{- end -}}

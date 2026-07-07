@@ -81,6 +81,46 @@ streamsec:
 
   replicas: 1
 
+  # priorityClass -- Dedicated PriorityClass for the node-agent DaemonSets (runtime-agent and
+  # process-discovery). Without it these pods run at priority 0 and can be left Pending on a
+  # fully-packed node (they target one existing node and cannot move elsewhere), leaving that
+  # node with no runtime security agent. See DEV-20663.
+  #
+  # NOTE: PriorityClass is a CLUSTER-SCOPED resource. Rendering it (create: true) requires the
+  # Helm installer's credentials to have create permission on scheduling.k8s.io/priorityclasses
+  # (cluster-admin does). It is created at install time by Helm, NOT by the agent's runtime
+  # ServiceAccount, so no addition to the agent ClusterRole is required. If your install path
+  # cannot create cluster-scoped objects, either pre-create the PriorityClass out of band and set
+  # create: false (the DaemonSets will reference it by `name`), or leave enabled: false.
+  priorityClass:
+    # streamsec.priorityClass.enabled -- Master switch. When true, the node-agent DaemonSets get
+    # priorityClassName set. Default false for a staged rollout (enable on your own clusters /
+    # a demo env first, then customers) because preemption is a behavior change (see below).
+    enabled: false
+
+    # streamsec.priorityClass.create -- Render the PriorityClass object with the chart. Set false
+    # to reference an externally pre-created class of the same `name` (e.g. when the installer
+    # lacks RBAC to create cluster-scoped resources). Only takes effect when enabled: true.
+    create: true
+
+    # streamsec.priorityClass.name -- Name of the PriorityClass, used both for the created object
+    # and the priorityClassName reference on the DaemonSets.
+    name: streamsec-agent-critical
+
+    # streamsec.priorityClass.value -- Priority value. Must be >> 0 (the default for unclassed
+    # pods) and < system-cluster-critical (2000000000). Immutable after creation.
+    value: 1000000000
+
+    # streamsec.priorityClass.preemptionPolicy -- PreemptLowerPriority lets the agent EVICT a
+    # priority-0 workload pod to fit on a full node (required here: a DaemonSet can't relocate;
+    # the evicted pod reschedules elsewhere / triggers cluster autoscaling, or waits for capacity
+    # on clusters without an autoscaler). Set to Never for schedule-only (no eviction; the agent
+    # may stay Pending on packed nodes).
+    preemptionPolicy: PreemptLowerPriority
+
+    # streamsec.priorityClass.description -- Human-readable description on the PriorityClass object.
+    description: "StreamSec node agents - must run on every node."
+
   # podSecurityContext -- Security context applied at the pod level for all non-privileged workloads
   # (cluster_agent, cost, process_discovery). Override in your values to adjust for your PSP/PSS policies.
   podSecurityContext:
@@ -273,6 +313,13 @@ streamsec:
     EXTERNAL_INBOUND_BODY_ENABLED:  # ""
 
 tetragon:
+  # tetragon.priorityClassName -- PriorityClass for the Tetragon sensor DaemonSet (the ~200m
+  # node agent that runtime-agent reads from). It has the same "priority 0, can't reschedule"
+  # exposure as the StreamSec DaemonSets (DEV-20663), so when enabling streamsec.priorityClass
+  # set this to the SAME class name (default: streamsec-agent-critical). Left empty by default.
+  # NOTE: Tetragon is a subchart and cannot read streamsec.priorityClass.enabled, so this must be
+  # set explicitly alongside it (both are typically set together in your per-install values overlay).
+  priorityClassName: ""
   serviceAccount:
     name: tetragon
   export:
