@@ -16,7 +16,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.2.0
+version: 1.2.1
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -25,6 +25,12 @@ appVersion: 1.1.4
 
 dependencies:
 - name: tetragon
-  condition: streamsec.runtime_agent.enabled
+  # First valid path wins: setting streamsec.tetragon.enabled explicitly overrides
+  # the legacy coupling to runtime_agent.enabled. It has no default in values.yaml
+  # on purpose — existing installs keep the fallback behavior. NOTE: the path must
+  # NOT be `tetragon.enabled`: Helm coalesces the subchart's own defaults under the
+  # top-level `tetragon` key, and cilium's chart ships `enabled: true` there, which
+  # would always win and silently enable tetragon for every install.
+  condition: streamsec.tetragon.enabled,streamsec.runtime_agent.enabled
   version: 1.6.1
   repository: https://helm.cilium.io
