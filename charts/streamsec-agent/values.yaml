@@ -119,7 +119,7 @@ streamsec:
     preemptionPolicy: PreemptLowerPriority
 
     # streamsec.priorityClass.description -- Human-readable description on the PriorityClass object.
-    description: "StreamSec node agents - must run on every node."
+    description: StreamSec node agents - must run on every node.
 
   # podSecurityContext -- Security context applied at the pod level for all non-privileged workloads
   # (cluster_agent, cost, process_discovery). Override in your values to adjust for your PSP/PSS policies.
@@ -297,8 +297,8 @@ streamsec:
     updateStrategy: {}
     image:
       name: runtime-agent
-      tag: 1.5.2
-      digest: sha256:cbf3701852b99f919d662f66f32afb792073b553c078e7cc71e44c635283d1d5
+      tag: 1.6.0
+      digest: sha256:22bd2da7553e80374845ee90eff4dadc6d779bb13dc989313ead606cd4f412cb
       pullPolicy: IfNotPresent
 
   env:
@@ -319,7 +319,7 @@ tetragon:
   # set this to the SAME class name (default: streamsec-agent-critical). Left empty by default.
   # NOTE: Tetragon is a subchart and cannot read streamsec.priorityClass.enabled, so this must be
   # set explicitly alongside it (both are typically set together in your per-install values overlay).
-  priorityClassName: ""
+  priorityClassName: ''
   serviceAccount:
     name: tetragon
   export:

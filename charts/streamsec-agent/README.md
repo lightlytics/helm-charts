@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.2.2](https://img.shields.io/badge/Version-1.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -85,11 +85,11 @@ Stream Security Agent Helm Chart
 | streamsec.cost_image.tag | string | `"1.2.10"` | Stream Security cost agent tag to use. |
 | streamsec.dnsConfig | object | `{}` |  |
 | streamsec.env.ACCOUNT_ID | string | `nil` |  |
-| streamsec.env.AI_BODY_ENABLED | string | `nil` | Enable AI body processing |
-| streamsec.env.EXTERNAL_INBOUND_BODY_ENABLED | string | `nil` | Enable external inbound body processing |
+| streamsec.env.AI_BODY_ENABLED | string | `nil` |  |
 | streamsec.env.CLUSTER_ID | string | `nil` |  |
 | streamsec.env.CLUSTER_NAME | string | `nil` |  |
 | streamsec.env.DEBUG | string | `"false"` |  |
+| streamsec.env.EXTERNAL_INBOUND_BODY_ENABLED | string | `nil` |  |
 | streamsec.env.LOGLEVEL | string | `"INFO"` |  |
 | streamsec.env.REGION | string | `nil` |  |
 | streamsec.env.RESOURCE_GROUP | string | `nil` |  |
@@ -112,12 +112,12 @@ Stream Security Agent Helm Chart
 | streamsec.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | streamsec.podSecurityContext.supplementalGroups[0] | int | `1000` |  |
 | streamsec.port | int | `443` | streamsec port |
-| streamsec.priorityClass.create | bool | `true` | Render the PriorityClass object with the chart. Set false to reference an externally pre-created class of the same `name`. Only takes effect when enabled: true. |
+| streamsec.priorityClass.create | bool | `true` | Render the PriorityClass object with the chart. Set false to reference an externally pre-created class of the same `name` (e.g. when the installer lacks RBAC to create cluster-scoped resources). Only takes effect when enabled: true. |
 | streamsec.priorityClass.description | string | `"StreamSec node agents - must run on every node."` | Human-readable description on the PriorityClass object. |
-| streamsec.priorityClass.enabled | bool | `false` | Master switch. When true, the node-agent DaemonSets (runtime-agent, process-discovery) get priorityClassName set so they can schedule/preempt on fully-packed nodes (DEV-20663). Default false for staged rollout. |
-| streamsec.priorityClass.name | string | `"streamsec-agent-critical"` | Name of the PriorityClass, used for both the created object and the priorityClassName reference. |
-| streamsec.priorityClass.preemptionPolicy | string | `"PreemptLowerPriority"` | PreemptLowerPriority lets the agent evict a priority-0 pod to fit on a full node. Set to Never for schedule-only (no eviction). |
-| streamsec.priorityClass.value | int | `1000000000` | Priority value. Must be >> 0 and < system-cluster-critical (2000000000). Immutable after creation. |
+| streamsec.priorityClass.enabled | bool | `false` | Master switch. When true, the node-agent DaemonSets get priorityClassName set. Default false for a staged rollout (enable on your own clusters / a demo env first, then customers) because preemption is a behavior change (see below). |
+| streamsec.priorityClass.name | string | `"streamsec-agent-critical"` | Name of the PriorityClass, used both for the created object and the priorityClassName reference on the DaemonSets. |
+| streamsec.priorityClass.preemptionPolicy | string | `"PreemptLowerPriority"` | PreemptLowerPriority lets the agent EVICT a priority-0 workload pod to fit on a full node (required here: a DaemonSet can't relocate; the evicted pod reschedules elsewhere / triggers cluster autoscaling, or waits for capacity on clusters without an autoscaler). Set to Never for schedule-only (no eviction; the agent may stay Pending on packed nodes). |
+| streamsec.priorityClass.value | int | `1000000000` | Priority value. Must be >> 0 (the default for unclassed pods) and < system-cluster-critical (2000000000). Immutable after creation. |
 | streamsec.process_discovery_containers.containers.process-discovery.name | string | `"process-discovery"` |  |
 | streamsec.process_discovery_containers.containers.process-discovery.resources | object | `{}` |  |
 | streamsec.process_discovery_containers.enabled | bool | `false` |  |
@@ -127,10 +127,10 @@ Stream Security Agent Helm Chart
 | streamsec.replicas | int | `1` |  |
 | streamsec.runtime_agent.affinity | object | `{}` |  |
 | streamsec.runtime_agent.enabled | bool | `false` |  |
-| streamsec.runtime_agent.image.digest | string | `"sha256:cbf3701852b99f919d662f66f32afb792073b553c078e7cc71e44c635283d1d5"` |  |
+| streamsec.runtime_agent.image.digest | string | `"sha256:22bd2da7553e80374845ee90eff4dadc6d779bb13dc989313ead606cd4f412cb"` |  |
 | streamsec.runtime_agent.image.name | string | `"runtime-agent"` |  |
 | streamsec.runtime_agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| streamsec.runtime_agent.image.tag | string | `"1.5.2"` |  |
+| streamsec.runtime_agent.image.tag | string | `"1.6.0"` |  |
 | streamsec.runtime_agent.nodeSelector | object | `{}` |  |
 | streamsec.runtime_agent.resources.requests.cpu | string | `"100m"` |  |
 | streamsec.runtime_agent.resources.requests.memory | string | `"128Mi"` |  |
@@ -146,7 +146,7 @@ Stream Security Agent Helm Chart
 | streamsec.tolerations[0].value | string | `"true"` |  |
 | streamsec.workflow | string | `"full_scan"` | streamsec workflow type  |
 | tetragon.export.mode | string | `""` |  |
-| tetragon.priorityClassName | string | `""` | PriorityClass for the Tetragon sensor DaemonSet (the ~200m node agent runtime-agent reads from). When enabling streamsec.priorityClass, set this to the SAME class name (default: streamsec-agent-critical). Tetragon is a subchart and cannot read streamsec.priorityClass.enabled, so set it explicitly. |
+| tetragon.priorityClassName | string | `""` | PriorityClass for the Tetragon sensor DaemonSet (the ~200m node agent that runtime-agent reads from). It has the same "priority 0, can't reschedule" exposure as the StreamSec DaemonSets (DEV-20663), so when enabling streamsec.priorityClass set this to the SAME class name (default: streamsec-agent-critical). Left empty by default. NOTE: Tetragon is a subchart and cannot read streamsec.priorityClass.enabled, so this must be set explicitly alongside it (both are typically set together in your per-install values overlay). |
 | tetragon.serviceAccount.name | string | `"tetragon"` |  |
 | tetragon.tetragon.exportDenyList | string | `"{\"event_set\": [\"PROCESS_EXIT\"]}"` |  |
 | tetragon.tetragon.exportFileMaxSizeMB | int | `50` |  |
