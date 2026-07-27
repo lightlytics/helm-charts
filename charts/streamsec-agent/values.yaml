@@ -284,8 +284,6 @@ streamsec:
 
   runtime_agent:
     enabled: false
-    tetragonFilePath: /var/run/cilium/tetragon/
-    tetragonFileName: tetragon.log
     nodeSelector: {}
     tolerations:
     - operator: Exists
@@ -311,37 +309,3 @@ streamsec:
     RESOURCE_GROUP:  # ""
     AI_BODY_ENABLED:  # ""
     EXTERNAL_INBOUND_BODY_ENABLED:  # ""
-
-tetragon:
-  # tetragon.priorityClassName -- PriorityClass for the Tetragon sensor DaemonSet (the ~200m
-  # node agent that runtime-agent reads from). It has the same "priority 0, can't reschedule"
-  # exposure as the StreamSec DaemonSets (DEV-20663), so when enabling streamsec.priorityClass
-  # set this to the SAME class name (default: streamsec-agent-critical). Left empty by default.
-  # NOTE: Tetragon is a subchart and cannot read streamsec.priorityClass.enabled, so this must be
-  # set explicitly alongside it (both are typically set together in your per-install values overlay).
-  priorityClassName: ''
-  serviceAccount:
-    name: tetragon
-  export:
-    mode: ''
-  tetragonOperator:
-    tolerations: []
-  tetragon:
-    grpc:
-      address: localhost:59751
-    resources:
-      requests:
-        cpu: 200m
-        memory: 400Mi
-    healthGrpc:
-      port: 9763
-    extraArgs:
-      enable-ancestors: base
-      enable-process-cred: true
-    exportFileMaxSizeMB: 50
-    exportDenyList: |-
-      {"event_set": ["PROCESS_EXIT"]}
-    fieldFilters: |
-      {"event_set":["PROCESS_KPROBE"], "fields":"parent", "action":"EXCLUDE"}
-      {"event_set":["PROCESS_KPROBE","PROCESS_EXEC"],"fields":"process.parent_exec_id,parent.parent_exec_id,ancestors.parent_exec_id,parent.cwd,ancestors.exec_id", "action":"EXCLUDE"}
-      {"event_set":["PROCESS_EXEC"],"fields":"process.cap,parent.cap,parent.process_credentials,ancestors.cap,ancestors.process_credentials", "action":"EXCLUDE"}
