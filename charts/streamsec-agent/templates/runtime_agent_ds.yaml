@@ -53,8 +53,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            - name: EVENTS_FILENAME
-              value: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}{{ .Values.streamsec.runtime_agent.tetragonFileName }}
             - name: API_URL
               value: {{ .Values.streamsec.apiUrl | quote }}
             - name: API_TOKEN
@@ -100,8 +98,6 @@ spec:
           volumeMounts:
             - mountPath: /sys/kernel
               name: sys-kernel
-            - mountPath: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}
-              name: export-logs
             - mountPath: /host/proc
               name: proc
             {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
@@ -119,10 +115,6 @@ spec:
       serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
       terminationGracePeriodSeconds: 1
       volumes:
-        - hostPath:
-            path: {{ .Values.streamsec.runtime_agent.tetragonFilePath }}
-            type: DirectoryOrCreate
-          name: export-logs
         - hostPath:
             path: /sys/kernel
             type: DirectoryOrCreate
