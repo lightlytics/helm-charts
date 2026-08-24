@@ -59,6 +59,14 @@ rules:
       - watch
       - list
   - apiGroups:
+      - external-secrets.io
+    resources:
+      - externalsecrets
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
       - extensions
     resources:
       - ingresses
