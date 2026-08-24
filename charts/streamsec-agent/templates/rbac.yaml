@@ -21,6 +21,7 @@ rules:
       - persistentvolumes
       - persistentvolumeclaims
       - serviceaccounts
+      - secrets
     verbs:
       - get
       - watch
@@ -30,6 +31,9 @@ rules:
       - rbac.authorization.k8s.io
     resources:
       - clusterroles
+      - roles
+      - rolebindings
+      - clusterrolebindings
     verbs:
       - get
       - watch
@@ -49,6 +53,15 @@ rules:
       - batch
     resources:
       - jobs
+      - cronjobs
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - external-secrets.io
+    resources:
+      - externalsecrets
     verbs:
       - get
       - watch
