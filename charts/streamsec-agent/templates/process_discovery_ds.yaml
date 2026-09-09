@@ -72,6 +72,13 @@ spec:
             - name: {{ $envVarName }}
               value: {{ $envVarValue | quote }}
             {{- end }}
+            {{- with $.Values.streamsec.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- with $.Values.streamsec.envFrom }}
+          envFrom:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: cgroups
               mountPath: /host/sys/fs/cgroup
