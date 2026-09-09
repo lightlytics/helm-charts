@@ -309,3 +309,23 @@ streamsec:
     RESOURCE_GROUP:  # ""
     AI_BODY_ENABLED:  # ""
     EXTERNAL_INBOUND_BODY_ENABLED:  # ""
+
+  # streamsec.extraEnv -- Raw EnvVar list rendered verbatim on every agent workload
+  # (cluster-agent, cost, process-discovery, runtime-agent), in addition to `env`
+  # above. Use it to source env vars from a Secret/ConfigMap without putting the value
+  # in Git — e.g. authenticated proxy credentials (DEV-21986). Same pattern the chart
+  # already uses for apiTokenExistingSecret, generalized to any variable.
+  #   extraEnv:
+  #     - name: HTTP_PROXY
+  #       valueFrom:
+  #         secretKeyRef:
+  #           name: my-proxy-secret
+  #           key: proxy_url
+  extraEnv: []
+
+  # streamsec.envFrom -- Raw envFrom list (secretRef/configMapRef) applied to every
+  # agent workload, to bulk-import all keys of a Secret/ConfigMap as env vars.
+  #   envFrom:
+  #     - secretRef:
+  #         name: my-proxy-secret
+  envFrom: []
