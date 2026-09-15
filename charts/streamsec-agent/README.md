@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.2.10](https://img.shields.io/badge/Version-1.2.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.2.14](https://img.shields.io/badge/Version-1.2.14-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -73,10 +73,10 @@ Stream Security Agent Helm Chart
 | streamsec.cost_containers.containers.cost.resources.requests.cpu | string | `"800m"` |  |
 | streamsec.cost_containers.containers.cost.resources.requests.memory | string | `"1024Mi"` |  |
 | streamsec.cost_containers.enabled | bool | `false` |  |
-| streamsec.cost_image.digest | string | `"sha256:953926202f916cc60049d9162a13c9faa61fefc1187de122e62f2a42dd49b2b4"` | Stream Security cost agent image digest to use. |
+| streamsec.cost_image.digest | string | `"sha256:7443ceed5e2b2793a47c502787315631da6922a5928010a8a5d5f36fffd57a68"` | Stream Security cost agent image digest to use. |
 | streamsec.cost_image.name | string | `"cluster-agent"` | Stream Security cost agent image name. |
 | streamsec.cost_image.pullPolicy | string | `"IfNotPresent"` | Stream Security cost agent image pullPolicy |
-| streamsec.cost_image.tag | string | `"1.2.12"` | Stream Security cost agent tag to use. |
+| streamsec.cost_image.tag | string | `"1.2.14"` | Stream Security cost agent tag to use. |
 | streamsec.dnsConfig | object | `{}` |  |
 | streamsec.env.ACCOUNT_ID | string | `nil` |  |
 | streamsec.env.AI_BODY_ENABLED | string | `nil` |  |
@@ -87,16 +87,18 @@ Stream Security Agent Helm Chart
 | streamsec.env.LOGLEVEL | string | `"INFO"` |  |
 | streamsec.env.REGION | string | `nil` |  |
 | streamsec.env.RESOURCE_GROUP | string | `nil` |  |
+| streamsec.envFrom | list | `[]` | Raw envFrom list (secretRef/configMapRef) applied to every agent workload, to bulk-import all keys of a Secret/ConfigMap as env vars.   envFrom:     - secretRef:         name: my-proxy-secret |
 | streamsec.equalsLabelSelector | string | `nil` |  |
 | streamsec.existLabelSelector | string | `nil` |  |
+| streamsec.extraEnv | list | `[]` | Raw EnvVar list rendered verbatim on every agent workload (cluster-agent, cost, process-discovery, runtime-agent), in addition to `env` above. Use it to source env vars from a Secret/ConfigMap without putting the value in Git — e.g. authenticated proxy credentials (DEV-21986). Same pattern the chart already uses for apiTokenExistingSecret, generalized to any variable.   extraEnv:     - name: HTTP_PROXY       valueFrom:         secretKeyRef:           name: my-proxy-secret           key: proxy_url |
 | streamsec.fieldSelectorsNames | string | `nil` |  |
 | streamsec.fieldSelectorsNamespaces | string | `nil` | filter/unfilter resources from specific namespace |
 | streamsec.filterRunningPods | bool | `true` | takes only pods which at status running |
 | streamsec.fullScanScheduleSeconds | int | `1800` | periodic Kubernetes resources scan at seconds |
-| streamsec.image.digest | string | `"sha256:953926202f916cc60049d9162a13c9faa61fefc1187de122e62f2a42dd49b2b4"` | Stream Security agent image digest to use. |
+| streamsec.image.digest | string | `"sha256:7443ceed5e2b2793a47c502787315631da6922a5928010a8a5d5f36fffd57a68"` | Stream Security agent image digest to use. |
 | streamsec.image.name | string | `"cluster-agent"` | Stream Security agent image name. |
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
-| streamsec.image.tag | string | `"1.2.12"` | Stream Security agent tag to use. |
+| streamsec.image.tag | string | `"1.2.14"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
 | streamsec.nodeSelector | object | `{}` |  |
 | streamsec.podSecurityContext.fsGroup | int | `2000` |  |
