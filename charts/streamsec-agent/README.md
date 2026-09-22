@@ -73,7 +73,7 @@ Stream Security Agent Helm Chart
 | streamsec.cost_containers.containers.cost.resources.requests.cpu | string | `"800m"` |  |
 | streamsec.cost_containers.containers.cost.resources.requests.memory | string | `"1024Mi"` |  |
 | streamsec.cost_containers.enabled | bool | `false` |  |
-| streamsec.cost_image.digest | string | `"sha256:7443ceed5e2b2793a47c502787315631da6922a5928010a8a5d5f36fffd57a68"` | Stream Security cost agent image digest to use. |
+| streamsec.cost_image.digest | string | `"sha256:9362ccbb0bfee098c77167747adf5d9dff4d3133779de0b02341149c33c720a2"` | Stream Security cost agent image digest to use. |
 | streamsec.cost_image.name | string | `"cluster-agent"` | Stream Security cost agent image name. |
 | streamsec.cost_image.pullPolicy | string | `"IfNotPresent"` | Stream Security cost agent image pullPolicy |
 | streamsec.cost_image.tag | string | `"1.2.15"` | Stream Security cost agent tag to use. |
@@ -95,7 +95,7 @@ Stream Security Agent Helm Chart
 | streamsec.fieldSelectorsNamespaces | string | `nil` | filter/unfilter resources from specific namespace |
 | streamsec.filterRunningPods | bool | `true` | takes only pods which at status running |
 | streamsec.fullScanScheduleSeconds | int | `1800` | periodic Kubernetes resources scan at seconds |
-| streamsec.image.digest | string | `"sha256:7443ceed5e2b2793a47c502787315631da6922a5928010a8a5d5f36fffd57a68"` | Stream Security agent image digest to use. |
+| streamsec.image.digest | string | `"sha256:9362ccbb0bfee098c77167747adf5d9dff4d3133779de0b02341149c33c720a2"` | Stream Security agent image digest to use. |
 | streamsec.image.name | string | `"cluster-agent"` | Stream Security agent image name. |
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
 | streamsec.image.tag | string | `"1.2.15"` | Stream Security agent tag to use. |
