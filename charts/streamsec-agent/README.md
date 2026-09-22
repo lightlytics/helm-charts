@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.2.14](https://img.shields.io/badge/Version-1.2.14-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.2.15](https://img.shields.io/badge/Version-1.2.15-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -76,7 +76,7 @@ Stream Security Agent Helm Chart
 | streamsec.cost_image.digest | string | `"sha256:7443ceed5e2b2793a47c502787315631da6922a5928010a8a5d5f36fffd57a68"` | Stream Security cost agent image digest to use. |
 | streamsec.cost_image.name | string | `"cluster-agent"` | Stream Security cost agent image name. |
 | streamsec.cost_image.pullPolicy | string | `"IfNotPresent"` | Stream Security cost agent image pullPolicy |
-| streamsec.cost_image.tag | string | `"1.2.14"` | Stream Security cost agent tag to use. |
+| streamsec.cost_image.tag | string | `"1.2.15"` | Stream Security cost agent tag to use. |
 | streamsec.dnsConfig | object | `{}` |  |
 | streamsec.env.ACCOUNT_ID | string | `nil` |  |
 | streamsec.env.AI_BODY_ENABLED | string | `nil` |  |
@@ -98,7 +98,7 @@ Stream Security Agent Helm Chart
 | streamsec.image.digest | string | `"sha256:7443ceed5e2b2793a47c502787315631da6922a5928010a8a5d5f36fffd57a68"` | Stream Security agent image digest to use. |
 | streamsec.image.name | string | `"cluster-agent"` | Stream Security agent image name. |
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
-| streamsec.image.tag | string | `"1.2.14"` | Stream Security agent tag to use. |
+| streamsec.image.tag | string | `"1.2.15"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
 | streamsec.nodeSelector | object | `{}` |  |
 | streamsec.podSecurityContext.fsGroup | int | `2000` |  |
