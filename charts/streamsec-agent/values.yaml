@@ -218,19 +218,20 @@ streamsec:
 
   cluster_agent_containers:
     enabled: true
-    # Annotations for the cluster-agent POD (not the Deployment). Empty by default.
-    #
-    # DEV-23000: the reason this exists is karpenter.sh/do-not-disrupt. The agent keeps its
-    # KRS delta baseline in process memory and only sends a delta from its SECOND scan
+
+    # DEV-23000: the reason this value exists is karpenter.sh/do-not-disrupt. The agent keeps
+    # its KRS delta baseline in process memory and only sends a delta from its SECOND scan
     # onward, so on a cluster where Karpenter consolidates faster than
     # FULL_SCAN_SCHEDULE_SECONDS the pod never reaches that point and the sidecar
-    # optimisation never runs. The sbom container has the same problem: it restarts its
-    # whole image pass on every eviction and never finishes.
+    # optimisation never runs. The sbom container, on installs that enable it, has the same
+    # problem: it restarts its whole image pass on every eviction and never finishes.
     #
-    # Deliberately NOT defaulted on. Holding a node against consolidation is a cost
-    # decision, so it belongs to whoever runs the cluster:
+    # Deliberately NOT defaulted on. Holding a node against consolidation is a cost decision,
+    # so it belongs to whoever runs the cluster:
     #   podAnnotations:
     #     karpenter.sh/do-not-disrupt: "true"
+    #
+    #streamsec.cluster_agent_containers.podAnnotations -- Annotations for the cluster-agent POD (not the Deployment).
     podAnnotations: {}
     containers:
       krs:
