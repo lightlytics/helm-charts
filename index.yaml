@@ -234,6 +234,16 @@ entries:
   streamsec-agent:
   - apiVersion: v2
     appVersion: 1.1.4
+    created: "2026-09-23T08:16:00.768322889Z"
+    description: Stream Security Agent Helm Chart
+    digest: 1af5c70558382d2cea5d3c6bf0fd48d64d250cdf3148d25bfe9be230cbab1a51
+    name: streamsec-agent
+    type: application
+    urls:
+    - https://github.com/lightlytics/helm-charts/releases/download/streamsec-agent-1.2.16/streamsec-agent-1.2.16.tgz
+    version: 1.2.16
+  - apiVersion: v2
+    appVersion: 1.1.4
     created: "2026-09-22T18:48:07.700661073Z"
     description: Stream Security Agent Helm Chart
     digest: ba69855314a6537467ddca544186b17f761f5b56ea311e1109a372024d7c0ae6
@@ -1532,4 +1542,4 @@ entries:
     urls:
     - https://github.com/lightlytics/helm-charts/releases/download/streamsec-agent-1.0.0/streamsec-agent-1.0.0.tgz
     version: 1.0.0
-generated: "2026-09-22T18:48:07.700980871Z"
+generated: "2026-09-23T08:16:00.768455198Z"
