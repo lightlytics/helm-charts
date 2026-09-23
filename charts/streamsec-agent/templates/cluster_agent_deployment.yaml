@@ -19,6 +19,10 @@ spec:
     metadata:
       labels:
       {{- include "streamsec.selectorLabels" . | nindent 8 }}
+      {{- with .Values.streamsec.cluster_agent_containers.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
       securityContext:

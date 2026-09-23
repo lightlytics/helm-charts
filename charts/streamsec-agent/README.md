@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.2.16](https://img.shields.io/badge/Version-1.2.16-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.2.17](https://img.shields.io/badge/Version-1.2.17-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -56,6 +56,7 @@ Stream Security Agent Helm Chart
 | streamsec.cluster_agent_containers.dockerConfigSecret.enabled | bool | `false` |  |
 | streamsec.cluster_agent_containers.dockerConfigSecret.name | string | `"regcred"` |  |
 | streamsec.cluster_agent_containers.enabled | bool | `true` |  |
+| streamsec.cluster_agent_containers.podAnnotations | object | `{}` | Annotations for the cluster-agent POD (not the Deployment). |
 | streamsec.cost_containers.containers.connector.command[0] | string | `"/usr/local/bin/python"` |  |
 | streamsec.cost_containers.containers.connector.command[1] | string | `"main.py"` |  |
 | streamsec.cost_containers.containers.connector.command[2] | string | `"connector"` |  |
