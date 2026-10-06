@@ -67,6 +67,25 @@ rules:
       - watch
       - list
   - apiGroups:
+      - networking.istio.io
+    resources:
+      - virtualservices
+      - destinationrules
+      - gateways
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - security.istio.io
+    resources:
+      - peerauthentications
+      - authorizationpolicies
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
       - extensions
     resources:
       - ingresses
