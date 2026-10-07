@@ -112,28 +112,14 @@ rules:
       - get
       - watch
       - list
-  # DEV-23543: Kubernetes Gateway API (any implementation) + Envoy Gateway CRDs. The agent
-  # lists them only on clusters that serve these API groups.
+  # DEV-23543: the Kubernetes Gateway API objects Envoy Gateway implements. The agent lists them
+  # only on clusters that serve this API group.
   - apiGroups:
       - gateway.networking.k8s.io
     resources:
       - gatewayclasses
       - gateways
       - httproutes
-      - grpcroutes
-      - referencegrants
-    verbs:
-      - get
-      - watch
-      - list
-  - apiGroups:
-      - gateway.envoyproxy.io
-    resources:
-      - envoyproxies
-      - securitypolicies
-      - backendtrafficpolicies
-      - clienttrafficpolicies
-      - backends
     verbs:
       - get
       - watch
