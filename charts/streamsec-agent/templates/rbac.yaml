@@ -91,6 +91,27 @@ rules:
       - get
       - list
       - watch
+  # DEV-22525: Istio mesh CRDs (the agent lists them only on clusters that serve the group;
+  # without this rule every full scan logs five 403s on a mesh cluster).
+  - apiGroups:
+      - networking.istio.io
+    resources:
+      - virtualservices
+      - destinationrules
+      - gateways
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - security.istio.io
+    resources:
+      - peerauthentications
+      - authorizationpolicies
+    verbs:
+      - get
+      - watch
+      - list
   # DEV-23543: Kubernetes Gateway API (any implementation) + Envoy Gateway CRDs. The agent
   # lists them only on clusters that serve these API groups.
   - apiGroups:
