@@ -39,7 +39,8 @@ streamsec:
   #streamsec.inLabelSelector
   inLabelSelector:
 
-  #streamsec.nodeSelector
+  # streamsec.nodeSelector -- cluster-agent, cost and process-discovery; merged with
+  # kubernetes.io/os=linux, a user-supplied kubernetes.io/os wins.
   nodeSelector: {}
   # Example:
   # nodeSelector:
