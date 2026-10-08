@@ -96,9 +96,10 @@ spec:
               value: {{ .Values.streamsec.env.EXTERNAL_INBOUND_BODY_ENABLED | quote }}
             {{- end }}
             {{- range $k, $v := $win.env }}
-            {{- if $v }}
+            {{- /* only null removes a key; false/0/"" are real values */}}
+            {{- if not (kindIs "invalid" $v) }}
             - name: {{ $k }}
-              value: {{ $v | quote }}
+              value: {{ $v | toString | quote }}
             {{- end }}
             {{- end }}
             {{- with $.Values.streamsec.extraEnv }}

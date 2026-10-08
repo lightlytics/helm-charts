@@ -26,8 +26,9 @@ DaemonSets share the API token Secret, the service account and the `streamsec.en
 `extraEnv` / `envFrom` blocks.
 
 Supported: AKS Windows Server 2022 and 2025 node pools (containerd, amd64). The image is
-`runtime-agent:<tag>-windows`; with `image.tag` left empty it follows
-`streamsec.runtime_agent.image.tag`.
+`runtime-agent:<tag>-windows`, published by the runtime-agent Jenkins build next to the
+Linux tag; with `image.tag` left empty it follows `streamsec.runtime_agent.image.tag`. Pin
+`image.digest` once the image exists (it has its own manifest, separate from the Linux one).
 
 ```yaml
 streamsec:
@@ -38,6 +39,15 @@ streamsec:
     # env:
     #   CLOUD_TYPE: azure   # default; skips the AWS IMDS probe on Azure
 ```
+
+Notes:
+
+- HostProcess containers receive no stop signal: on pod delete the kubelet waits
+  `terminationGracePeriodSeconds` and then kills `censor.exe`, so the ETW sessions stay on
+  the node until the next agent start reclaims them (single-instance mutex + orphan reclaim).
+- Chart 1.2.23 adds `nodeSelector kubernetes.io/os: linux` to the Linux runtime-agent
+  DaemonSet. This is a pod-template change, so upgrading rolls every Linux agent pod once
+  (RollingUpdate, `maxUnavailable: 1`).
 
 {{ template "chart.valuesSection" . }}
 

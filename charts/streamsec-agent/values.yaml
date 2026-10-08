@@ -322,7 +322,8 @@ streamsec:
   runtime_agent_windows:
     # streamsec.runtime_agent_windows.enabled -- Deploy the Windows HostProcess DaemonSet.
     enabled: false
-    # streamsec.runtime_agent_windows.nodeSelector -- Merged with kubernetes.io/os=windows (always set).
+    # streamsec.runtime_agent_windows.nodeSelector -- Merged with kubernetes.io/os=windows; a
+    # user-supplied kubernetes.io/os wins.
     nodeSelector: {}
     tolerations:
     - operator: Exists
@@ -332,21 +333,28 @@ streamsec:
         cpu: 100m
         memory: 256Mi
     updateStrategy: {}
-    # streamsec.runtime_agent_windows.terminationGracePeriodSeconds -- Time for censor.exe to
-    # close its ETW sessions on pod stop (a crash-replacement reclaims orphans anyway).
+    # streamsec.runtime_agent_windows.terminationGracePeriodSeconds -- How long the kubelet waits
+    # before killing censor.exe. HostProcess containers receive no stop signal, so the agent cannot
+    # close its ETW sessions on pod stop; the next start reclaims them.
     terminationGracePeriodSeconds: 10
     # streamsec.runtime_agent_windows.env -- Plain name/value env for the Windows agent only, on top
     # of the shared block (CLUSTER_ID, extraEnv, ...). CLOUD_TYPE=azure skips the AWS IMDS probe.
     env:
       CLOUD_TYPE: azure
+    # The Windows image is published by the runtime-agent Jenkins build (DEV-21963 P3) as
+    # runtime-agent:<VERSION>-windows. Do not release a chart version whose default tag has no
+    # image yet; pin `digest` once it exists, as the Linux image does.
     image:
       # streamsec.runtime_agent_windows.image.registry -- Overrides the global `registry` for this image only.
       registry:
       name: runtime-agent
       # streamsec.runtime_agent_windows.image.tag -- Image tag. Empty = runtime_agent.image.tag + "-windows".
       tag:
-      # streamsec.runtime_agent_windows.image.digest -- Optional digest pin (the Windows image has its own manifest).
+      # streamsec.runtime_agent_windows.image.digest -- Digest pin for the Windows image (its own manifest,
+      # not the Linux one). Set it once the image is published; empty until then.
       digest:
+      # streamsec.runtime_agent_windows.image.pullPolicy -- With a mutable `-windows` tag and no digest,
+      # IfNotPresent keeps whatever the node pulled first; pin `digest` for reproducible rollouts.
       pullPolicy: IfNotPresent
 
   env:
