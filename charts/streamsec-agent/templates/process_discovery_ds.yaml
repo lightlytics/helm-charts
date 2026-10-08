@@ -32,7 +32,7 @@ spec:
           {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
       # Linux-only image; without this a mixed cluster can schedule it onto a Windows node.
       nodeSelector:
-        {{- toYaml (mergeOverwrite (dict "kubernetes.io/os" "linux") (.Values.streamsec.nodeSelector | default dict)) | nindent 8 }}
+        kubernetes.io/os: linux
       containers:
       {{- range $container_name, $container_values := .Values.streamsec.process_discovery_containers.containers }}
         - name: {{ $container_name }}

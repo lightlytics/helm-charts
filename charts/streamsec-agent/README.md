@@ -43,9 +43,10 @@ Notes:
 - Chart 1.2.23 adds `nodeSelector kubernetes.io/os: linux` to every Linux-only workload: the
   Linux runtime-agent DaemonSet, cluster-agent, cost and process-discovery (AKS Windows pools
   carry no taint, so without it a Linux-only image can land on a Windows node and ImagePullBackOff).
-  A user-supplied `kubernetes.io/os` in `streamsec.nodeSelector` / `runtime_agent.nodeSelector`
-  still wins. This is a pod-template change, so upgrading rolls each of those pods once
-  (DaemonSets: RollingUpdate, `maxUnavailable: 1`).
+  A user-supplied `kubernetes.io/os` in `streamsec.nodeSelector` (cluster-agent) /
+  `runtime_agent.nodeSelector` still wins; cost and process-discovery are pinned to linux and,
+  as before, take no nodeSelector from values. This is a pod-template change, so upgrading rolls
+  each of those pods once (DaemonSets: RollingUpdate, `maxUnavailable: 1`).
 
 ## Values
 
@@ -144,7 +145,7 @@ Notes:
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
 | streamsec.image.tag | string | `"1.2.21"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
-| streamsec.nodeSelector | object | `{}` | cluster-agent, cost and process-discovery; merged with kubernetes.io/os=linux, a user-supplied kubernetes.io/os wins. |
+| streamsec.nodeSelector | object | `{}` | cluster-agent only; merged with kubernetes.io/os=linux, a user-supplied kubernetes.io/os wins. |
 | streamsec.podSecurityContext.fsGroup | int | `2000` |  |
 | streamsec.podSecurityContext.runAsGroup | int | `3000` |  |
 | streamsec.podSecurityContext.runAsNonRoot | bool | `true` |  |
