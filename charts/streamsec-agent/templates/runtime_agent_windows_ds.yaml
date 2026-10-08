@@ -1,10 +1,15 @@
-{{- if and (.Values.streamsec.cluster_agent_containers.enabled) (.Values.streamsec.runtime_agent.enabled) }}
+{{- if and (.Values.streamsec.cluster_agent_containers.enabled) (.Values.streamsec.runtime_agent_windows.enabled) }}
+{{- $win := .Values.streamsec.runtime_agent_windows }}
+# Windows node pools: the agent runs as a HostProcess container, i.e. a plain host
+# process as NT AUTHORITY\SYSTEM (no isolation), which is what the ETW sensors and the
+# HCS container resolver need. Only AKS-style containerd Windows nodes are supported.
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ template "streamsec.fullname" . }}-runtime-agent
+  name: {{ template "streamsec.fullname" . }}-runtime-agent-windows
   labels:
   {{- include "streamsec.labels" . | nindent 4 }}
+    app.kubernetes.io/component: runtime-agent-windows
   annotations:
     {{- if not .Values.streamsec.apiTokenExistingSecret }}
       checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
@@ -13,27 +18,36 @@ spec:
   selector:
     matchLabels:
   {{- include "streamsec.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: runtime-agent-windows
   template:
     metadata:
       labels:
     {{- include "streamsec.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: runtime-agent-windows
     spec:
-      # Linux-only: on a mixed cluster the Windows pool runs runtime_agent_windows_ds.yaml.
       nodeSelector:
-        {{- toYaml (mergeOverwrite (dict "kubernetes.io/os" "linux") (.Values.streamsec.runtime_agent.nodeSelector | default dict)) | nindent 8 }}
-      {{- with .Values.streamsec.runtime_agent.affinity }}
+        {{- toYaml (mergeOverwrite (dict "kubernetes.io/os" "windows") ($win.nodeSelector | default dict)) | nindent 8 }}
+      {{- with $win.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.streamsec.runtime_agent.tolerations }}
+      {{- with $win.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      securityContext:
+        windowsOptions:
+          hostProcess: true
+          runAsUserName: "NT AUTHORITY\\SYSTEM"
       containers:
         - name: runtime-agent
-          image: {{ include "streamsec.runtime-agent-image-path" $ }}
-          imagePullPolicy: {{ .Values.streamsec.runtime_agent.image.pullPolicy }}
-          {{- with .Values.streamsec.runtime_agent.resources }}
+          image: {{ include "streamsec.runtime-agent-windows-image-path" $ }}
+          imagePullPolicy: {{ $win.image.pullPolicy }}
+          # The image root is mounted at %CONTAINER_SANDBOX_MOUNT_POINT% on the node;
+          # containerd expands the variable in the command line.
+          command:
+            - '%CONTAINER_SANDBOX_MOUNT_POINT%\censor.exe'
+          {{- with $win.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -42,12 +56,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
-            - name: POD_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            {{- end }}
             - name: NODE_NAME
               valueFrom:
                 fieldRef:
@@ -79,10 +87,6 @@ spec:
             - name: RESOURCE_GROUP
               value: {{ .Values.streamsec.env.RESOURCE_GROUP | quote }}
             {{- end }}
-            {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
-            - name: RESPONSE_ACTIONS_ENABLED
-              value: "true"
-            {{- end }}
             {{- if .Values.streamsec.env.AI_BODY_ENABLED }}
             - name: AI_BODY_ENABLED
               value: {{ .Values.streamsec.env.AI_BODY_ENABLED | quote }}
@@ -91,6 +95,12 @@ spec:
             - name: EXTERNAL_INBOUND_BODY_ENABLED
               value: {{ .Values.streamsec.env.EXTERNAL_INBOUND_BODY_ENABLED | quote }}
             {{- end }}
+            {{- range $k, $v := $win.env }}
+            {{- if $v }}
+            - name: {{ $k }}
+              value: {{ $v | quote }}
+            {{- end }}
+            {{- end }}
             {{- with $.Values.streamsec.extraEnv }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -98,44 +108,16 @@ spec:
           envFrom:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          securityContext:
-            privileged: true
           terminationMessagePolicy: FallbackToLogsOnError
-          volumeMounts:
-            - mountPath: /sys/kernel
-              name: sys-kernel
-            - mountPath: /host/proc
-              name: proc
-            {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
-            - mountPath: /run/containerd/containerd.sock
-              name: containerd-sock
-            {{- end }}
       dnsPolicy: {{ .Values.dnsPolicy }}
       hostNetwork: true
-      hostPID: true
-      hostIPC: true
-      {{- $priorityClassName := default (include "streamsec.priorityClassName" .) .Values.streamsec.runtime_agent.priorityClassName }}
+      {{- $priorityClassName := default (include "streamsec.priorityClassName" .) $win.priorityClassName }}
       {{- if $priorityClassName }}
       priorityClassName: {{ $priorityClassName | quote }}
       {{- end }}
       serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
-      terminationGracePeriodSeconds: 1
-      volumes:
-        - hostPath:
-            path: /sys/kernel
-            type: DirectoryOrCreate
-          name: sys-kernel
-        - hostPath:
-            path: /proc
-            type: DirectoryOrCreate
-          name: proc
-        {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
-        - hostPath:
-            path: /run/containerd/containerd.sock
-            type: Socket
-          name: containerd-sock
-        {{- end }}
-  {{- with .Values.updateStrategy }}
+      terminationGracePeriodSeconds: {{ $win.terminationGracePeriodSeconds }}
+  {{- with $win.updateStrategy }}
   updateStrategy:
     {{- toYaml . | nindent 4 }}
   {{- end }}
