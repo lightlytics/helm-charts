@@ -315,7 +315,7 @@ streamsec:
       pullPolicy: IfNotPresent
 
   # runtime_agent_windows -- Runtime agent for Windows node pools (AKS, containerd, Windows
-  # Server 2022/2025, amd64). Renders a second DaemonSet of HostProcess containers: the agent
+  # Server 2022 (verified; 2025 expected, not yet verified), amd64). Renders a second DaemonSet of HostProcess containers: the agent
   # runs directly on the node as NT AUTHORITY\SYSTEM with the host network, sharing the API
   # token Secret and env block of the Linux DaemonSet. The Linux DaemonSet is pinned to
   # kubernetes.io/os=linux, so the two never overlap; each can be enabled independently.
@@ -341,7 +341,7 @@ streamsec:
     # of the shared block (CLUSTER_ID, extraEnv, ...). CLOUD_TYPE=azure skips the AWS IMDS probe.
     env:
       CLOUD_TYPE: azure
-    # The Windows image is published by the runtime-agent Jenkins build (DEV-21963 P3) as
+    # The Windows image is published by the runtime-agent build as
     # runtime-agent:<VERSION>-windows. Do not release a chart version whose default tag has no
     # image yet; pin `digest` once it exists, as the Linux image does.
     image:
