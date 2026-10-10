@@ -25,6 +25,9 @@ spec:
         {{- toYaml .Values.streamsec.podSecurityContext | nindent 8 }}
       tolerations:
           {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
+      # Linux-only image; without this a mixed cluster can schedule it onto a Windows node.
+      nodeSelector:
+        kubernetes.io/os: linux
       containers:
       {{- range $container_name, $container_values := .Values.streamsec.cost_containers.containers }}
         - name: {{ $container_name }}

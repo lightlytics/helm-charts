@@ -4,6 +4,50 @@
 
 Stream Security Agent Helm Chart
 
+## Windows node pools (AKS)
+
+The runtime agent ships two DaemonSets. `streamsec.runtime_agent` (Linux, privileged) is
+pinned to `kubernetes.io/os=linux`; `streamsec.runtime_agent_windows` renders a second
+DaemonSet of [HostProcess containers](https://kubernetes.io/docs/tasks/configure-pod-container/create-hostprocess-pod/)
+pinned to `kubernetes.io/os=windows`. A HostProcess container is a plain host process
+running as `NT AUTHORITY\SYSTEM` with the host network, which is what the agent's ETW
+sensors and container resolver need; there is no Windows Service inside the pod. Both
+DaemonSets share the API token Secret, the service account and the `streamsec.env` /
+`extraEnv` / `envFrom` blocks.
+
+Supported: AKS Windows Server 2022 node pools (verified; 2025 expected, not yet verified;
+containerd, amd64). The image is
+`runtime-agent:<tag>-windows`, published by the runtime-agent Jenkins build next to the
+Linux tag; with `image.tag` left empty it follows `streamsec.runtime_agent.image.tag`. Pin
+`image.digest` once the image exists (it has its own manifest, separate from the Linux one).
+
+```yaml
+streamsec:
+  runtime_agent:
+    enabled: true
+  runtime_agent_windows:
+    enabled: true
+    # env:
+    #   CLOUD_TYPE: azure   # default; skips the AWS IMDS probe on Azure
+```
+
+Notes:
+
+- HostProcess containers receive no stop signal: on pod delete the kubelet waits
+  `terminationGracePeriodSeconds` and then kills `censor.exe`, so the ETW sessions stay on
+  the node until the next agent start reclaims them (single-instance mutex + orphan reclaim).
+- The Windows image and binary are unsigned for now (Authenticode signing is a follow-up).
+- Leave `streamsec.env.CLUSTER_ID` unset on AKS: the agent derives the cluster id from the
+  `MC_<rg>_<cluster>_<region>` node resource group. It feeds both DaemonSets; if set it must
+  match the cluster onboarded in Stream, or every batch is dropped.
+- Chart 1.2.23 adds `nodeSelector kubernetes.io/os: linux` to every Linux-only workload: the
+  Linux runtime-agent DaemonSet, cluster-agent, cost and process-discovery (AKS Windows pools
+  carry no taint, so without it a Linux-only image can land on a Windows node and ImagePullBackOff).
+  A user-supplied `kubernetes.io/os` in `streamsec.nodeSelector` (cluster-agent) /
+  `runtime_agent.nodeSelector` still wins; cost and process-discovery are pinned to linux and,
+  as before, take no nodeSelector from values. This is a pod-template change, so upgrading rolls
+  each of those pods once (DaemonSets: RollingUpdate, `maxUnavailable: 1`).
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -101,7 +145,7 @@ Stream Security Agent Helm Chart
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
 | streamsec.image.tag | string | `"1.2.22"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
-| streamsec.nodeSelector | object | `{}` |  |
+| streamsec.nodeSelector | object | `{}` | cluster-agent only; merged with kubernetes.io/os=linux, a user-supplied kubernetes.io/os wins. |
 | streamsec.podSecurityContext.fsGroup | int | `2000` |  |
 | streamsec.podSecurityContext.runAsGroup | int | `3000` |  |
 | streamsec.podSecurityContext.runAsNonRoot | bool | `true` |  |
@@ -133,6 +177,20 @@ Stream Security Agent Helm Chart
 | streamsec.runtime_agent.resources.requests.memory | string | `"128Mi"` |  |
 | streamsec.runtime_agent.tolerations[0].operator | string | `"Exists"` |  |
 | streamsec.runtime_agent.updateStrategy | object | `{}` |  |
+| streamsec.runtime_agent_windows.affinity | object | `{}` |  |
+| streamsec.runtime_agent_windows.enabled | bool | `false` | Deploy the Windows HostProcess DaemonSet. |
+| streamsec.runtime_agent_windows.env | object | `{"CLOUD_TYPE":"azure"}` | Plain name/value env for the Windows agent only, on top of the shared block (CLUSTER_ID, extraEnv, ...). CLOUD_TYPE=azure skips the AWS IMDS probe. |
+| streamsec.runtime_agent_windows.image.digest | string | `nil` | Digest pin for the Windows image (its own manifest, not the Linux one). Set it once the image is published; empty until then. |
+| streamsec.runtime_agent_windows.image.name | string | `"runtime-agent"` |  |
+| streamsec.runtime_agent_windows.image.pullPolicy | string | `"IfNotPresent"` | With a mutable `-windows` tag and no digest, IfNotPresent keeps whatever the node pulled first; pin `digest` for reproducible rollouts. |
+| streamsec.runtime_agent_windows.image.registry | string | `nil` | Overrides the global `registry` for this image only. |
+| streamsec.runtime_agent_windows.image.tag | string | `nil` | Image tag. Empty = runtime_agent.image.tag + "-windows". |
+| streamsec.runtime_agent_windows.nodeSelector | object | `{}` | Merged with kubernetes.io/os=windows; a user-supplied kubernetes.io/os wins. |
+| streamsec.runtime_agent_windows.resources.requests.cpu | string | `"100m"` |  |
+| streamsec.runtime_agent_windows.resources.requests.memory | string | `"256Mi"` |  |
+| streamsec.runtime_agent_windows.terminationGracePeriodSeconds | int | `10` | How long the kubelet waits before killing censor.exe. HostProcess containers receive no stop signal, so the agent cannot close its ETW sessions on pod stop; the next start reclaims them. |
+| streamsec.runtime_agent_windows.tolerations[0].operator | string | `"Exists"` |  |
+| streamsec.runtime_agent_windows.updateStrategy | object | `{}` |  |
 | streamsec.serviceAccount.create | bool | `true` |  |
 | streamsec.serviceAccount.name | string | `""` | The name of the Service account. If not set and create is true, a name is generated using the fullname template |
 | streamsec.tolerations[0].effect | string | `"NoSchedule"` |  |

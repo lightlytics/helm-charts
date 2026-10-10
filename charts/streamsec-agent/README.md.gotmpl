@@ -1,0 +1,59 @@
+{{ template "chart.header" . }}
+
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+## Windows node pools (AKS)
+
+The runtime agent ships two DaemonSets. `streamsec.runtime_agent` (Linux, privileged) is
+pinned to `kubernetes.io/os=linux`; `streamsec.runtime_agent_windows` renders a second
+DaemonSet of [HostProcess containers](https://kubernetes.io/docs/tasks/configure-pod-container/create-hostprocess-pod/)
+pinned to `kubernetes.io/os=windows`. A HostProcess container is a plain host process
+running as `NT AUTHORITY\SYSTEM` with the host network, which is what the agent's ETW
+sensors and container resolver need; there is no Windows Service inside the pod. Both
+DaemonSets share the API token Secret, the service account and the `streamsec.env` /
+`extraEnv` / `envFrom` blocks.
+
+Supported: AKS Windows Server 2022 node pools (verified; 2025 expected, not yet verified;
+containerd, amd64). The image is
+`runtime-agent:<tag>-windows`, published by the runtime-agent Jenkins build next to the
+Linux tag; with `image.tag` left empty it follows `streamsec.runtime_agent.image.tag`. Pin
+`image.digest` once the image exists (it has its own manifest, separate from the Linux one).
+
+```yaml
+streamsec:
+  runtime_agent:
+    enabled: true
+  runtime_agent_windows:
+    enabled: true
+    # env:
+    #   CLOUD_TYPE: azure   # default; skips the AWS IMDS probe on Azure
+```
+
+Notes:
+
+- HostProcess containers receive no stop signal: on pod delete the kubelet waits
+  `terminationGracePeriodSeconds` and then kills `censor.exe`, so the ETW sessions stay on
+  the node until the next agent start reclaims them (single-instance mutex + orphan reclaim).
+- The Windows image and binary are unsigned for now (Authenticode signing is a follow-up).
+- Leave `streamsec.env.CLUSTER_ID` unset on AKS: the agent derives the cluster id from the
+  `MC_<rg>_<cluster>_<region>` node resource group. It feeds both DaemonSets; if set it must
+  match the cluster onboarded in Stream, or every batch is dropped.
+- Chart 1.2.23 adds `nodeSelector kubernetes.io/os: linux` to the Linux runtime-agent
+  DaemonSet. This is a pod-template change, so upgrading rolls every Linux agent pod once
+  (RollingUpdate, `maxUnavailable: 1`).
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}

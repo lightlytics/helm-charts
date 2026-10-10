@@ -35,6 +35,21 @@ define ECR url based on the AWS account
 {{- end -}}
 
 {{/*
+Windows HostProcess runtime-agent image. Registry falls back to the global one; an
+empty tag follows the Linux runtime-agent tag with a "-windows" suffix (one version to bump).
+*/}}
+{{- define "streamsec.runtime-agent-windows-image-path" -}}
+  {{- $img := .Values.streamsec.runtime_agent_windows.image }}
+  {{- $registry := default .Values.registry $img.registry }}
+  {{- $tag := default (printf "%s-windows" .Values.streamsec.runtime_agent.image.tag) $img.tag }}
+  {{- if $img.digest }}
+  {{- printf "%s/%s:%s@%s" $registry $img.name $tag $img.digest }}
+  {{- else }}
+  {{- printf "%s/%s:%s" $registry $img.name $tag }}
+  {{- end }}
+{{- end -}}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "streamsec.name" -}}
