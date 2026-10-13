@@ -43,17 +43,13 @@ spec:
       {{- end }}
       containers:
       {{- range $container_name, $container_values := .Values.streamsec.cluster_agent_containers.containers }}
-      {{- if or ($container_values.enabled) (and (eq $container_name "tracing-policy") ($.Values.streamsec.runtime_agent.enabled)) }}
+      {{- /* sbom was removed (DEV-23809). Skipped by name so an older install's values that still enable it render nothing, not a container without a command. */}}
+      {{- if and (ne $container_name "sbom") (or ($container_values.enabled) (and (eq $container_name "tracing-policy") ($.Values.streamsec.runtime_agent.enabled))) }}
         - name: {{ $container_name }}
           image: {{ include "streamsec.image-path" $ }}
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume
-            {{- if and (eq $container_name "sbom") $.Values.streamsec.cluster_agent_containers.dockerConfigSecret.enabled }}
-            - mountPath: /tmp/.docker
-              name: docker-config
-              readOnly: true
-            {{- end }}
           imagePullPolicy: {{ $.Values.streamsec.image.pullPolicy }}
           command:
             {{- range $container_values.command }}
@@ -133,12 +129,4 @@ spec:
       volumes:
         - name: tmp-volume
           emptyDir: {}
-        {{- if $.Values.streamsec.cluster_agent_containers.dockerConfigSecret.enabled }}
-        - name: docker-config
-          secret:
-            secretName: {{ $.Values.streamsec.cluster_agent_containers.dockerConfigSecret.name }}
-            items:
-              - key: .dockerconfigjson
-                path: config.json
-        {{- end }}
 {{- end }}
