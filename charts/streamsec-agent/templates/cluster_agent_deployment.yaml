@@ -1,4 +1,11 @@
-{{- if .Values.streamsec.cluster_agent_containers.enabled }}
+{{- /* sbom was removed (DEV-23809). Skipped by name because an older install's values can still enable it: --reuse-values keeps the old `main.py sbom` command, the old UI's --set leaves none. With nothing else enabled there is no Deployment, rather than one without containers. */}}
+{{- $enabled_containers := list }}
+{{- range $container_name, $container_values := .Values.streamsec.cluster_agent_containers.containers }}
+{{- if and (ne $container_name "sbom") (or ($container_values.enabled) (and (eq $container_name "tracing-policy") ($.Values.streamsec.runtime_agent.enabled))) }}
+{{- $enabled_containers = append $enabled_containers $container_name }}
+{{- end }}
+{{- end }}
+{{- if and .Values.streamsec.cluster_agent_containers.enabled $enabled_containers }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -42,9 +49,8 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-      {{- range $container_name, $container_values := .Values.streamsec.cluster_agent_containers.containers }}
-      {{- /* sbom was removed (DEV-23809). Skipped by name so an older install's values that still enable it render nothing, not a container without a command. */}}
-      {{- if and (ne $container_name "sbom") (or ($container_values.enabled) (and (eq $container_name "tracing-policy") ($.Values.streamsec.runtime_agent.enabled))) }}
+      {{- range $container_name := $enabled_containers }}
+      {{- $container_values := index $.Values.streamsec.cluster_agent_containers.containers $container_name }}
         - name: {{ $container_name }}
           image: {{ include "streamsec.image-path" $ }}
           volumeMounts:
@@ -124,7 +130,6 @@ spec:
           envFrom:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- end }}
       {{- end }}
       volumes:
         - name: tmp-volume
