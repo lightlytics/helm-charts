@@ -86,6 +86,16 @@ rules:
       - watch
       - list
   - apiGroups:
+      - gateway.networking.k8s.io
+    resources:
+      - gatewayclasses
+      - gateways
+      - httproutes
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
       - extensions
     resources:
       - ingresses

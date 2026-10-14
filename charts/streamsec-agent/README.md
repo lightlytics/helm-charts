@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.2.23](https://img.shields.io/badge/Version-1.2.23-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.2.25](https://img.shields.io/badge/Version-1.2.25-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -40,7 +40,7 @@ Notes:
 - Leave `streamsec.env.CLUSTER_ID` unset on AKS: the agent derives the cluster id from the
   `MC_<rg>_<cluster>_<region>` node resource group. It feeds both DaemonSets; if set it must
   match the cluster onboarded in Stream, or every batch is dropped.
-- Chart 1.2.23 adds `nodeSelector kubernetes.io/os: linux` to every Linux-only workload: the
+- Chart 1.2.25 adds `nodeSelector kubernetes.io/os: linux` to every Linux-only workload: the
   Linux runtime-agent DaemonSet, cluster-agent, cost and process-discovery (AKS Windows pools
   carry no taint, so without it a Linux-only image can land on a Windows node and ImagePullBackOff).
   A user-supplied `kubernetes.io/os` in `streamsec.nodeSelector` (cluster-agent) /
@@ -83,22 +83,11 @@ Notes:
 | streamsec.cluster_agent_containers.containers.network-policy.enabled | bool | `false` |  |
 | streamsec.cluster_agent_containers.containers.network-policy.name | string | `"network-policy"` |  |
 | streamsec.cluster_agent_containers.containers.network-policy.resources | object | `{}` |  |
-| streamsec.cluster_agent_containers.containers.sbom.command[0] | string | `"/usr/local/bin/python"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.command[1] | string | `"main.py"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.command[2] | string | `"sbom"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.enabled | bool | `false` |  |
-| streamsec.cluster_agent_containers.containers.sbom.name | string | `"sbom"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.resources.limits.cpu | string | `"2000m"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.resources.limits.memory | string | `"4096Mi"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.resources.requests.cpu | string | `"1000m"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.resources.requests.memory | string | `"2048Mi"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.command[0] | string | `"/usr/local/bin/python"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.command[1] | string | `"main.py"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.command[2] | string | `"tracing_policy"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.name | string | `"tracing-policy"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.resources | object | `{}` |  |
-| streamsec.cluster_agent_containers.dockerConfigSecret.enabled | bool | `false` |  |
-| streamsec.cluster_agent_containers.dockerConfigSecret.name | string | `"regcred"` |  |
 | streamsec.cluster_agent_containers.enabled | bool | `true` |  |
 | streamsec.cluster_agent_containers.podAnnotations | object | `{}` | Annotations for the cluster-agent POD (not the Deployment). |
 | streamsec.cost_containers.containers.connector.command[0] | string | `"/usr/local/bin/python"` |  |
@@ -118,10 +107,10 @@ Notes:
 | streamsec.cost_containers.containers.cost.resources.requests.cpu | string | `"800m"` |  |
 | streamsec.cost_containers.containers.cost.resources.requests.memory | string | `"1024Mi"` |  |
 | streamsec.cost_containers.enabled | bool | `false` |  |
-| streamsec.cost_image.digest | string | `"sha256:4daf388904feef8da696dcf62a69144e0a082780596110c06d1f0409b56309c2"` | Stream Security cost agent image digest to use. |
+| streamsec.cost_image.digest | string | `"sha256:992e705de4e9bce400bc6c494e5de416e338a3515ec9fa1d54993cfac8516fe2"` | Stream Security cost agent image digest to use. |
 | streamsec.cost_image.name | string | `"cluster-agent"` | Stream Security cost agent image name. |
 | streamsec.cost_image.pullPolicy | string | `"IfNotPresent"` | Stream Security cost agent image pullPolicy |
-| streamsec.cost_image.tag | string | `"1.2.21"` | Stream Security cost agent tag to use. |
+| streamsec.cost_image.tag | string | `"1.2.22"` | Stream Security cost agent tag to use. |
 | streamsec.dnsConfig | object | `{}` |  |
 | streamsec.env.ACCOUNT_ID | string | `nil` |  |
 | streamsec.env.AI_BODY_ENABLED | string | `nil` |  |
@@ -140,10 +129,10 @@ Notes:
 | streamsec.fieldSelectorsNamespaces | string | `nil` | filter/unfilter resources from specific namespace |
 | streamsec.filterRunningPods | bool | `true` | takes only pods which at status running |
 | streamsec.fullScanScheduleSeconds | int | `1800` | periodic Kubernetes resources scan at seconds |
-| streamsec.image.digest | string | `"sha256:4daf388904feef8da696dcf62a69144e0a082780596110c06d1f0409b56309c2"` | Stream Security agent image digest to use. |
+| streamsec.image.digest | string | `"sha256:992e705de4e9bce400bc6c494e5de416e338a3515ec9fa1d54993cfac8516fe2"` | Stream Security agent image digest to use. |
 | streamsec.image.name | string | `"cluster-agent"` | Stream Security agent image name. |
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
-| streamsec.image.tag | string | `"1.2.21"` | Stream Security agent tag to use. |
+| streamsec.image.tag | string | `"1.2.22"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
 | streamsec.nodeSelector | object | `{}` | cluster-agent only; merged with kubernetes.io/os=linux, a user-supplied kubernetes.io/os wins. |
 | streamsec.podSecurityContext.fsGroup | int | `2000` |  |

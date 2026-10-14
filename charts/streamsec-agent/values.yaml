@@ -138,10 +138,10 @@ streamsec:
     name: cluster-agent
 
     #streamsec.image.tag -- Stream Security agent tag to use.
-    tag: 1.2.21
+    tag: 1.2.22
 
     #streamsec.image.digest -- Stream Security agent image digest to use.
-    digest: sha256:4daf388904feef8da696dcf62a69144e0a082780596110c06d1f0409b56309c2
+    digest: sha256:992e705de4e9bce400bc6c494e5de416e338a3515ec9fa1d54993cfac8516fe2
 
     #streamsec.image.pullPolicy -- Stream Security agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -152,10 +152,10 @@ streamsec:
     name: cluster-agent
 
     #streamsec.cost_image.tag -- Stream Security cost agent tag to use.
-    tag: 1.2.21
+    tag: 1.2.22
 
     #streamsec.cost_image.digest -- Stream Security cost agent image digest to use.
-    digest: sha256:4daf388904feef8da696dcf62a69144e0a082780596110c06d1f0409b56309c2
+    digest: sha256:992e705de4e9bce400bc6c494e5de416e338a3515ec9fa1d54993cfac8516fe2
 
     #streamsec.cost_image.pullPolicy -- Stream Security cost agent image pullPolicy
     pullPolicy: IfNotPresent
@@ -224,8 +224,7 @@ streamsec:
     # its KRS delta baseline in process memory and only sends a delta from its SECOND scan
     # onward, so on a cluster where Karpenter consolidates faster than
     # FULL_SCAN_SCHEDULE_SECONDS the pod never reaches that point and the sidecar
-    # optimisation never runs. The sbom container, on installs that enable it, has the same
-    # problem: it restarts its whole image pass on every eviction and never finishes.
+    # optimisation never runs.
     #
     # Deliberately NOT defaulted on. Holding a node against consolidation is a cost decision,
     # so it belongs to whoever runs the cluster:
@@ -242,20 +241,6 @@ streamsec:
         - /usr/local/bin/python
         - main.py
         - krs
-        resources:
-          requests:
-            cpu: 1000m
-            memory: 2048Mi
-          limits:
-            cpu: 2000m
-            memory: 4096Mi
-      sbom:
-        enabled: false
-        name: sbom
-        command:
-        - /usr/local/bin/python
-        - main.py
-        - sbom
         resources:
           requests:
             cpu: 1000m
@@ -286,10 +271,6 @@ streamsec:
         - main.py
         - tracing_policy
         resources: {}
-
-    dockerConfigSecret:
-      enabled: false                # Set to true to mount secret to sbom container
-      name: regcred
 
   process_discovery_containers:
     enabled: false
