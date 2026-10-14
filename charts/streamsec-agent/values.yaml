@@ -299,19 +299,21 @@ streamsec:
   # runtime_agent_windows -- Runtime agent for Windows node pools (AKS, containerd, Windows
   # Server 2022 (verified; 2025 expected, not yet verified), amd64). Renders a second DaemonSet of HostProcess containers: the agent
   # runs directly on the node as NT AUTHORITY\SYSTEM with the host network. It inherits
-  # streamsec.runtime_agent: nodeSelector, tolerations, affinity, updateStrategy and
-  # priorityClassName are not set here and fall back to runtime_agent.X (set one here to
-  # override it for Windows only; nodeSelector always gets kubernetes.io/os=windows). Env is the
-  # shared streamsec.env / extraEnv / envFrom, same as Linux. The Linux DaemonSet is pinned to
-  # kubernetes.io/os=linux, so the two never overlap; each can be enabled independently.
+  # streamsec.runtime_agent: nodeSelector, tolerations, affinity and priorityClassName are not
+  # set here and fall back to runtime_agent.X (set one here to replace it for Windows only;
+  # nodeSelector always gets kubernetes.io/os=windows); updateStrategy unset = the global
+  # updateStrategy, as on the Linux DaemonSet. Env is the shared streamsec.env / extraEnv /
+  # envFrom, same as Linux. The Linux DaemonSet is pinned to kubernetes.io/os=linux, so the two
+  # never overlap; each can be enabled independently.
   runtime_agent_windows:
     # streamsec.runtime_agent_windows.enabled -- Deploy the Windows HostProcess DaemonSet.
     enabled: false
-    # streamsec.runtime_agent_windows.resources -- Deep-merged over runtime_agent.resources (unset
-    # keys = runtime_agent's). The 256Mi request is Windows-specific: the perf run measured ~200 MB
-    # private bytes under load.
+    # streamsec.runtime_agent_windows.resources -- Replaces runtime_agent.resources for Windows (null =
+    # runtime_agent's). Not merged, so an inherited Linux limit can never sit below the Windows
+    # request. 256Mi: the perf run measured ~200 MB private bytes under load.
     resources:
       requests:
+        cpu: 100m
         memory: 256Mi
     # streamsec.runtime_agent_windows.terminationGracePeriodSeconds -- How long the kubelet waits
     # before killing censor.exe. HostProcess containers receive no stop signal, so the agent cannot

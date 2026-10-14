@@ -54,28 +54,27 @@ version to bump). The digest never falls back: the Windows image has its own man
 
 {{/*
 Effective Windows DaemonSet settings (YAML; read back with fromYaml): each key unset or null
-in runtime_agent_windows falls back to runtime_agent. nodeSelector always gets
-kubernetes.io/os=windows (an explicit runtime_agent_windows one may override it); resources
-are deep-merged over runtime_agent.resources.
+in runtime_agent_windows falls back to runtime_agent (a set one replaces it whole). nodeSelector
+always gets kubernetes.io/os=windows (an explicit runtime_agent_windows one may override it);
+updateStrategy falls back to the global updateStrategy, as on the Linux DaemonSet.
 */}}
 {{- define "streamsec.runtimeAgentWindowsSettings" -}}
 {{- $lin := .Values.streamsec.runtime_agent -}}
 {{- $win := .Values.streamsec.runtime_agent_windows -}}
 {{- $out := dict -}}
-{{- range $k := list "affinity" "tolerations" "updateStrategy" "priorityClassName" -}}
+{{- range $k := list "affinity" "tolerations" "priorityClassName" "resources" -}}
 {{- if and (hasKey $win $k) (not (kindIs "invalid" (index $win $k))) -}}
 {{- $_ := set $out $k (index $win $k) -}}
 {{- else -}}
 {{- $_ := set $out $k (index $lin $k) -}}
 {{- end -}}
 {{- end -}}
-{{- $_ := set $out "updateStrategy" (default $.Values.updateStrategy $out.updateStrategy) -}}
+{{- $_ := set $out "updateStrategy" (default $.Values.updateStrategy $win.updateStrategy) -}}
 {{- if and (hasKey $win "nodeSelector") (not (kindIs "invalid" $win.nodeSelector)) -}}
 {{- $_ := set $out "nodeSelector" (mergeOverwrite (dict "kubernetes.io/os" "windows") (deepCopy $win.nodeSelector)) -}}
 {{- else -}}
 {{- $_ := set $out "nodeSelector" (mergeOverwrite (omit ($lin.nodeSelector | default dict) "kubernetes.io/os") (dict "kubernetes.io/os" "windows")) -}}
 {{- end -}}
-{{- $_ := set $out "resources" (mergeOverwrite (deepCopy ($lin.resources | default dict)) (deepCopy ($win.resources | default dict))) -}}
 {{- $_ := set $out "pullPolicy" (default $lin.image.pullPolicy ($win.image | default dict).pullPolicy) -}}
 {{- toYaml $out -}}
 {{- end -}}
