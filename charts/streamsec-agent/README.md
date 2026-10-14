@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.2.23](https://img.shields.io/badge/Version-1.2.23-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.2.24](https://img.shields.io/badge/Version-1.2.24-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -39,22 +39,11 @@ Stream Security Agent Helm Chart
 | streamsec.cluster_agent_containers.containers.network-policy.enabled | bool | `false` |  |
 | streamsec.cluster_agent_containers.containers.network-policy.name | string | `"network-policy"` |  |
 | streamsec.cluster_agent_containers.containers.network-policy.resources | object | `{}` |  |
-| streamsec.cluster_agent_containers.containers.sbom.command[0] | string | `"/usr/local/bin/python"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.command[1] | string | `"main.py"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.command[2] | string | `"sbom"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.enabled | bool | `false` |  |
-| streamsec.cluster_agent_containers.containers.sbom.name | string | `"sbom"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.resources.limits.cpu | string | `"2000m"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.resources.limits.memory | string | `"4096Mi"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.resources.requests.cpu | string | `"1000m"` |  |
-| streamsec.cluster_agent_containers.containers.sbom.resources.requests.memory | string | `"2048Mi"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.command[0] | string | `"/usr/local/bin/python"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.command[1] | string | `"main.py"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.command[2] | string | `"tracing_policy"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.name | string | `"tracing-policy"` |  |
 | streamsec.cluster_agent_containers.containers.tracing-policy.resources | object | `{}` |  |
-| streamsec.cluster_agent_containers.dockerConfigSecret.enabled | bool | `false` |  |
-| streamsec.cluster_agent_containers.dockerConfigSecret.name | string | `"regcred"` |  |
 | streamsec.cluster_agent_containers.enabled | bool | `true` |  |
 | streamsec.cluster_agent_containers.podAnnotations | object | `{}` | Annotations for the cluster-agent POD (not the Deployment). |
 | streamsec.cost_containers.containers.connector.command[0] | string | `"/usr/local/bin/python"` |  |

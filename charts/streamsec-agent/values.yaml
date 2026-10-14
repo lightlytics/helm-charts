@@ -223,8 +223,7 @@ streamsec:
     # its KRS delta baseline in process memory and only sends a delta from its SECOND scan
     # onward, so on a cluster where Karpenter consolidates faster than
     # FULL_SCAN_SCHEDULE_SECONDS the pod never reaches that point and the sidecar
-    # optimisation never runs. The sbom container, on installs that enable it, has the same
-    # problem: it restarts its whole image pass on every eviction and never finishes.
+    # optimisation never runs.
     #
     # Deliberately NOT defaulted on. Holding a node against consolidation is a cost decision,
     # so it belongs to whoever runs the cluster:
@@ -241,20 +240,6 @@ streamsec:
         - /usr/local/bin/python
         - main.py
         - krs
-        resources:
-          requests:
-            cpu: 1000m
-            memory: 2048Mi
-          limits:
-            cpu: 2000m
-            memory: 4096Mi
-      sbom:
-        enabled: false
-        name: sbom
-        command:
-        - /usr/local/bin/python
-        - main.py
-        - sbom
         resources:
           requests:
             cpu: 1000m
@@ -285,10 +270,6 @@ streamsec:
         - main.py
         - tracing_policy
         resources: {}
-
-    dockerConfigSecret:
-      enabled: false                # Set to true to mount secret to sbom container
-      name: regcred
 
   process_discovery_containers:
     enabled: false
