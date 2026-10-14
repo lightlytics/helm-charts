@@ -5,7 +5,7 @@ To Read more about The K8S Agent kindly refer to the following guide: https://do
 # Changelog
 ## Helm Chart Changes
 ### [1.2.25] - 2026-10-14
-- streamsec-agent: Windows HostProcess DaemonSet for AKS Windows node pools (`streamsec.runtime_agent_windows`, default off; needs the `<VERSION>-windows` runtime-agent image)
+- streamsec-agent: Windows HostProcess DaemonSet for AKS Windows node pools (`streamsec.runtime_agent_windows`, default off; needs the `<VERSION>-windows` runtime-agent image); inherits `streamsec.runtime_agent` scheduling/resources/image settings and the shared `streamsec.env`/`extraEnv` (no `CLOUD_TYPE` default)
 - streamsec-agent: every Linux-only workload (runtime-agent DaemonSet, cluster-agent, cost, process-discovery) pinned to `kubernetes.io/os: linux` — upgrading rolls each of those pods once (pod template change; DaemonSets RollingUpdate maxUnavailable 1)
 ### [0.1.18] - 2024-12-04
 - Version bump, new Agent versions added 

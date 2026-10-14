@@ -1,5 +1,6 @@
 {{- if and (.Values.streamsec.cluster_agent_containers.enabled) (.Values.streamsec.runtime_agent_windows.enabled) }}
 {{- $win := .Values.streamsec.runtime_agent_windows }}
+{{- $eff := include "streamsec.runtimeAgentWindowsSettings" . | fromYaml }}
 # Windows node pools: the agent runs as a HostProcess container, i.e. a plain host
 # process as NT AUTHORITY\SYSTEM (no isolation), which is what the ETW sensors and the
 # HCS container resolver need. Only AKS-style containerd Windows nodes are supported.
@@ -26,12 +27,12 @@ spec:
         app.kubernetes.io/component: runtime-agent-windows
     spec:
       nodeSelector:
-        {{- toYaml (mergeOverwrite (dict "kubernetes.io/os" "windows") ($win.nodeSelector | default dict)) | nindent 8 }}
-      {{- with $win.affinity }}
+        {{- toYaml $eff.nodeSelector | nindent 8 }}
+      {{- with $eff.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with $win.tolerations }}
+      {{- with $eff.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -42,69 +43,17 @@ spec:
       containers:
         - name: runtime-agent
           image: {{ include "streamsec.runtime-agent-windows-image-path" $ }}
-          imagePullPolicy: {{ $win.image.pullPolicy }}
+          imagePullPolicy: {{ $eff.pullPolicy }}
           # The image root is mounted at %CONTAINER_SANDBOX_MOUNT_POINT% on the node;
           # containerd expands the variable in the command line.
           command:
             - '%CONTAINER_SANDBOX_MOUNT_POINT%\censor.exe'
-          {{- with $win.resources }}
+          {{- with $eff.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           env:
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-            - name: NODE_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: spec.nodeName
-            - name: API_URL
-              value: {{ .Values.streamsec.apiUrl | quote }}
-            - name: API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "streamsec.apiTokenSecretName" $ }}
-                  key: api-key
-            {{- if .Values.streamsec.env.CLUSTER_ID }}
-            - name: CLUSTER_ID
-              value: {{ .Values.streamsec.env.CLUSTER_ID | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.env.CLUSTER_NAME }}
-            - name: CLUSTER_NAME
-              value: {{ .Values.streamsec.env.CLUSTER_NAME | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.env.ACCOUNT_ID }}
-            - name: ACCOUNT_ID
-              value: {{ .Values.streamsec.env.ACCOUNT_ID | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.env.REGION }}
-            - name: REGION
-              value: {{ .Values.streamsec.env.REGION | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.env.RESOURCE_GROUP }}
-            - name: RESOURCE_GROUP
-              value: {{ .Values.streamsec.env.RESOURCE_GROUP | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.env.AI_BODY_ENABLED }}
-            - name: AI_BODY_ENABLED
-              value: {{ .Values.streamsec.env.AI_BODY_ENABLED | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.env.EXTERNAL_INBOUND_BODY_ENABLED }}
-            - name: EXTERNAL_INBOUND_BODY_ENABLED
-              value: {{ .Values.streamsec.env.EXTERNAL_INBOUND_BODY_ENABLED | quote }}
-            {{- end }}
-            {{- range $k, $v := $win.env }}
-            {{- /* only null removes a key; false/0/"" are real values */}}
-            {{- if not (kindIs "invalid" $v) }}
-            - name: {{ $k }}
-              value: {{ $v | toString | quote }}
-            {{- end }}
-            {{- end }}
-            {{- with $.Values.streamsec.extraEnv }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }}
+            {{- include "streamsec.runtimeAgentEnv" (dict "root" $ "responseActions" false) | nindent 12 }}
           {{- with $.Values.streamsec.envFrom }}
           envFrom:
             {{- toYaml . | nindent 12 }}
@@ -112,13 +61,13 @@ spec:
           terminationMessagePolicy: FallbackToLogsOnError
       dnsPolicy: {{ .Values.dnsPolicy }}
       hostNetwork: true
-      {{- $priorityClassName := default (include "streamsec.priorityClassName" .) $win.priorityClassName }}
+      {{- $priorityClassName := default (include "streamsec.priorityClassName" .) $eff.priorityClassName }}
       {{- if $priorityClassName }}
       priorityClassName: {{ $priorityClassName | quote }}
       {{- end }}
       serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
       terminationGracePeriodSeconds: {{ $win.terminationGracePeriodSeconds }}
-  {{- with $win.updateStrategy }}
+  {{- with $eff.updateStrategy }}
   updateStrategy:
     {{- toYaml . | nindent 4 }}
   {{- end }}

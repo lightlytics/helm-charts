@@ -35,18 +35,97 @@ define ECR url based on the AWS account
 {{- end -}}
 
 {{/*
-Windows HostProcess runtime-agent image. Registry falls back to the global one; an
-empty tag follows the Linux runtime-agent tag with a "-windows" suffix (one version to bump).
+Windows HostProcess runtime-agent image. Registry falls back to the global one, name to
+runtime_agent.image.name; an empty tag follows the Linux tag with a "-windows" suffix (one
+version to bump). The digest never falls back: the Windows image has its own manifest.
 */}}
 {{- define "streamsec.runtime-agent-windows-image-path" -}}
-  {{- $img := .Values.streamsec.runtime_agent_windows.image }}
+  {{- $img := .Values.streamsec.runtime_agent_windows.image | default dict }}
+  {{- $lin := .Values.streamsec.runtime_agent.image }}
   {{- $registry := default .Values.registry $img.registry }}
-  {{- $tag := default (printf "%s-windows" .Values.streamsec.runtime_agent.image.tag) $img.tag }}
+  {{- $name := default $lin.name $img.name }}
+  {{- $tag := default (printf "%s-windows" $lin.tag) $img.tag }}
   {{- if $img.digest }}
-  {{- printf "%s/%s:%s@%s" $registry $img.name $tag $img.digest }}
+  {{- printf "%s/%s:%s@%s" $registry $name $tag $img.digest }}
   {{- else }}
-  {{- printf "%s/%s:%s" $registry $img.name $tag }}
+  {{- printf "%s/%s:%s" $registry $name $tag }}
   {{- end }}
+{{- end -}}
+
+{{/*
+Effective Windows DaemonSet settings (YAML; read back with fromYaml): each key unset or null
+in runtime_agent_windows falls back to runtime_agent. nodeSelector always gets
+kubernetes.io/os=windows (an explicit runtime_agent_windows one may override it); resources
+are deep-merged over runtime_agent.resources.
+*/}}
+{{- define "streamsec.runtimeAgentWindowsSettings" -}}
+{{- $lin := .Values.streamsec.runtime_agent -}}
+{{- $win := .Values.streamsec.runtime_agent_windows -}}
+{{- $out := dict -}}
+{{- range $k := list "affinity" "tolerations" "updateStrategy" "priorityClassName" -}}
+{{- if and (hasKey $win $k) (not (kindIs "invalid" (index $win $k))) -}}
+{{- $_ := set $out $k (index $win $k) -}}
+{{- else -}}
+{{- $_ := set $out $k (index $lin $k) -}}
+{{- end -}}
+{{- end -}}
+{{- $_ := set $out "updateStrategy" (default $.Values.updateStrategy $out.updateStrategy) -}}
+{{- if and (hasKey $win "nodeSelector") (not (kindIs "invalid" $win.nodeSelector)) -}}
+{{- $_ := set $out "nodeSelector" (mergeOverwrite (dict "kubernetes.io/os" "windows") (deepCopy $win.nodeSelector)) -}}
+{{- else -}}
+{{- $_ := set $out "nodeSelector" (mergeOverwrite (omit ($lin.nodeSelector | default dict) "kubernetes.io/os") (dict "kubernetes.io/os" "windows")) -}}
+{{- end -}}
+{{- $_ := set $out "resources" (mergeOverwrite (deepCopy ($lin.resources | default dict)) (deepCopy ($win.resources | default dict))) -}}
+{{- $_ := set $out "pullPolicy" (default $lin.image.pullPolicy ($win.image | default dict).pullPolicy) -}}
+{{- toYaml $out -}}
+{{- end -}}
+
+{{/*
+Shared env of the runtime-agent DaemonSets (Linux and Windows): streamsec.env + extraEnv.
+Call with (dict "root" $ "responseActions" <bool>).
+*/}}
+{{- define "streamsec.runtimeAgentEnv" -}}
+{{- $v := .root.Values.streamsec -}}
+- name: POD_NAME
+  valueFrom:
+    fieldRef:
+      fieldPath: metadata.name
+{{- if .responseActions }}
+- name: POD_NAMESPACE
+  valueFrom:
+    fieldRef:
+      fieldPath: metadata.namespace
+{{- end }}
+- name: NODE_NAME
+  valueFrom:
+    fieldRef:
+      fieldPath: spec.nodeName
+- name: API_URL
+  value: {{ $v.apiUrl | quote }}
+- name: API_TOKEN
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "streamsec.apiTokenSecretName" .root }}
+      key: api-key
+{{- range $k := list "CLUSTER_ID" "CLUSTER_NAME" "ACCOUNT_ID" "REGION" "RESOURCE_GROUP" }}
+{{- if index $v.env $k }}
+- name: {{ $k }}
+  value: {{ index $v.env $k | quote }}
+{{- end }}
+{{- end }}
+{{- if .responseActions }}
+- name: RESPONSE_ACTIONS_ENABLED
+  value: "true"
+{{- end }}
+{{- range $k := list "AI_BODY_ENABLED" "EXTERNAL_INBOUND_BODY_ENABLED" }}
+{{- if index $v.env $k }}
+- name: {{ $k }}
+  value: {{ index $v.env $k | quote }}
+{{- end }}
+{{- end }}
+{{- with $v.extraEnv }}
+{{ toYaml . }}
+{{- end }}
 {{- end -}}
 
 {{/*

@@ -25,6 +25,15 @@ sensors and container resolver need; there is no Windows Service inside the pod.
 DaemonSets share the API token Secret, the service account and the `streamsec.env` /
 `extraEnv` / `envFrom` blocks.
 
+The Windows DaemonSet inherits `streamsec.runtime_agent`: `nodeSelector`, `tolerations`,
+`affinity`, `updateStrategy` and `priorityClassName` fall back to `runtime_agent.*` unless set
+under `runtime_agent_windows` (`kubernetes.io/os: windows` is always added), `resources` is
+deep-merged over `runtime_agent.resources` (Windows default: 256Mi memory request), and
+`image.registry` / `name` / `pullPolicy` fall back to the global `registry` /
+`runtime_agent.image.*`. There is no Windows-only env and no `CLOUD_TYPE` default: the agent
+discovers the cloud itself (AWS, then Azure, then GCP). To pin it, set `CLOUD_TYPE` through
+`streamsec.extraEnv`, exactly as on Linux.
+
 Supported: AKS Windows Server 2022 node pools (verified; 2025 expected, not yet verified;
 containerd, amd64). The image is
 `runtime-agent:<tag>-windows`, published by the runtime-agent Jenkins build next to the
@@ -37,8 +46,10 @@ streamsec:
     enabled: true
   runtime_agent_windows:
     enabled: true
-    # env:
-    #   CLOUD_TYPE: azure   # default; skips the AWS IMDS probe on Azure
+  # optional, both DaemonSets: skip cloud auto-discovery
+  # extraEnv:
+  #   - name: CLOUD_TYPE
+  #     value: azure
 ```
 
 Notes:
@@ -50,9 +61,13 @@ Notes:
 - Leave `streamsec.env.CLUSTER_ID` unset on AKS: the agent derives the cluster id from the
   `MC_<rg>_<cluster>_<region>` node resource group. It feeds both DaemonSets; if set it must
   match the cluster onboarded in Stream, or every batch is dropped.
-- Chart 1.2.23 adds `nodeSelector kubernetes.io/os: linux` to the Linux runtime-agent
-  DaemonSet. This is a pod-template change, so upgrading rolls every Linux agent pod once
-  (RollingUpdate, `maxUnavailable: 1`).
+- Chart 1.2.25 adds `nodeSelector kubernetes.io/os: linux` to every Linux-only workload: the
+  Linux runtime-agent DaemonSet, cluster-agent, cost and process-discovery (AKS Windows pools
+  carry no taint, so without it a Linux-only image can land on a Windows node and ImagePullBackOff).
+  A user-supplied `kubernetes.io/os` in `streamsec.nodeSelector` (cluster-agent) /
+  `runtime_agent.nodeSelector` still wins; cost and process-discovery are pinned to linux and,
+  as before, take no nodeSelector from values. This is a pod-template change, so upgrading rolls
+  each of those pods once (DaemonSets: RollingUpdate, `maxUnavailable: 1`).
 
 {{ template "chart.valuesSection" . }}
 

@@ -38,62 +38,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           env:
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-            {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
-            - name: POD_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            {{- end }}
-            - name: NODE_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: spec.nodeName
-            - name: API_URL
-              value: {{ .Values.streamsec.apiUrl | quote }}
-            - name: API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "streamsec.apiTokenSecretName" $ }}
-                  key: api-key
-            {{- if .Values.streamsec.env.CLUSTER_ID }}
-            - name: CLUSTER_ID
-              value: {{ .Values.streamsec.env.CLUSTER_ID | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.env.CLUSTER_NAME }}
-            - name: CLUSTER_NAME
-              value: {{ .Values.streamsec.env.CLUSTER_NAME | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.env.ACCOUNT_ID }}
-            - name: ACCOUNT_ID
-              value: {{ .Values.streamsec.env.ACCOUNT_ID | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.env.REGION }}
-            - name: REGION
-              value: {{ .Values.streamsec.env.REGION | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.env.RESOURCE_GROUP }}
-            - name: RESOURCE_GROUP
-              value: {{ .Values.streamsec.env.RESOURCE_GROUP | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
-            - name: RESPONSE_ACTIONS_ENABLED
-              value: "true"
-            {{- end }}
-            {{- if .Values.streamsec.env.AI_BODY_ENABLED }}
-            - name: AI_BODY_ENABLED
-              value: {{ .Values.streamsec.env.AI_BODY_ENABLED | quote }}
-            {{- end }}
-            {{- if .Values.streamsec.env.EXTERNAL_INBOUND_BODY_ENABLED }}
-            - name: EXTERNAL_INBOUND_BODY_ENABLED
-              value: {{ .Values.streamsec.env.EXTERNAL_INBOUND_BODY_ENABLED | quote }}
-            {{- end }}
-            {{- with $.Values.streamsec.extraEnv }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }}
+            {{- include "streamsec.runtimeAgentEnv" (dict "root" $ "responseActions" .Values.streamsec.runtime_agent.responseActionsEnabled) | nindent 12 }}
           {{- with $.Values.streamsec.envFrom }}
           envFrom:
             {{- toYaml . | nindent 12 }}
