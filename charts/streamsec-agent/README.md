@@ -113,10 +113,10 @@ Stream Security Agent Helm Chart
 | streamsec.replicas | int | `1` |  |
 | streamsec.runtime_agent.affinity | object | `{}` |  |
 | streamsec.runtime_agent.enabled | bool | `false` |  |
-| streamsec.runtime_agent.image.digest | string | `"sha256:04d00a0f1d01cd96d2c0bac42c4b817f957566afa0a77a09bdac8f109da3ef85"` |  |
+| streamsec.runtime_agent.image.digest | string | `"sha256:9f67954e7dca6e7512eeb3a8f65044b0dc41fb95b503fca8025aca302882944f"` |  |
 | streamsec.runtime_agent.image.name | string | `"runtime-agent"` |  |
 | streamsec.runtime_agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| streamsec.runtime_agent.image.tag | string | `"1.7.1"` |  |
+| streamsec.runtime_agent.image.tag | string | `"1.7.2"` |  |
 | streamsec.runtime_agent.nodeSelector | object | `{}` |  |
 | streamsec.runtime_agent.resources.requests.cpu | string | `"100m"` |  |
 | streamsec.runtime_agent.resources.requests.memory | string | `"128Mi"` |  |
