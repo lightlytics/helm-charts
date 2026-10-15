@@ -179,7 +179,7 @@ Notes:
 | streamsec.runtime_agent.tolerations[0].operator | string | `"Exists"` |  |
 | streamsec.runtime_agent.updateStrategy | object | `{}` |  |
 | streamsec.runtime_agent_windows.enabled | bool | `false` | Deploy the Windows HostProcess DaemonSet. |
-| streamsec.runtime_agent_windows.image.digest | string | `nil` | Digest pin for the Windows image (its own manifest, never inherited from runtime_agent). Set it once the image is published; empty until then. |
+| streamsec.runtime_agent_windows.image.digest | string | `"sha256:e81fb2db4b3711dc94887058c959f877a7ef022b0957abcfb9ae3606283870e4"` | Digest pin for the Windows image (its own manifest, never inherited from runtime_agent). Pinned to the stable release's -windows image; mark-stable updates it. |
 | streamsec.runtime_agent_windows.image.name | string | `nil` | Unset = runtime_agent.image.name. |
 | streamsec.runtime_agent_windows.image.pullPolicy | string | `nil` | Unset = runtime_agent.image.pullPolicy. With a mutable `-windows` tag and no digest, IfNotPresent keeps whatever the node pulled first. |
 | streamsec.runtime_agent_windows.image.registry | string | `nil` | Unset = the global `registry`. |

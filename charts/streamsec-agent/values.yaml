@@ -330,8 +330,8 @@ streamsec:
       # streamsec.runtime_agent_windows.image.tag -- Unset = runtime_agent.image.tag + "-windows".
       tag:
       # streamsec.runtime_agent_windows.image.digest -- Digest pin for the Windows image (its own manifest,
-      # never inherited from runtime_agent). Set it once the image is published; empty until then.
-      digest:
+      # never inherited from runtime_agent). Pinned to the stable release's -windows image; mark-stable updates it.
+      digest: sha256:e81fb2db4b3711dc94887058c959f877a7ef022b0957abcfb9ae3606283870e4
       # streamsec.runtime_agent_windows.image.pullPolicy -- Unset = runtime_agent.image.pullPolicy. With a
       # mutable `-windows` tag and no digest, IfNotPresent keeps whatever the node pulled first.
       pullPolicy:
