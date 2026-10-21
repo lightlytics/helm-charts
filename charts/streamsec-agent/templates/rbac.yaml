@@ -95,6 +95,16 @@ rules:
       - get
       - watch
       - list
+  # DEV-24107: GitHub Actions Runner Controller pools (runner-scale-set mode). Only the
+  # AutoscalingRunnerSet is read; its per-job EphemeralRunner children are not collected.
+  - apiGroups:
+      - actions.github.com
+    resources:
+      - autoscalingrunnersets
+    verbs:
+      - get
+      - watch
+      - list
   - apiGroups:
       - extensions
     resources:
