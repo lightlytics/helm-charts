@@ -39,7 +39,8 @@ streamsec:
   #streamsec.inLabelSelector
   inLabelSelector:
 
-  #streamsec.nodeSelector
+  # streamsec.nodeSelector -- cluster-agent only; merged with kubernetes.io/os=linux, a
+  # user-supplied kubernetes.io/os wins.
   nodeSelector: {}
   # Example:
   # nodeSelector:
@@ -294,6 +295,46 @@ streamsec:
       tag: 1.7.4
       digest: sha256:a5f5b580575b7d7fe9eb82c7d405ceabeeebc1af1b6dd2aa471664d4cfd7ff19
       pullPolicy: IfNotPresent
+
+  # runtime_agent_windows -- Runtime agent for Windows node pools (AKS, containerd, Windows
+  # Server 2022 (verified; 2025 expected, not yet verified), amd64). Renders a second DaemonSet of HostProcess containers: the agent
+  # runs directly on the node as NT AUTHORITY\SYSTEM with the host network. It inherits
+  # streamsec.runtime_agent: nodeSelector, tolerations, affinity and priorityClassName are not
+  # set here and fall back to runtime_agent.X (set one here to replace it for Windows only;
+  # nodeSelector always gets kubernetes.io/os=windows); updateStrategy unset = the global
+  # updateStrategy, as on the Linux DaemonSet. Env is the shared streamsec.env / extraEnv /
+  # envFrom, same as Linux. The Linux DaemonSet is pinned to kubernetes.io/os=linux, so the two
+  # never overlap; each can be enabled independently.
+  runtime_agent_windows:
+    # streamsec.runtime_agent_windows.enabled -- Deploy the Windows HostProcess DaemonSet.
+    enabled: false
+    # streamsec.runtime_agent_windows.resources -- Replaces runtime_agent.resources for Windows (null =
+    # runtime_agent's). Not merged, so an inherited Linux limit can never sit below the Windows
+    # request. 256Mi: the perf run measured ~200 MB private bytes under load.
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    # streamsec.runtime_agent_windows.terminationGracePeriodSeconds -- How long the kubelet waits
+    # before killing censor.exe. HostProcess containers receive no stop signal, so the agent cannot
+    # close its ETW sessions on pod stop; the next start reclaims them.
+    terminationGracePeriodSeconds: 10
+    # The Windows image is published by the runtime-agent build as
+    # runtime-agent:<VERSION>-windows. Do not release a chart version whose default tag has no
+    # image yet; pin `digest` once it exists, as the Linux image does.
+    image:
+      # streamsec.runtime_agent_windows.image.registry -- Unset = the global `registry`.
+      registry:
+      # streamsec.runtime_agent_windows.image.name -- Unset = runtime_agent.image.name.
+      name:
+      # streamsec.runtime_agent_windows.image.tag -- Unset = runtime_agent.image.tag + "-windows".
+      tag:
+      # streamsec.runtime_agent_windows.image.digest -- Digest pin for the Windows image (its own manifest,
+      # never inherited from runtime_agent). Pinned to the stable release's -windows image; mark-stable updates it.
+      digest: sha256:e81fb2db4b3711dc94887058c959f877a7ef022b0957abcfb9ae3606283870e4
+      # streamsec.runtime_agent_windows.image.pullPolicy -- Unset = runtime_agent.image.pullPolicy. With a
+      # mutable `-windows` tag and no digest, IfNotPresent keeps whatever the node pulled first.
+      pullPolicy:
 
   env:
     LOGLEVEL: INFO
