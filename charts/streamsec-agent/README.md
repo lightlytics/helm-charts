@@ -83,6 +83,7 @@ Stream Security Agent Helm Chart
 | streamsec.extraEnv | list | `[]` | Raw EnvVar list rendered verbatim on every agent workload (cluster-agent, cost, process-discovery, runtime-agent), in addition to `env` above. Use it to source env vars from a Secret/ConfigMap without putting the value in Git — e.g. authenticated proxy credentials (DEV-21986). Same pattern the chart already uses for apiTokenExistingSecret, generalized to any variable.   extraEnv:     - name: HTTP_PROXY       valueFrom:         secretKeyRef:           name: my-proxy-secret           key: proxy_url |
 | streamsec.fieldSelectorsNames | string | `nil` |  |
 | streamsec.fieldSelectorsNamespaces | string | `nil` | filter/unfilter resources from specific namespace |
+| streamsec.collectSecrets | bool | `false` | collect Secret metadata (name, namespace, labels, type, key names; never values). Off by default: no RBAC on Secrets is granted. Enable with --set streamsec.collectSecrets=true |
 | streamsec.filterRunningPods | bool | `true` | takes only pods which at status running |
 | streamsec.fullScanScheduleSeconds | int | `1800` | periodic Kubernetes resources scan at seconds |
 | streamsec.image.digest | string | `"sha256:8c5500553a83b85b03ecd82d6bf2802c3440d9e2774731c7b82423305658f794"` | Stream Security agent image digest to use. |

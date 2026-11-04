@@ -27,6 +27,9 @@ streamsec:
   #streamsec.fullScanScheduleSeconds -- periodic Kubernetes resources scan at seconds
   fullScanScheduleSeconds: 1800
 
+  #streamsec.collectSecrets -- collect Secret metadata (name, namespace, labels, type, key names; never values). Off by default: no RBAC on Secrets is granted. Enable with --set streamsec.collectSecrets=true
+  collectSecrets: false
+
   #streamsec.filterRunningPods -- takes only pods which at status running
   filterRunningPods: true
 
