@@ -1,9 +1,7 @@
 {{- if and (.Values.streamsec.cluster_agent_containers.enabled) (.Values.streamsec.runtime_agent_windows | default dict).enabled }}
 {{- $win := .Values.streamsec.runtime_agent_windows }}
 {{- $eff := include "streamsec.runtimeAgentWindowsSettings" . | fromYaml }}
-# Windows node pools: the agent runs as a HostProcess container, i.e. a plain host
-# process as NT AUTHORITY\SYSTEM (no isolation), which is what the ETW sensors and the
-# HCS container resolver need. Only AKS-style containerd Windows nodes are supported.
+# HostProcess DaemonSet: censor.exe runs on the Windows node as NT AUTHORITY\SYSTEM.
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -44,8 +42,6 @@ spec:
         - name: runtime-agent
           image: {{ include "streamsec.runtime-agent-windows-image-path" $ }}
           imagePullPolicy: {{ $eff.pullPolicy }}
-          # The image root is mounted at %CONTAINER_SANDBOX_MOUNT_POINT% on the node;
-          # containerd expands the variable in the command line.
           command:
             - '%CONTAINER_SANDBOX_MOUNT_POINT%\censor.exe'
           {{- with $eff.resources }}

@@ -19,7 +19,9 @@ The Windows DaemonSet inherits `streamsec.runtime_agent`: `nodeSelector`, `toler
 `affinity` and `priorityClassName` fall back to `runtime_agent.*` unless set under
 `runtime_agent_windows` (`kubernetes.io/os: windows` is always added), `updateStrategy` falls
 back to the global `updateStrategy` as on Linux, `resources` has its own Windows default
-(100m / 256Mi requests; set it to null to take `runtime_agent.resources`), and
+(100m / 256Mi requests; the perf run measured ~200 MB private bytes under load). It replaces
+`runtime_agent.resources` instead of merging, so an inherited Linux limit can never sit below
+the Windows request; set it to null to take `runtime_agent.resources`.
 `image.registry` / `name` / `pullPolicy` fall back to the global `registry` /
 `runtime_agent.image.*`. There is no Windows-only env and no `CLOUD_TYPE` default: the agent
 discovers the cloud itself (AWS, then Azure, then GCP). To pin it, set `CLOUD_TYPE` through
@@ -30,7 +32,9 @@ containerd, amd64). The image is
 `runtime-agent:<tag>-windows`, published by the runtime-agent Jenkins build next to the
 Linux tag. The chart pins `image.tag` and `image.digest` together (the digest is the
 Windows image's own manifest, separate from the Linux one); with `image.tag` and `image.digest`
-both cleared the tag follows `streamsec.runtime_agent.image.tag`.
+both cleared the tag follows `streamsec.runtime_agent.image.tag`. The mark-stable release job
+rewrites both on each runtime-agent release. Without a digest the mutable `-windows` tag plus
+`IfNotPresent` keeps whatever image the node pulled first.
 
 ```yaml
 streamsec:
@@ -151,7 +155,7 @@ Notes:
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
 | streamsec.image.tag | string | `"1.2.27"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
-| streamsec.nodeSelector | object | `{}` | cluster-agent only; merged with kubernetes.io/os=linux, a user-supplied kubernetes.io/os wins. |
+| streamsec.nodeSelector | object | `{}` | cluster-agent only; merged with kubernetes.io/os=linux. |
 | streamsec.podSecurityContext.fsGroup | int | `2000` |  |
 | streamsec.podSecurityContext.runAsGroup | int | `3000` |  |
 | streamsec.podSecurityContext.runAsNonRoot | bool | `true` |  |
@@ -184,13 +188,13 @@ Notes:
 | streamsec.runtime_agent.tolerations[0].operator | string | `"Exists"` |  |
 | streamsec.runtime_agent.updateStrategy | object | `{}` |  |
 | streamsec.runtime_agent_windows.enabled | bool | `false` | Deploy the Windows HostProcess DaemonSet. |
-| streamsec.runtime_agent_windows.image.digest | string | `"sha256:ac7bae4742f45cbe2800335a69b2dd4e4231fa990ca4edf7def96b7632b16587"` | Digest pin for the Windows image (its own manifest, never inherited from runtime_agent). Pinned to the stable release's -windows image; mark-stable updates it. |
+| streamsec.runtime_agent_windows.image.digest | string | `"sha256:ac7bae4742f45cbe2800335a69b2dd4e4231fa990ca4edf7def96b7632b16587"` | The -windows image's digest (mark-stable). |
 | streamsec.runtime_agent_windows.image.name | string | `nil` | Unset = runtime_agent.image.name. |
-| streamsec.runtime_agent_windows.image.pullPolicy | string | `nil` | Unset = runtime_agent.image.pullPolicy. With a mutable `-windows` tag and no digest, IfNotPresent keeps whatever the node pulled first. |
+| streamsec.runtime_agent_windows.image.pullPolicy | string | `nil` | Unset = runtime_agent.image.pullPolicy. |
 | streamsec.runtime_agent_windows.image.registry | string | `nil` | Unset = the global `registry`. |
-| streamsec.runtime_agent_windows.image.tag | string | `"1.7.4-windows"` | Pinned with `digest`; override both (or clear `digest`), since the node pulls by digest. Unset = runtime_agent.image.tag + "-windows". |
-| streamsec.runtime_agent_windows.resources | object | `{"requests":{"cpu":"100m","memory":"256Mi"}}` | Replaces runtime_agent.resources for Windows (null = runtime_agent's). Not merged, so an inherited Linux limit can never sit below the Windows request. 256Mi: the perf run measured ~200 MB private bytes under load. |
-| streamsec.runtime_agent_windows.terminationGracePeriodSeconds | int | `10` | How long the kubelet waits before killing censor.exe. HostProcess containers receive no stop signal, so the agent cannot close its ETW sessions on pod stop; the next start reclaims them. |
+| streamsec.runtime_agent_windows.image.tag | string | `"1.7.4-windows"` | Pinned with `digest`; override both together. |
+| streamsec.runtime_agent_windows.resources | object | `{"requests":{"cpu":"100m","memory":"256Mi"}}` | Replaces runtime_agent.resources (null = inherit). |
+| streamsec.runtime_agent_windows.terminationGracePeriodSeconds | int | `10` | Wait before killing censor.exe. |
 | streamsec.serviceAccount.create | bool | `true` |  |
 | streamsec.serviceAccount.name | string | `""` | The name of the Service account. If not set and create is true, a name is generated using the fullname template |
 | streamsec.tolerations[0].effect | string | `"NoSchedule"` |  |
