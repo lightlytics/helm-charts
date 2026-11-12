@@ -21,11 +21,21 @@ rules:
       - persistentvolumes
       - persistentvolumeclaims
       - serviceaccounts
+    verbs:
+      - get
+      - watch
+      - list
+  {{- if .Values.streamsec.collectSecrets }}
+  # DEV-24859: Secret access only when Secret collection is enabled (streamsec.collectSecrets).
+  - apiGroups:
+      - ""
+    resources:
       - secrets
     verbs:
       - get
       - watch
       - list
+  {{- end }}
   - apiGroups:
       - rbac
       - rbac.authorization.k8s.io

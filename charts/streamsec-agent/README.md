@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.2.31](https://img.shields.io/badge/Version-1.2.31-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.2.33](https://img.shields.io/badge/Version-1.2.33-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -102,6 +102,7 @@ Notes:
 | streamsec.cluster_agent_containers.containers.tracing-policy.resources | object | `{}` |  |
 | streamsec.cluster_agent_containers.enabled | bool | `true` |  |
 | streamsec.cluster_agent_containers.podAnnotations | object | `{}` | Annotations for the cluster-agent POD (not the Deployment). |
+| streamsec.collectSecrets | bool | `false` |  |
 | streamsec.cost_containers.containers.connector.command[0] | string | `"/usr/local/bin/python"` |  |
 | streamsec.cost_containers.containers.connector.command[1] | string | `"main.py"` |  |
 | streamsec.cost_containers.containers.connector.command[2] | string | `"connector"` |  |
@@ -119,10 +120,10 @@ Notes:
 | streamsec.cost_containers.containers.cost.resources.requests.cpu | string | `"800m"` |  |
 | streamsec.cost_containers.containers.cost.resources.requests.memory | string | `"1024Mi"` |  |
 | streamsec.cost_containers.enabled | bool | `false` |  |
-| streamsec.cost_image.digest | string | `"sha256:8c5500553a83b85b03ecd82d6bf2802c3440d9e2774731c7b82423305658f794"` | Stream Security cost agent image digest to use. |
+| streamsec.cost_image.digest | string | `"sha256:fa6d1a31723ebc69724b65a8dc040dd97b33328f7566d42a32d4a3111ced347e"` | Stream Security cost agent image digest to use. |
 | streamsec.cost_image.name | string | `"cluster-agent"` | Stream Security cost agent image name. |
 | streamsec.cost_image.pullPolicy | string | `"IfNotPresent"` | Stream Security cost agent image pullPolicy |
-| streamsec.cost_image.tag | string | `"1.2.26"` | Stream Security cost agent tag to use. |
+| streamsec.cost_image.tag | string | `"1.2.27"` | Stream Security cost agent tag to use. |
 | streamsec.dnsConfig | object | `{}` |  |
 | streamsec.env.ACCOUNT_ID | string | `nil` |  |
 | streamsec.env.AI_BODY_ENABLED | string | `nil` |  |
@@ -141,10 +142,10 @@ Notes:
 | streamsec.fieldSelectorsNamespaces | string | `nil` | filter/unfilter resources from specific namespace |
 | streamsec.filterRunningPods | bool | `true` | takes only pods which at status running |
 | streamsec.fullScanScheduleSeconds | int | `1800` | periodic Kubernetes resources scan at seconds |
-| streamsec.image.digest | string | `"sha256:8c5500553a83b85b03ecd82d6bf2802c3440d9e2774731c7b82423305658f794"` | Stream Security agent image digest to use. |
+| streamsec.image.digest | string | `"sha256:fa6d1a31723ebc69724b65a8dc040dd97b33328f7566d42a32d4a3111ced347e"` | Stream Security agent image digest to use. |
 | streamsec.image.name | string | `"cluster-agent"` | Stream Security agent image name. |
 | streamsec.image.pullPolicy | string | `"IfNotPresent"` | Stream Security agent image pullPolicy |
-| streamsec.image.tag | string | `"1.2.26"` | Stream Security agent tag to use. |
+| streamsec.image.tag | string | `"1.2.27"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
 | streamsec.nodeSelector | object | `{}` | cluster-agent only; merged with kubernetes.io/os=linux, a user-supplied kubernetes.io/os wins. |
 | streamsec.podSecurityContext.fsGroup | int | `2000` |  |
