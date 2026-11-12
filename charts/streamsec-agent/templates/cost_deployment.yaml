@@ -6,10 +6,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
   {{- include "streamsec.labels" . | nindent 4 }}
-  annotations:
-    {{- if not .Values.streamsec.apiTokenExistingSecret }}
-      checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
-    {{- end }}
 spec:
   replicas: {{ .Values.streamsec.replicas }}
   selector:
@@ -19,6 +15,10 @@ spec:
     metadata:
       labels:
     {{- include "streamsec.selectorLabels" . | nindent 8 }}
+      {{- if not .Values.streamsec.apiTokenExistingSecret }}
+      annotations:
+        checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      {{- end }}
     spec:
       serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
       securityContext:
