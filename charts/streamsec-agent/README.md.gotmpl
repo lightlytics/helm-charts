@@ -38,8 +38,9 @@ discovers the cloud itself (AWS, then Azure, then GCP). To pin it, set `CLOUD_TY
 Supported: AKS Windows Server 2022 node pools (verified; 2025 expected, not yet verified;
 containerd, amd64). The image is
 `runtime-agent:<tag>-windows`, published by the runtime-agent Jenkins build next to the
-Linux tag; with `image.tag` left empty it follows `streamsec.runtime_agent.image.tag`. Pin
-`image.digest` once the image exists (it has its own manifest, separate from the Linux one).
+Linux tag. The chart pins `image.tag` and `image.digest` together (the digest is the
+Windows image's own manifest, separate from the Linux one); with `image.tag` and `image.digest`
+both cleared the tag follows `streamsec.runtime_agent.image.tag`.
 
 ```yaml
 streamsec:

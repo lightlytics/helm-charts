@@ -28,8 +28,9 @@ discovers the cloud itself (AWS, then Azure, then GCP). To pin it, set `CLOUD_TY
 Supported: AKS Windows Server 2022 node pools (verified; 2025 expected, not yet verified;
 containerd, amd64). The image is
 `runtime-agent:<tag>-windows`, published by the runtime-agent Jenkins build next to the
-Linux tag; with `image.tag` left empty it follows `streamsec.runtime_agent.image.tag`. Pin
-`image.digest` once the image exists (it has its own manifest, separate from the Linux one).
+Linux tag. The chart pins `image.tag` and `image.digest` together (the digest is the
+Windows image's own manifest, separate from the Linux one); with `image.tag` and `image.digest`
+both cleared the tag follows `streamsec.runtime_agent.image.tag`.
 
 ```yaml
 streamsec:
@@ -180,11 +181,11 @@ Notes:
 | streamsec.runtime_agent.tolerations[0].operator | string | `"Exists"` |  |
 | streamsec.runtime_agent.updateStrategy | object | `{}` |  |
 | streamsec.runtime_agent_windows.enabled | bool | `false` | Deploy the Windows HostProcess DaemonSet. |
-| streamsec.runtime_agent_windows.image.digest | string | `"sha256:e81fb2db4b3711dc94887058c959f877a7ef022b0957abcfb9ae3606283870e4"` | Digest pin for the Windows image (its own manifest, never inherited from runtime_agent). Pinned to the stable release's -windows image; mark-stable updates it. |
+| streamsec.runtime_agent_windows.image.digest | string | `"sha256:ac7bae4742f45cbe2800335a69b2dd4e4231fa990ca4edf7def96b7632b16587"` | Digest pin for the Windows image (its own manifest, never inherited from runtime_agent). Pinned to the stable release's -windows image; mark-stable updates it. |
 | streamsec.runtime_agent_windows.image.name | string | `nil` | Unset = runtime_agent.image.name. |
 | streamsec.runtime_agent_windows.image.pullPolicy | string | `nil` | Unset = runtime_agent.image.pullPolicy. With a mutable `-windows` tag and no digest, IfNotPresent keeps whatever the node pulled first. |
 | streamsec.runtime_agent_windows.image.registry | string | `nil` | Unset = the global `registry`. |
-| streamsec.runtime_agent_windows.image.tag | string | `nil` | Unset = runtime_agent.image.tag + "-windows". |
+| streamsec.runtime_agent_windows.image.tag | string | `"1.7.4-windows"` | Pinned with `digest`. Unset = runtime_agent.image.tag + "-windows". |
 | streamsec.runtime_agent_windows.resources | object | `{"requests":{"cpu":"100m","memory":"256Mi"}}` | Replaces runtime_agent.resources for Windows (null = runtime_agent's). Not merged, so an inherited Linux limit can never sit below the Windows request. 256Mi: the perf run measured ~200 MB private bytes under load. |
 | streamsec.runtime_agent_windows.terminationGracePeriodSeconds | int | `10` | How long the kubelet waits before killing censor.exe. HostProcess containers receive no stop signal, so the agent cannot close its ETW sessions on pod stop; the next start reclaims them. |
 | streamsec.serviceAccount.create | bool | `true` |  |
