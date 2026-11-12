@@ -1,4 +1,4 @@
-{{- if and (.Values.streamsec.cluster_agent_containers.enabled) (.Values.streamsec.runtime_agent_windows.enabled) }}
+{{- if and (.Values.streamsec.cluster_agent_containers.enabled) (.Values.streamsec.runtime_agent_windows | default dict).enabled }}
 {{- $win := .Values.streamsec.runtime_agent_windows }}
 {{- $eff := include "streamsec.runtimeAgentWindowsSettings" . | fromYaml }}
 # Windows node pools: the agent runs as a HostProcess container, i.e. a plain host
@@ -11,10 +11,6 @@ metadata:
   labels:
   {{- include "streamsec.labels" . | nindent 4 }}
     app.kubernetes.io/component: runtime-agent-windows
-  annotations:
-    {{- if not .Values.streamsec.apiTokenExistingSecret }}
-      checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
-    {{- end }}
 spec:
   selector:
     matchLabels:
@@ -25,6 +21,10 @@ spec:
       labels:
     {{- include "streamsec.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: runtime-agent-windows
+      {{- if not .Values.streamsec.apiTokenExistingSecret }}
+      annotations:
+        checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      {{- end }}
     spec:
       nodeSelector:
         {{- toYaml $eff.nodeSelector | nindent 8 }}
