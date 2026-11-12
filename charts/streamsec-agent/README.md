@@ -49,6 +49,9 @@ Notes:
 - HostProcess containers receive no stop signal: on pod delete the kubelet waits
   `terminationGracePeriodSeconds` and then kills `censor.exe`, so the ETW sessions stay on
   the node until the next agent start reclaims them (single-instance mutex + orphan reclaim).
+- An unset `runtime_agent_windows.nodeSelector` inherits `runtime_agent.nodeSelector` (minus
+  `kubernetes.io/os`); if that names a Linux-only pool or arch, set the Windows one explicitly,
+  or the Windows DaemonSet matches no node.
 - The Windows image and binary are unsigned for now (Authenticode signing is a follow-up).
 - Leave `streamsec.env.CLUSTER_ID` unset on AKS: the agent derives the cluster id from the
   `MC_<rg>_<cluster>_<region>` node resource group. It feeds both DaemonSets; if set it must
@@ -185,7 +188,7 @@ Notes:
 | streamsec.runtime_agent_windows.image.name | string | `nil` | Unset = runtime_agent.image.name. |
 | streamsec.runtime_agent_windows.image.pullPolicy | string | `nil` | Unset = runtime_agent.image.pullPolicy. With a mutable `-windows` tag and no digest, IfNotPresent keeps whatever the node pulled first. |
 | streamsec.runtime_agent_windows.image.registry | string | `nil` | Unset = the global `registry`. |
-| streamsec.runtime_agent_windows.image.tag | string | `"1.7.4-windows"` | Pinned with `digest`. Unset = runtime_agent.image.tag + "-windows". |
+| streamsec.runtime_agent_windows.image.tag | string | `"1.7.4-windows"` | Pinned with `digest`; override both (or clear `digest`), since the node pulls by digest. Unset = runtime_agent.image.tag + "-windows". |
 | streamsec.runtime_agent_windows.resources | object | `{"requests":{"cpu":"100m","memory":"256Mi"}}` | Replaces runtime_agent.resources for Windows (null = runtime_agent's). Not merged, so an inherited Linux limit can never sit below the Windows request. 256Mi: the perf run measured ~200 MB private bytes under load. |
 | streamsec.runtime_agent_windows.terminationGracePeriodSeconds | int | `10` | How long the kubelet waits before killing censor.exe. HostProcess containers receive no stop signal, so the agent cannot close its ETW sessions on pod stop; the next start reclaims them. |
 | streamsec.serviceAccount.create | bool | `true` |  |

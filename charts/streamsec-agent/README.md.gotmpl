@@ -59,6 +59,9 @@ Notes:
 - HostProcess containers receive no stop signal: on pod delete the kubelet waits
   `terminationGracePeriodSeconds` and then kills `censor.exe`, so the ETW sessions stay on
   the node until the next agent start reclaims them (single-instance mutex + orphan reclaim).
+- An unset `runtime_agent_windows.nodeSelector` inherits `runtime_agent.nodeSelector` (minus
+  `kubernetes.io/os`); if that names a Linux-only pool or arch, set the Windows one explicitly,
+  or the Windows DaemonSet matches no node.
 - The Windows image and binary are unsigned for now (Authenticode signing is a follow-up).
 - Leave `streamsec.env.CLUSTER_ID` unset on AKS: the agent derives the cluster id from the
   `MC_<rg>_<cluster>_<region>` node resource group. It feeds both DaemonSets; if set it must

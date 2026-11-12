@@ -330,7 +330,8 @@ streamsec:
       registry:
       # streamsec.runtime_agent_windows.image.name -- Unset = runtime_agent.image.name.
       name:
-      # streamsec.runtime_agent_windows.image.tag -- Pinned with `digest`. Unset = runtime_agent.image.tag + "-windows".
+      # streamsec.runtime_agent_windows.image.tag -- Pinned with `digest`; override both (or clear `digest`), since the
+      # node pulls by digest. Unset = runtime_agent.image.tag + "-windows".
       tag: 1.7.4-windows
       # streamsec.runtime_agent_windows.image.digest -- Digest pin for the Windows image (its own manifest,
       # never inherited from runtime_agent). Pinned to the stable release's -windows image; mark-stable updates it.
