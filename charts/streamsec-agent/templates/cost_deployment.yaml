@@ -6,10 +6,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
   {{- include "streamsec.labels" . | nindent 4 }}
-  annotations:
-    {{- if not .Values.streamsec.apiTokenExistingSecret }}
-      checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
-    {{- end }}
 spec:
   replicas: {{ .Values.streamsec.replicas }}
   selector:
@@ -19,12 +15,18 @@ spec:
     metadata:
       labels:
     {{- include "streamsec.selectorLabels" . | nindent 8 }}
+      {{- if not .Values.streamsec.apiTokenExistingSecret }}
+      annotations:
+        checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      {{- end }}
     spec:
       serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.streamsec.podSecurityContext | nindent 8 }}
       tolerations:
           {{- toYaml .Values.streamsec.tolerations | nindent 8 }}
+      nodeSelector:
+        kubernetes.io/os: linux
       containers:
       {{- range $container_name, $container_values := .Values.streamsec.cost_containers.containers }}
         - name: {{ $container_name }}

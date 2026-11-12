@@ -42,7 +42,7 @@ streamsec:
   #streamsec.inLabelSelector
   inLabelSelector:
 
-  #streamsec.nodeSelector
+  # streamsec.nodeSelector -- cluster-agent only; merged with kubernetes.io/os=linux.
   nodeSelector: {}
   # Example:
   # nodeSelector:
@@ -297,6 +297,29 @@ streamsec:
       tag: 1.7.4
       digest: sha256:a5f5b580575b7d7fe9eb82c7d405ceabeeebc1af1b6dd2aa471664d4cfd7ff19
       pullPolicy: IfNotPresent
+
+  # Windows HostProcess runtime agent; see "Windows node pools" in the chart README.
+  runtime_agent_windows:
+    # streamsec.runtime_agent_windows.enabled -- Deploy the Windows HostProcess DaemonSet.
+    enabled: false
+    # streamsec.runtime_agent_windows.resources -- Replaces runtime_agent.resources (null = inherit).
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    # streamsec.runtime_agent_windows.terminationGracePeriodSeconds -- Wait before killing censor.exe.
+    terminationGracePeriodSeconds: 10
+    image:
+      # streamsec.runtime_agent_windows.image.registry -- Unset = the global `registry`.
+      registry:
+      # streamsec.runtime_agent_windows.image.name -- Unset = runtime_agent.image.name.
+      name:
+      # streamsec.runtime_agent_windows.image.tag -- Pinned with `digest`; override both together.
+      tag: 1.7.4-windows
+      # streamsec.runtime_agent_windows.image.digest -- The -windows image's digest (mark-stable).
+      digest: sha256:ac7bae4742f45cbe2800335a69b2dd4e4231fa990ca4edf7def96b7632b16587
+      # streamsec.runtime_agent_windows.image.pullPolicy -- Unset = runtime_agent.image.pullPolicy.
+      pullPolicy:
 
   env:
     LOGLEVEL: INFO
