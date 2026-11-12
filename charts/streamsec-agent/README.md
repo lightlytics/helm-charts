@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.2.33](https://img.shields.io/badge/Version-1.2.33-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.2.34](https://img.shields.io/badge/Version-1.2.34-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -53,7 +53,7 @@ Notes:
 - Leave `streamsec.env.CLUSTER_ID` unset on AKS: the agent derives the cluster id from the
   `MC_<rg>_<cluster>_<region>` node resource group. It feeds both DaemonSets; if set it must
   match the cluster onboarded in Stream, or every batch is dropped.
-- Chart 1.2.25 adds `nodeSelector kubernetes.io/os: linux` to every Linux-only workload: the
+- Chart 1.2.34 adds `nodeSelector kubernetes.io/os: linux` to every Linux-only workload: the
   Linux runtime-agent DaemonSet, cluster-agent, cost and process-discovery (AKS Windows pools
   carry no taint, so without it a Linux-only image can land on a Windows node and ImagePullBackOff).
   A user-supplied `kubernetes.io/os` in `streamsec.nodeSelector` (cluster-agent) /

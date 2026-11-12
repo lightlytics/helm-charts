@@ -63,7 +63,7 @@ Notes:
 - Leave `streamsec.env.CLUSTER_ID` unset on AKS: the agent derives the cluster id from the
   `MC_<rg>_<cluster>_<region>` node resource group. It feeds both DaemonSets; if set it must
   match the cluster onboarded in Stream, or every batch is dropped.
-- Chart 1.2.25 adds `nodeSelector kubernetes.io/os: linux` to every Linux-only workload: the
+- Chart 1.2.34 adds `nodeSelector kubernetes.io/os: linux` to every Linux-only workload: the
   Linux runtime-agent DaemonSet, cluster-agent, cost and process-discovery (AKS Windows pools
   carry no taint, so without it a Linux-only image can land on a Windows node and ImagePullBackOff).
   A user-supplied `kubernetes.io/os` in `streamsec.nodeSelector` (cluster-agent) /
