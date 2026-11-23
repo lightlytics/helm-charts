@@ -180,6 +180,22 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+User pod labels (streamsec.podLabels). Keys the chart sets on pod templates are rejected: they
+are selector keys, and overriding one would detach the pods from their Deployment/DaemonSet.
+*/}}
+{{- define "streamsec.podLabels" -}}
+{{- $reserved := list "app" "app.kubernetes.io/name" "app.kubernetes.io/instance" "app.kubernetes.io/component" -}}
+{{- $labels := dict -}}
+{{- range $key, $value := .Values.streamsec.podLabels -}}
+{{- if has $key $reserved -}}
+{{- fail (printf "streamsec.podLabels: %q is reserved by the chart" $key) -}}
+{{- end -}}
+{{- $_ := set $labels $key (toString $value) -}}
+{{- end -}}
+{{- with $labels }}{{ toYaml . }}{{ end -}}
+{{- end }}
+
+{{/*
 Return secret name to be used based on provided values.
 */}}
 {{- define "streamsec.apiTokenSecretName" -}}

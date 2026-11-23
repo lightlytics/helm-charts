@@ -156,6 +156,7 @@ Notes:
 | streamsec.image.tag | string | `"1.2.32"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
 | streamsec.nodeSelector | object | `{}` | cluster-agent only; merged with kubernetes.io/os=linux. |
+| streamsec.podLabels | object | `{}` | Labels added to the pod template of every enabled agent workload. Selectors are unchanged; changing this rolls the pods. Selector keys (app, app.kubernetes.io/name\|instance\|component) are rejected. Avoid labels that Services, NetworkPolicies or Istio select on. |
 | streamsec.podSecurityContext.fsGroup | int | `2000` |  |
 | streamsec.podSecurityContext.runAsGroup | int | `3000` |  |
 | streamsec.podSecurityContext.runAsNonRoot | bool | `true` |  |

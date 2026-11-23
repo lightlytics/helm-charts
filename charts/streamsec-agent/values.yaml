@@ -42,6 +42,9 @@ streamsec:
   #streamsec.inLabelSelector
   inLabelSelector:
 
+  # streamsec.podLabels -- Labels added to the pod template of every enabled agent workload. Selectors are unchanged; changing this rolls the pods. Selector keys (app, app.kubernetes.io/name|instance|component) are rejected. Avoid labels that Services, NetworkPolicies or Istio select on.
+  podLabels: {}
+
   # streamsec.nodeSelector -- cluster-agent only; merged with kubernetes.io/os=linux.
   nodeSelector: {}
   # Example:

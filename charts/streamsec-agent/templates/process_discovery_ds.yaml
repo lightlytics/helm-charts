@@ -20,6 +20,9 @@ spec:
       labels:
     {{- include "streamsec.selectorLabels" . | nindent 8 }}
         app: {{ template "streamsec.fullname" . }}-process-discovery
+      {{- with include "streamsec.podLabels" . }}
+        {{- . | nindent 8 }}
+      {{- end }}
     spec:
       serviceAccountName: {{ template "streamsec.serviceAccountName" . }}
       {{- $priorityClassName := include "streamsec.priorityClassName" . }}
