@@ -190,6 +190,9 @@ are selector keys, and overriding one would detach the pods from their Deploymen
 {{- if has $key $reserved -}}
 {{- fail (printf "streamsec.podLabels: %q is reserved by the chart" $key) -}}
 {{- end -}}
+{{- if or (kindIs "invalid" $value) (kindIs "map" $value) (kindIs "slice" $value) -}}
+{{- fail (printf "streamsec.podLabels.%s must be a scalar" $key) -}}
+{{- end -}}
 {{- $_ := set $labels $key (toString $value) -}}
 {{- end -}}
 {{- with $labels }}{{ toYaml . }}{{ end -}}
