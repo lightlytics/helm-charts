@@ -26,6 +26,9 @@ spec:
     metadata:
       labels:
       {{- include "streamsec.selectorLabels" . | nindent 8 }}
+      {{- with include "streamsec.podLabels" . }}
+        {{- . | nindent 8 }}
+      {{- end }}
       {{- with .Values.streamsec.cluster_agent_containers.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}

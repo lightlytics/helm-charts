@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.2.39](https://img.shields.io/badge/Version-1.2.39-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.2.40](https://img.shields.io/badge/Version-1.2.40-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -156,6 +156,7 @@ Notes:
 | streamsec.image.tag | string | `"1.2.32"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
 | streamsec.nodeSelector | object | `{}` | cluster-agent only; merged with kubernetes.io/os=linux. |
+| streamsec.podLabels | object | `{}` | Labels added to the pod template of every enabled agent workload. Selectors are unchanged; changing this rolls the pods, except DaemonSets with updateStrategy OnDelete (they keep old labels until their pods are recreated). Selector keys (app, app.kubernetes.io/name\|instance\|component) are rejected. Avoid labels that Services, NetworkPolicies or Istio select on. |
 | streamsec.podSecurityContext.fsGroup | int | `2000` |  |
 | streamsec.podSecurityContext.runAsGroup | int | `3000` |  |
 | streamsec.podSecurityContext.runAsNonRoot | bool | `true` |  |

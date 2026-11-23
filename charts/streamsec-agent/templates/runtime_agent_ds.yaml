@@ -13,6 +13,9 @@ spec:
     metadata:
       labels:
     {{- include "streamsec.selectorLabels" . | nindent 8 }}
+      {{- with include "streamsec.podLabels" . }}
+        {{- . | nindent 8 }}
+      {{- end }}
       {{- if not .Values.streamsec.apiTokenExistingSecret }}
       annotations:
         checksum/api-token: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
