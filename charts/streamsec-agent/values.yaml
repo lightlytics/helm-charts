@@ -294,8 +294,8 @@ streamsec:
     updateStrategy: {}
     image:
       name: runtime-agent
-      tag: 1.8.0
-      digest: sha256:f0ffc1fcb2be2f403c88ab9fd9c7ee2def6964f8713b17b21c622dec0cfe5176
+      tag: 1.8.1
+      digest: sha256:542215ee2776bb9419fa893555079206118c9b423962ee166cb062ee36d11dea
       pullPolicy: IfNotPresent
 
   # Windows HostProcess runtime agent; see "Windows node pools" in the chart README.
@@ -315,9 +315,9 @@ streamsec:
       # streamsec.runtime_agent_windows.image.name -- Unset = runtime_agent.image.name.
       name:
       # streamsec.runtime_agent_windows.image.tag -- Pinned with `digest`; override both together.
-      tag: 1.8.0-windows
+      tag: 1.8.1-windows
       # streamsec.runtime_agent_windows.image.digest -- The -windows image's digest (mark-stable).
-      digest: sha256:5b1857dd427ca12491cf6ab7e55b6afc1b0a381d2e6f2ef7c1a0938374f95eb7
+      digest: sha256:9ce685a61c1981f8c54124ca387dc3695bca444b4e53e18e68064ad3cf80591a
       # streamsec.runtime_agent_windows.image.pullPolicy -- Unset = runtime_agent.image.pullPolicy.
       pullPolicy:
 
