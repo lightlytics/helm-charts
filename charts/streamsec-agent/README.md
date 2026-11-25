@@ -1,6 +1,6 @@
 # streamsec-agent
 
-![Version: 1.2.40](https://img.shields.io/badge/Version-1.2.40-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
+![Version: 1.2.41](https://img.shields.io/badge/Version-1.2.41-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.4](https://img.shields.io/badge/AppVersion-1.1.4-informational?style=flat-square)
 
 Stream Security Agent Helm Chart
 
@@ -156,7 +156,7 @@ Notes:
 | streamsec.image.tag | string | `"1.2.32"` | Stream Security agent tag to use. |
 | streamsec.inLabelSelector | string | `nil` |  |
 | streamsec.nodeSelector | object | `{}` | cluster-agent only; merged with kubernetes.io/os=linux. |
-| streamsec.podLabels | object | `{}` | Labels added to the pod template of every enabled agent workload. Selectors are unchanged; changing this rolls the pods, except DaemonSets with updateStrategy OnDelete (they keep old labels until their pods are recreated). Selector keys (app, app.kubernetes.io/name\|instance\|component) are rejected. Avoid labels that Services, NetworkPolicies or Istio select on. |
+| streamsec.podLabels | object | `{}` | Labels added to the pod template of every enabled agent workload. Selectors are unchanged; changing this rolls the pods, except DaemonSets with updateStrategy OnDelete (they keep old labels until their pods are recreated). Selector keys (app, app.kubernetes.io/name|instance|component) are rejected. Avoid labels that Services, NetworkPolicies or Istio select on. |
 | streamsec.podSecurityContext.fsGroup | int | `2000` |  |
 | streamsec.podSecurityContext.runAsGroup | int | `3000` |  |
 | streamsec.podSecurityContext.runAsNonRoot | bool | `true` |  |
@@ -179,21 +179,21 @@ Notes:
 | streamsec.replicas | int | `1` |  |
 | streamsec.runtime_agent.affinity | object | `{}` |  |
 | streamsec.runtime_agent.enabled | bool | `false` |  |
-| streamsec.runtime_agent.image.digest | string | `"sha256:542215ee2776bb9419fa893555079206118c9b423962ee166cb062ee36d11dea"` |  |
+| streamsec.runtime_agent.image.digest | string | `"sha256:7c9241995868d74ae3659d7f28b16d9992f65dc05423358d5335a209a8e7d02d"` |  |
 | streamsec.runtime_agent.image.name | string | `"runtime-agent"` |  |
 | streamsec.runtime_agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| streamsec.runtime_agent.image.tag | string | `"1.8.1"` |  |
+| streamsec.runtime_agent.image.tag | string | `"1.8.2"` |  |
 | streamsec.runtime_agent.nodeSelector | object | `{}` |  |
 | streamsec.runtime_agent.resources.requests.cpu | string | `"100m"` |  |
 | streamsec.runtime_agent.resources.requests.memory | string | `"128Mi"` |  |
 | streamsec.runtime_agent.tolerations[0].operator | string | `"Exists"` |  |
 | streamsec.runtime_agent.updateStrategy | object | `{}` |  |
 | streamsec.runtime_agent_windows.enabled | bool | `false` | Deploy the Windows HostProcess DaemonSet. |
-| streamsec.runtime_agent_windows.image.digest | string | `"sha256:9ce685a61c1981f8c54124ca387dc3695bca444b4e53e18e68064ad3cf80591a"` | The -windows image's digest (mark-stable). |
+| streamsec.runtime_agent_windows.image.digest | string | `"sha256:f12fb9fa65c691ea30778283252439b3eb76505a88397948d146e345e3866641"` | The -windows image's digest (mark-stable). |
 | streamsec.runtime_agent_windows.image.name | string | `nil` | Unset = runtime_agent.image.name. |
 | streamsec.runtime_agent_windows.image.pullPolicy | string | `nil` | Unset = runtime_agent.image.pullPolicy. |
 | streamsec.runtime_agent_windows.image.registry | string | `nil` | Unset = the global `registry`. |
-| streamsec.runtime_agent_windows.image.tag | string | `"1.8.1-windows"` | Pinned with `digest`; override both together. |
+| streamsec.runtime_agent_windows.image.tag | string | `"1.8.2-windows"` | Pinned with `digest`; override both together. |
 | streamsec.runtime_agent_windows.resources | object | `{"requests":{"cpu":"100m","memory":"256Mi"}}` | Replaces runtime_agent.resources (null = inherit). |
 | streamsec.runtime_agent_windows.terminationGracePeriodSeconds | int | `10` | Wait before killing censor.exe. |
 | streamsec.serviceAccount.create | bool | `true` |  |
