@@ -4,6 +4,21 @@
 
 Stream Security Agent Helm Chart
 
+## Host bpffs (`/sys/fs/bpf`)
+
+From chart 1.2.42 the runtime agent DaemonSet mounts the host's `/sys/fs/bpf` (read-write
+hostPath), so the agent's pinned BPF maps under `/sys/fs/bpf/censor/` (its process table and
+drift marks) outlive a pod restart. Before, the agent mounted a bpffs inside its own container
+and the pins ended with the pod.
+
+- An admission policy that allowlists host paths (Gatekeeper `allowedHostPaths`, Kyverno) must
+  also allow `/sys/fs/bpf`, or the upgraded pods are rejected and the rollout stalls.
+- `helm uninstall` and a rollback leave the pins on each node until it reboots. To clear them,
+  remove `/sys/fs/bpf/censor` on the node, or start the agent once with
+  `CENSOR_EXECVE_MAP_FRESH=true` in `streamsec.extraEnv`.
+- A node that does not mount bpffs at `/sys/fs/bpf` gets the old behaviour: the agent mounts its
+  own, logs a warning, and the pins end with the pod.
+
 ## Windows node pools (AKS)
 
 The runtime agent ships two DaemonSets. `streamsec.runtime_agent` (Linux, privileged) is
