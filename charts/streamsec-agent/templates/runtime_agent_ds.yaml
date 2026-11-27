@@ -54,9 +54,6 @@ spec:
               name: sys-kernel
             - mountPath: /host/proc
               name: proc
-            # The host's bpffs, so the agent's pinned maps (its process table
-            # and the drift marks) outlive a pod restart; a bpffs mounted
-            # inside the container ends with it.
             - mountPath: /sys/fs/bpf
               name: bpffs
             {{- if .Values.streamsec.runtime_agent.responseActionsEnabled }}
